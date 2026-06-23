@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>오늘의 운세</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Noto+Serif+KR:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      background: radial-gradient(ellipse at top, #1a0030 0%, #0a0015 50%, #000008 100%);
+      font-family: 'Noto Serif KR', serif;
+      color: #e2d9f3;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+    }
+
+    /* 별빛 배경 */
+    .stars {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .star {
+      position: absolute;
+      border-radius: 50%;
+      background: #fff;
+      animation: twinkle var(--d) ease-in-out infinite alternate;
+    }
+    @keyframes twinkle {
+      from { opacity: var(--min); transform: scale(1); }
+      to   { opacity: var(--max); transform: scale(1.4); }
+    }
+
+    /* 떠다니는 파티클 */
+    .particles {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .particle {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: #a855f7;
+      border-radius: 50%;
+      animation: float var(--fd) linear infinite;
+      opacity: 0;
+    }
+    @keyframes float {
+      0%   { transform: translateY(100vh) translateX(0); opacity: 0; }
+      10%  { opacity: 0.6; }
+      90%  { opacity: 0.4; }
+      100% { transform: translateY(-10vh) translateX(var(--fx)); opacity: 0; }
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      max-width: 600px;
+      width: 100%;
+    }
+
+    /* 타이틀 */
+    .title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.6rem, 5vw, 2.8rem);
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      background: linear-gradient(135deg, #ffd700, #a855f7, #60a5fa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.3rem;
+      text-shadow: none;
+    }
+    .subtitle {
+      font-size: 0.85rem;
+      color: #7c5fa8;
+      letter-spacing: 0.3em;
+      margin-bottom: 3rem;
+    }
+
+    /* 버튼 */
+    .draw-btn {
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      padding: 0.9rem 2.5rem;
+      background: transparent;
+      border: 2px solid #a855f7;
+      color: #d8b4fe;
+      border-radius: 50px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 20px rgba(168,85,247,0.3), inset 0 0 20px rgba(168,85,247,0.05);
+    }
+    .draw-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle, rgba(168,85,247,0.3) 0%, transparent 70%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .draw-btn:hover::before { opacity: 1; }
+    .draw-btn:hover {
+      border-color: #ffd700;
+      color: #ffd700;
+      box-shadow: 0 0 30px rgba(255,215,0,0.4), inset 0 0 30px rgba(255,215,0,0.08);
+      transform: translateY(-2px);
+    }
+    .draw-btn:active { transform: translateY(0); }
+    .draw-btn.pulse {
+      animation: btnPulse 0.6s ease;
+    }
+    @keyframes btnPulse {
+      0%,100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    /* 카드 영역 */
+    .card-area {
+      margin: 2.5rem auto 0;
+      perspective: 1000px;
+      width: 220px;
+      height: 340px;
+      display: none;
+    }
+    .card-area.visible { display: block; }
+
+    .card-inner {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .card-inner.flipped { transform: rotateY(180deg); }
+
+    .card-face {
+      position: absolute;
+      inset: 0;
+      border-radius: 18px;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(168,85,247,0.4);
+    }
+
+    /* 카드 뒷면 */
+    .card-back {
+      background: linear-gradient(145deg, #1a0030, #0d001f);
+      box-shadow: 0 0 40px rgba(168,85,247,0.25), inset 0 0 30px rgba(168,85,247,0.08);
+    }
+    .card-back-pattern {
+      width: 80%;
+      height: 80%;
+      border: 1px solid rgba(168,85,247,0.3);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      color: rgba(168,85,247,0.5);
+      background: repeating-linear-gradient(
+        45deg,
+        rgba(168,85,247,0.03) 0px,
+        rgba(168,85,247,0.03) 1px,
+        transparent 1px,
+        transparent 8px
+      );
+    }
+
+    /* 카드 앞면 */
+    .card-front {
+      background: linear-gradient(145deg, #1e0040, #0f0025);
+      transform: rotateY(180deg);
+      box-shadow: 0 0 50px rgba(168,85,247,0.4), inset 0 0 40px rgba(168,85,247,0.1);
+      gap: 0.8rem;
+      padding: 1.5rem;
+    }
+    .card-icon {
+      font-size: 4rem;
+      filter: drop-shadow(0 0 12px rgba(255,215,0,0.6));
+      animation: iconGlow 2s ease-in-out infinite alternate;
+    }
+    @keyframes iconGlow {
+      from { filter: drop-shadow(0 0 8px rgba(255,215,0,0.5)); }
+      to   { filter: drop-shadow(0 0 20px rgba(255,215,0,0.9)); }
+    }
+    .card-name {
+      font-family: 'Cinzel', serif;
+      font-size: 0.9rem;
+      letter-spacing: 0.12em;
+      color: #ffd700;
+      text-align: center;
+    }
+    .card-divider {
+      width: 60%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #a855f7, transparent);
+    }
+    .card-keyword {
+      font-size: 0.75rem;
+      color: #c084fc;
+      letter-spacing: 0.15em;
+      text-align: center;
+    }
+
+    /* 운세 메세지 */
+    .fortune-msg {
+      margin-top: 2rem;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.7s ease 0.3s, transform 0.7s ease 0.3s;
+      padding: 1.5rem 2rem;
+      border-radius: 16px;
+      background: rgba(168,85,247,0.07);
+      border: 1px solid rgba(168,85,247,0.2);
+      box-shadow: 0 0 30px rgba(168,85,247,0.1);
+    }
+    .fortune-msg.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .fortune-msg p {
+      font-size: 0.95rem;
+      line-height: 1.9;
+      color: #d8b4fe;
+    }
+    .fortune-msg .lucky {
+      margin-top: 1rem;
+      font-size: 0.8rem;
+      color: #7c5fa8;
+      letter-spacing: 0.1em;
+    }
+    .fortune-msg .lucky span {
+      color: #ffd700;
+    }
+
+    /* 다시 뽑기 버튼 */
+    .reset-btn {
+      margin-top: 1.5rem;
+      font-family: 'Cinzel', serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.2em;
+      padding: 0.6rem 1.8rem;
+      background: transparent;
+      border: 1px solid rgba(168,85,247,0.4);
+      color: #7c5fa8;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.5s ease 0.8s, transform 0.5s ease 0.8s, border-color 0.3s, color 0.3s;
+    }
+    .reset-btn.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reset-btn:hover {
+      border-color: #a855f7;
+      color: #d8b4fe;
+    }
+
+    /* 카드 흔들림 */
+    @keyframes shake {
+      0%,100% { transform: translateX(0) rotate(0); }
+      20% { transform: translateX(-6px) rotate(-1.5deg); }
+      40% { transform: translateX(6px) rotate(1.5deg); }
+      60% { transform: translateX(-4px) rotate(-1deg); }
+      80% { transform: translateX(4px) rotate(1deg); }
+    }
+    .card-area.shake .card-inner { animation: shake 0.5s ease; }
+
+    @media (max-width: 480px) {
+      .card-area { width: 180px; height: 280px; }
+      .card-icon { font-size: 3rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="stars" id="stars"></div>
+<div class="particles" id="particles"></div>
+
+<div class="container">
+  <h1 class="title">✦ FORTUNE ✦</h1>
+  <p class="subtitle">오늘의 운세를 뽑아보세요</p>
+
+  <button class="draw-btn" id="drawBtn" onclick="drawCard()">카드를 뽑으세요</button>
+
+  <div class="card-area" id="cardArea">
+    <div class="card-inner" id="cardInner">
+      <div class="card-face card-back">
+        <div class="card-back-pattern">✦</div>
+      </div>
+      <div class="card-face card-front" id="cardFront">
+        <div class="card-icon" id="cardIcon"></div>
+        <div class="card-name" id="cardName"></div>
+        <div class="card-divider"></div>
+        <div class="card-keyword" id="cardKeyword"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="fortune-msg" id="fortuneMsg">
+    <p id="fortuneText"></p>
+    <p class="lucky" id="luckyInfo"></p>
+  </div>
+
+  <button class="reset-btn" id="resetBtn" onclick="reset()">↺ 다시 뽑기</button>
+</div>
+
+<script>
+  const CARDS = [
+    {
+      icon: '⭐', name: '별빛의 카드', keyword: '새로운 시작 · 희망',
+      msg: '오늘은 새로운 시작을 알리는 별빛이 당신을 감싸고 있습니다. 오래 품어온 꿈을 향해 첫 발을 내딛기에 더없이 좋은 날입니다. 두려움을 내려놓고 빛을 향해 나아가세요.',
+      lucky: '행운의 숫자', luckyVal: '7', color: '#ffd700'
+    },
+    {
+      icon: '🌙', name: '달의 카드', keyword: '직감 · 내면의 목소리',
+      msg: '달빛 아래 숨겨진 진실이 오늘 당신 앞에 모습을 드러낼 것입니다. 논리보다 직감을 믿으세요. 마음 깊은 곳에서 울리는 목소리가 당신에게 정확한 길을 알려줄 것입니다.',
+      lucky: '행운의 색', luckyVal: '은빛 · 흰색', color: '#c0c8d8'
+    },
+    {
+      icon: '☀️', name: '태양의 카드', keyword: '성공 · 활력 · 풍요',
+      msg: '태양의 강렬한 에너지가 오늘 당신의 모든 일을 밝게 비춥니다. 자신감을 가지고 앞으로 나아가면 원하는 것을 이룰 수 있습니다. 주변에 당신의 따뜻함을 나누면 더 큰 행운이 돌아옵니다.',
+      lucky: '행운의 방향', luckyVal: '동쪽', color: '#ff8c00'
+    },
+    {
+      icon: '☸️', name: '운명의 수레바퀴', keyword: '변화 · 기회 · 전환점',
+      msg: '운명의 바퀴가 당신에게 유리한 방향으로 돌아가고 있습니다. 예상치 못한 만남이나 소식이 삶을 바꿀 큰 기회가 될 수 있습니다. 변화를 두려워하지 말고 흐름에 몸을 맡기세요.',
+      lucky: '행운의 시간', luckyVal: '오후 3시~5시', color: '#a855f7'
+    },
+    {
+      icon: '🕯️', name: '고독한 등불', keyword: '고요함 · 지혜 · 성찰',
+      msg: '오늘은 혼자만의 시간이 당신에게 가장 큰 선물입니다. 고요한 곳에서 자신의 내면을 들여다보세요. 오래된 문제의 해답이 침묵 속에서 자연스럽게 떠오를 것입니다.',
+      lucky: '행운의 장소', luckyVal: '조용한 카페 · 서재', color: '#f59e0b'
+    },
+    {
+      icon: '⚡', name: '번개의 카드', keyword: '변혁 · 각성 · 돌파',
+      msg: '번개처럼 강렬한 에너지가 묵은 것들을 일시에 허물어버립니다. 오늘은 오래된 패턴에서 벗어나 과감히 행동할 때입니다. 충격적으로 느껴질 수 있지만, 그 너머에 진정한 자유가 기다립니다.',
+      lucky: '행운의 숫자', luckyVal: '3', color: '#60a5fa'
+    },
+    {
+      icon: '🌍', name: '세계의 카드', keyword: '완성 · 성취 · 조화',
+      msg: '당신이 걸어온 긴 여정이 드디어 결실을 맺을 때가 왔습니다. 오늘은 모든 것이 조화롭게 맞아 떨어지는 날입니다. 스스로를 자랑스러워하고, 당신이 이룬 것들을 충분히 축하하세요.',
+      lucky: '행운의 색', luckyVal: '초록색 · 금색', color: '#10b981'
+    },
+    {
+      icon: '🔮', name: '마법사의 카드', keyword: '능력 · 의지 · 창조',
+      msg: '오늘 당신 안에 잠들어 있던 능력이 깨어납니다. 모든 도구는 이미 당신의 손안에 있습니다. 의지를 집중하고 행동으로 옮기면 현실을 원하는 대로 빚어낼 수 있습니다.',
+      lucky: '행운의 숫자', luckyVal: '1', color: '#ec4899'
+    }
+  ];
+
+  let drawn = false;
+
+  function drawCard() {
+    if (drawn) return;
+    drawn = true;
+
+    const btn = document.getElementById('drawBtn');
+    btn.classList.add('pulse');
+    btn.disabled = true;
+    btn.style.opacity = '0.4';
+    btn.style.pointerEvents = 'none';
+
+    const card = CARDS[Math.floor(Math.random() * CARDS.length)];
+    const cardArea = document.getElementById('cardArea');
+
+    document.getElementById('cardIcon').textContent = card.icon;
+    document.getElementById('cardName').textContent = card.name;
+    document.getElementById('cardKeyword').textContent = card.keyword;
+    document.getElementById('fortuneText').textContent = card.msg;
+    document.getElementById('luckyInfo').innerHTML = `✦ ${card.lucky}: <span>${card.luckyVal}</span>`;
+
+    document.querySelector('.card-front').style.boxShadow =
+      `0 0 50px ${card.color}55, inset 0 0 40px ${card.color}18`;
+
+    cardArea.classList.add('visible');
+    cardArea.classList.add('shake');
+
+    setTimeout(() => {
+      cardArea.classList.remove('shake');
+      document.getElementById('cardInner').classList.add('flipped');
+    }, 500);
+
+    setTimeout(() => {
+      document.getElementById('fortuneMsg').classList.add('show');
+      document.getElementById('resetBtn').classList.add('show');
+    }, 1000);
+  }
+
+  function reset() {
+    drawn = false;
+    const cardArea = document.getElementById('cardArea');
+    const cardInner = document.getElementById('cardInner');
+    const fortuneMsg = document.getElementById('fortuneMsg');
+    const resetBtn = document.getElementById('resetBtn');
+    const btn = document.getElementById('drawBtn');
+
+    fortuneMsg.classList.remove('show');
+    resetBtn.classList.remove('show');
+
+    setTimeout(() => {
+      cardInner.classList.remove('flipped');
+      setTimeout(() => {
+        cardArea.classList.remove('visible');
+        btn.disabled = false;
+        btn.style.opacity = '';
+        btn.style.pointerEvents = '';
+      }, 500);
+    }, 200);
+  }
+
+  // 별 생성
+  const starsEl = document.getElementById('stars');
+  for (let i = 0; i < 140; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    const size = Math.random() * 2.2 + 0.4;
+    s.style.cssText = `
+      width:${size}px; height:${size}px;
+      top:${Math.random()*100}%; left:${Math.random()*100}%;
+      --d:${(Math.random()*3+2).toFixed(1)}s;
+      --min:${(Math.random()*0.2+0.1).toFixed(2)};
+      --max:${(Math.random()*0.5+0.5).toFixed(2)};
+      animation-delay:${(Math.random()*4).toFixed(1)}s;
+    `;
+    starsEl.appendChild(s);
+  }
+
+  // 파티클 생성
+  const particlesEl = document.getElementById('particles');
+  for (let i = 0; i < 30; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.cssText = `
+      left:${Math.random()*100}%;
+      --fd:${(Math.random()*10+8).toFixed(1)}s;
+      --fx:${(Math.random()*80-40).toFixed(0)}px;
+      animation-delay:${(Math.random()*12).toFixed(1)}s;
+    `;
+    particlesEl.appendChild(p);
+  }
+</script>
+</body>
+</html>
