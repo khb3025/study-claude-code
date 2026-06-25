@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ClaudeCodeEditorTabs">
+    <option name="activeSessionId" value="7aab634c-75ca-489b-bcb9-6d2bb424c16c" />
+    <option name="openSessionIds">
+      <list>
+        <option value="c53f4ed7-6528-41f8-8ced-249045eecb61" />
+        <option value="7aab634c-75ca-489b-bcb9-6d2bb424c16c" />
+      </list>
+    </option>
+    <option name="sessionPaths">
+      <map>
+        <entry key="7aab634c-75ca-489b-bcb9-6d2bb424c16c" value="/sessions/838efdb7-2ca4-41fc-b3bc-d96b9f033d66" />
+        <entry key="c53f4ed7-6528-41f8-8ced-249045eecb61" value="/sessions/9d1fd35a-fc9b-4c03-abae-4292f029db53" />
+      </map>
+    </option>
+    <option name="sessionTitles">
+      <map>
+        <entry key="7aab634c-75ca-489b-bcb9-6d2bb424c16c" value="커맨드 /statusline 을 통해 상태표시줄을 설정했는데 전혀 보이지 않거든? 메모리에" />
+        <entry key="c53f4ed7-6528-41f8-8ced-249045eecb61" value="나만의 프로필 웹사이트를 만들고 싶어. 다음 정보를 포함해줘: - 이름 : 김호빈 - 직업" />
+      </map>
+    </option>
+  </component>
+</project>

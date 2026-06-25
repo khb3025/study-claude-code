@@ -1,0 +1,149 @@
+/* ── Custom properties ── */
+:root {
+  --color-bg: #0f172a;
+  --color-surface: #1e293b;
+  --color-border: #334155;
+  --color-accent-from: #06b6d4;
+  --color-accent-to: #10b981;
+  --color-text: #e2e8f0;
+  --color-muted: #94a3b8;
+}
+
+/* ── Base ── */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: 'Pretendard', 'Noto Sans KR', sans-serif;
+}
+
+/* ── Gradient text ── */
+.text-gradient {
+  background: linear-gradient(135deg, var(--color-accent-from), var(--color-accent-to));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Gradient border button ── */
+.btn-gradient {
+  background: linear-gradient(135deg, var(--color-accent-from), var(--color-accent-to));
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.btn-gradient:hover {
+  opacity: 0.85;
+  transform: translateY(-2px);
+}
+
+/* ── Navbar glass ── */
+.navbar-glass {
+  background: rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* ── Section fade-in animation ── */
+.fade-in-section {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+
+.fade-in-section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Skill card ── */
+.skill-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+}
+
+.skill-card:hover {
+  border-color: var(--color-accent-from);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(6, 182, 212, 0.15);
+}
+
+/* ── Project card ── */
+.project-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+}
+
+.project-card:hover {
+  border-color: var(--color-accent-to);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(16, 185, 129, 0.15);
+}
+
+/* ── Hero: fullscreen background photo ── */
+.hero-fullbg {
+  overflow: hidden;
+}
+
+/* ── Section divider accent line ── */
+.accent-line {
+  height: 3px;
+  width: 48px;
+  background: linear-gradient(90deg, var(--color-accent-from), var(--color-accent-to));
+  border-radius: 9999px;
+  margin: 0.5rem auto 2rem;
+}
+
+/* ── Nav link underline effect ── */
+.nav-link {
+  position: relative;
+  color: var(--color-muted);
+  transition: color 0.2s;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-accent-from), var(--color-accent-to));
+  border-radius: 9999px;
+  transition: width 0.25s;
+}
+
+.nav-link:hover {
+  color: var(--color-text);
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* ── Tag badge ── */
+.tag {
+  background: rgba(6, 182, 212, 0.1);
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  color: var(--color-accent-from);
+  font-size: 0.7rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 9999px;
+}
+
+/* ── Contact card ── */
+.contact-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--color-bg); }
+::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-accent-from); }
