@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>김호빈 | 백엔드 웹 개발자</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet" />
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="antialiased">
+
+  <!-- ════════════════════════════════
+       NAVBAR
+  ════════════════════════════════ -->
+  <header id="navbar" class="fixed top-0 left-0 right-0 z-50 navbar-glass">
+    <nav class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
+      <!-- Logo -->
+      <a href="#hero" class="text-xl font-black text-gradient tracking-tight">HB.</a>
+
+      <!-- Desktop links -->
+      <ul class="hidden md:flex gap-8 text-sm font-medium">
+        <li><a href="#about"    class="nav-link">About</a></li>
+        <li><a href="#skills"   class="nav-link">Skills</a></li>
+        <li><a href="#projects" class="nav-link">Projects</a></li>
+        <li><a href="#contact"  class="nav-link">Contact</a></li>
+      </ul>
+
+      <!-- Mobile hamburger -->
+      <button id="menu-btn" class="md:hidden text-slate-400 hover:text-white focus:outline-none" aria-label="메뉴 열기">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </nav>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="hidden md:hidden px-6 pb-4 flex flex-col gap-3 text-sm font-medium">
+      <a href="#about"    class="nav-link py-1">About</a>
+      <a href="#skills"   class="nav-link py-1">Skills</a>
+      <a href="#projects" class="nav-link py-1">Projects</a>
+      <a href="#contact"  class="nav-link py-1">Contact</a>
+    </div>
+  </header>
+
+
+  <!-- ════════════════════════════════
+       HERO
+  ════════════════════════════════ -->
+  <section id="hero" class="hero-fullbg min-h-screen relative flex items-center px-6">
+    <!-- Background photo -->
+    <img
+      src="images/developer.jpg"
+      alt="개발자 배경 사진"
+      class="absolute inset-0 w-full h-full object-cover"
+    />
+    <!-- Dark gradient overlay: 왼쪽 진하게, 오른쪽 살짝 투명 -->
+    <div class="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-950/70 to-slate-950/30"></div>
+
+    <!-- Content (relative so it sits above overlay) -->
+    <div class="relative z-10 max-w-5xl mx-auto w-full pt-24 pb-16">
+      <p class="text-cyan-400 text-sm font-semibold tracking-widest uppercase mb-4">Hello, World 👋</p>
+
+      <h1 class="text-5xl md:text-7xl font-black leading-tight mb-4">
+        <span class="text-white">김&nbsp;</span><span class="text-gradient">호빈</span>
+      </h1>
+
+      <h2 class="text-2xl md:text-3xl font-bold text-slate-200 mb-2">
+        <span id="typing-text" class="text-gradient"></span>
+        <span class="animate-pulse text-cyan-400">|</span>
+      </h2>
+      <p class="text-slate-300 text-sm mb-10">6년차 &nbsp;·&nbsp; Spring Boot &nbsp;·&nbsp; JPA &nbsp;·&nbsp; REST API</p>
+
+      <div class="flex flex-col sm:flex-row gap-4">
+        <a href="#contact"
+           class="btn-gradient inline-block px-8 py-3 rounded-full text-white font-semibold text-sm shadow-lg">
+          Contact Me
+        </a>
+        <a href="#projects"
+           class="inline-block px-8 py-3 rounded-full border border-slate-400 text-slate-200 font-semibold text-sm hover:border-cyan-400 hover:text-white transition-colors duration-200">
+          View Projects
+        </a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════
+       ABOUT
+  ════════════════════════════════ -->
+  <section id="about" class="py-24 px-6">
+    <div class="max-w-5xl mx-auto fade-in-section">
+      <h2 class="text-3xl font-black text-center text-white">About Me</h2>
+      <div class="accent-line"></div>
+
+      <div class="grid md:grid-cols-2 gap-12 items-center mt-4">
+        <!-- Bio -->
+        <div>
+          <p class="text-slate-300 leading-relaxed mb-4">
+            안녕하세요! 6년차 백엔드 웹 개발자 <strong class="text-white">김호빈</strong>입니다.
+            Spring Boot 기반의 안정적이고 확장 가능한 API를 설계·구현하는 것을 좋아하며,
+            사용자와 팀이 편리하게 쓸 수 있는 시스템을 만드는 데 보람을 느낍니다.
+          </p>
+          <p class="text-slate-300 leading-relaxed mb-4">
+            JPA와 데이터베이스 설계에 깊은 관심을 갖고 있으며, 코드 품질과
+            유지보수성을 항상 최우선으로 생각합니다.
+          </p>
+          <p class="text-slate-300 leading-relaxed">
+            새로운 기술을 빠르게 습득하고 팀과의 원활한 협업을 통해
+            비즈니스 가치를 실현하는 개발자를 목표로 성장하고 있습니다.
+          </p>
+        </div>
+
+        <!-- Info cards -->
+        <div class="grid grid-cols-2 gap-4">
+          <div class="skill-card rounded-2xl p-5 text-center">
+            <p class="text-3xl font-black text-gradient mb-1">6+</p>
+            <p class="text-slate-400 text-sm">Years Experience</p>
+          </div>
+          <div class="skill-card rounded-2xl p-5 text-center">
+            <p class="text-3xl font-black text-gradient mb-1">20+</p>
+            <p class="text-slate-400 text-sm">Projects Done</p>
+          </div>
+          <div class="skill-card rounded-2xl p-5 text-center">
+            <p class="text-3xl font-black text-gradient mb-1">6</p>
+            <p class="text-slate-400 text-sm">Tech Stacks</p>
+          </div>
+          <div class="skill-card rounded-2xl p-5 text-center">
+            <p class="text-3xl font-black text-gradient mb-1">∞</p>
+            <p class="text-slate-400 text-sm">Passion</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════
+       SKILLS
+  ════════════════════════════════ -->
+  <section id="skills" class="py-24 px-6 bg-slate-900/50">
+    <div class="max-w-5xl mx-auto fade-in-section">
+      <h2 class="text-3xl font-black text-center text-white">Skills</h2>
+      <div class="accent-line"></div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-5 mt-4">
+
+        <!-- HTML -->
+        <div class="skill-card rounded-2xl p-6 flex flex-col items-center gap-3">
+          <div class="w-12 h-12 rounded-xl bg-orange-500/10 flex items-center justify-center">
+            <svg class="w-7 h-7 text-orange-400" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M1.5 0h21l-1.91 21.563L11.977 24l-8.565-2.438zm7.031 9.75l-.232-2.718 10.059.003.23-2.622-13.006-.004.948 11.69h9.004l.322-3.078-7.326-.271z"/>
+            </svg>
+          </div>
+          <p class="font-bold text-white">HTML</p>
+          <p class="text-slate-400 text-xs text-center">시맨틱 마크업, 웹 접근성</p>
+        </div>
+
+        <!-- CSS -->
+        <div class="skill-card rounded-2xl p-6 flex flex-col items-center gap-3">
+          <div class="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center">
+            <svg class="w-7 h-7 text-blue-400" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M1.5 0h21l-1.91 21.563L11.977 24l-8.564-2.438zm7.974 10.97l-.232-2.935 8.716.003.231-2.622-11.769-.004.948 10.674h9.004l.322-3.078-6.243-.271-.977-.767z"/>
+            </svg>
+          </div>
+          <p class="font-bold text-white">CSS</p>
+          <p class="text-slate-400 text-xs text-center">반응형 레이아웃, 애니메이션</p>
+        </div>
+
+        <!-- JavaScript -->
+        <div class="skill-card rounded-2xl p-6 flex flex-col items-center gap-3">
+          <div class="w-12 h-12 rounded-xl bg-yellow-500/10 flex items-center justify-center">
+            <svg class="w-7 h-7 text-yellow-400" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M0 0h24v24H0V0zm22.034 18.276c-.175-1.095-.888-2.015-3.003-2.873-.736-.345-1.554-.585-1.797-1.14-.091-.33-.105-.51-.046-.705.15-.646.915-.84 1.515-.66.39.12.75.42.976.9 1.034-.676 1.034-.676 1.755-1.125-.27-.42-.404-.601-.586-.78-.63-.705-1.469-1.065-2.834-1.034l-.705.089c-.676.165-1.32.525-1.71 1.005-1.14 1.291-.811 3.541.569 4.471 1.365 1.02 3.361 1.244 3.616 2.205.24 1.17-.87 1.545-1.966 1.41-.811-.18-1.26-.586-1.755-1.336l-1.83 1.051c.21.48.45.689.81 1.109 1.74 1.756 6.09 1.666 6.871-1.004.029-.09.24-.705.074-1.65zm-8.983-7.245h-2.248c0 1.938-.009 3.864-.009 5.805 0 1.232.063 2.363-.138 2.711-.33.689-1.18.601-1.566.48-.396-.196-.597-.466-.83-.855-.063-.105-.11-.196-.127-.196l-1.825 1.125c.305.63.75 1.172 1.324 1.517.855.51 2.004.675 3.207.405.783-.226 1.458-.691 1.811-1.411.51-.93.402-2.07.397-3.346.012-2.054 0-4.109 0-6.179z"/>
+            </svg>
+          </div>
+          <p class="font-bold text-white">JavaScript</p>
+          <p class="text-slate-400 text-xs text-center">ES6+, DOM 조작, 비동기 처리</p>
+        </div>
+
+        <!-- jQuery -->
+        <div class="skill-card rounded-2xl p-6 flex flex-col items-center gap-3">
+          <div class="w-12 h-12 rounded-xl bg-cyan-500/10 flex items-center justify-center">
+            <svg class="w-7 h-7 text-cyan-400" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M11.998 0C5.366 0 0 5.367 0 12c0 6.632 5.366 12 11.998 12C18.633 24 24 18.632 24 12c0-6.633-5.367-12-12.002-12zm5.336 5.967c.085-.006.127.045.127.119-.01.422-.232 1.193-.598 1.856-.338.604-.858 1.088-1.438 1.338-.28.12-.562.17-.838.152-.256-.016-.51-.094-.748-.232-.477-.276-.811-.754-.888-1.26-.074-.49.054-.994.348-1.416.295-.422.76-.73 1.285-.853.526-.122 1.062-.04 1.487.223l.026.014c.072.042.131.082.177.116.056.04.106.078.15.112.057.042.108.08.154.113.057.041.107.078.15.112l.003.002c.053.038.098.07.138.097.056.037.102.066.139.089zm-14.097 1.428c1.35-1.01 3.267-1.24 4.8-.566C9.302 7.41 10.157 8.64 10.157 10c0 .97-.395 1.88-1.085 2.563-.685.68-1.643 1.062-2.637 1.062-1.007 0-1.965-.382-2.65-1.062-.688-.684-1.083-1.594-1.083-2.563 0-.955.386-1.855 1.054-2.525.214-.213.45-.39.704-.534.252-.142.52-.253.796-.329C5.505 6.538 5.767 6.5 6.034 6.5c.155 0 .313.01.47.032.16.023.321.058.483.107.162.05.325.112.49.188.168.078.335.17.502.276.168.107.332.228.49.363.157.133.307.278.445.432.138.153.265.313.378.479.113.165.21.335.29.509.08.173.143.347.186.523.044.175.066.35.066.524 0 .175-.022.348-.068.519-.044.17-.11.337-.195.498-.085.16-.19.314-.31.457-.122.144-.26.277-.413.396-.153.117-.32.22-.5.307-.179.085-.37.153-.567.201-.198.048-.4.072-.602.072-.203 0-.406-.024-.604-.074-.197-.05-.39-.121-.57-.21-.179-.088-.347-.193-.5-.313-.152-.12-.29-.255-.41-.4-.12-.146-.221-.302-.302-.464-.08-.163-.14-.33-.178-.5-.036-.17-.054-.341-.054-.512 0-.17.018-.34.054-.505z"/>
+            </svg>
+          </div>
+          <p class="font-bold text-white">jQuery</p>
+          <p class="text-slate-400 text-xs text-center">Ajax, DOM 이벤트 처리</p>
+        </div>
+
+        <!-- Spring Boot -->
+        <div class="skill-card rounded-2xl p-6 flex flex-col items-center gap-3">
+          <div class="w-12 h-12 rounded-xl bg-green-500/10 flex items-center justify-center">
+            <svg class="w-7 h-7 text-green-400" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M20.205 16.392c-2.469 3.289-7.741 2.179-11.122 2.338 0 0-.599.034-1.201.133 0 0 .228-.097.519-.198 2.374-.821 3.496-.986 4.939-1.727 2.71-1.388 5.408-4.413 5.957-7.555-1.032 3.022-4.16 5.623-7.007 6.679-1.955.722-5.49 1.424-5.49 1.424a5.38 5.38 0 0 1-.922-.535c-2.765-1.927-2.817-6.571.851-9.143 1.683-1.2 3.699-1.741 5.379-1.741 1.977 0 4.023.674 5.409 1.768 0-1.082-1.128-2.25-2.44-3.09C7.466.523.932 3.44.137 9.979-.245 13.28.79 16.2 3.275 18.175c2.526 2.006 5.967 2.604 9.002 1.997 3.375-.672 6.747-2.869 7.928-5.78m1.783-2.498c-.163.814-.578 1.612-1.112 2.396.648-2.95-.26-5.783-1.863-7.964C17.104 5.683 14.498 4.14 11.6 3.85c3.576-.147 7.738 2.613 8.664 6.723.252 1.123.29 2.29-.276 3.321z"/>
+            </svg>
+          </div>
+          <p class="font-bold text-white">Spring Boot</p>
+          <p class="text-slate-400 text-xs text-center">REST API, Security, Batch</p>
+        </div>
+
+        <!-- JPA -->
+        <div class="skill-card rounded-2xl p-6 flex flex-col items-center gap-3">
+          <div class="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center">
+            <svg class="w-7 h-7 text-emerald-400" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 2c4.418 0 8 3.582 8 8s-3.582 8-8 8-8-3.582-8-8 3.582-8 8-8zm-1 3v6l5 3-1-1.73L11 13V7h-1z"/>
+            </svg>
+          </div>
+          <p class="font-bold text-white">JPA</p>
+          <p class="text-slate-400 text-xs text-center">Hibernate, QueryDSL, N+1 최적화</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════
+       PROJECTS
+  ════════════════════════════════ -->
+  <section id="projects" class="py-24 px-6">
+    <div class="max-w-5xl mx-auto fade-in-section">
+      <h2 class="text-3xl font-black text-center text-white">Projects</h2>
+      <div class="accent-line"></div>
+
+      <div class="grid md:grid-cols-3 gap-6 mt-4">
+
+        <!-- Project 1 -->
+        <div class="project-card rounded-2xl p-6 flex flex-col">
+          <div class="w-10 h-10 rounded-lg bg-cyan-500/10 flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+            </svg>
+          </div>
+          <h3 class="font-bold text-white text-lg mb-2">쇼핑몰 백엔드 API</h3>
+          <p class="text-slate-400 text-sm leading-relaxed flex-1">
+            대규모 트래픽을 고려한 RESTful API 설계. 주문·결제·재고 관리 도메인을
+            JPA로 구현하고, Redis 캐싱으로 조회 성능을 최적화한 프로젝트.
+          </p>
+          <div class="flex flex-wrap gap-2 mt-4">
+            <span class="tag">Spring Boot</span>
+            <span class="tag">JPA</span>
+            <span class="tag">Redis</span>
+            <span class="tag">MySQL</span>
+          </div>
+          <a href="#" class="mt-5 text-xs text-slate-500 hover:text-cyan-400 transition-colors flex items-center gap-1">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+            </svg>
+            GitHub →
+          </a>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="project-card rounded-2xl p-6 flex flex-col">
+          <div class="w-10 h-10 rounded-lg bg-emerald-500/10 flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+          </div>
+          <h3 class="font-bold text-white text-lg mb-2">통합 인증 시스템</h3>
+          <p class="text-slate-400 text-sm leading-relaxed flex-1">
+            Spring Security + JWT 기반 인증·인가 서버 구축. OAuth 2.0 소셜 로그인,
+            리프레시 토큰 로테이션, Role 기반 접근 제어(RBAC) 기능 구현.
+          </p>
+          <div class="flex flex-wrap gap-2 mt-4">
+            <span class="tag">Spring Security</span>
+            <span class="tag">JWT</span>
+            <span class="tag">OAuth2</span>
+          </div>
+          <a href="#" class="mt-5 text-xs text-slate-500 hover:text-cyan-400 transition-colors flex items-center gap-1">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+            </svg>
+            GitHub →
+          </a>
+        </div>
+
+        <!-- Project 3 -->
+        <div class="project-card rounded-2xl p-6 flex flex-col">
+          <div class="w-10 h-10 rounded-lg bg-violet-500/10 flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+            </svg>
+          </div>
+          <h3 class="font-bold text-white text-lg mb-2">실시간 채팅 서비스</h3>
+          <p class="text-slate-400 text-sm leading-relaxed flex-1">
+            WebSocket(STOMP) 기반 실시간 채팅 서버 구현. 채팅방 생성·참여,
+            메시지 히스토리 저장, 읽음 확인 기능을 Spring Boot로 개발.
+          </p>
+          <div class="flex flex-wrap gap-2 mt-4">
+            <span class="tag">WebSocket</span>
+            <span class="tag">STOMP</span>
+            <span class="tag">Spring Boot</span>
+          </div>
+          <a href="#" class="mt-5 text-xs text-slate-500 hover:text-cyan-400 transition-colors flex items-center gap-1">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+            </svg>
+            GitHub →
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════
+       CONTACT
+  ════════════════════════════════ -->
+  <section id="contact" class="py-24 px-6 bg-slate-900/50">
+    <div class="max-w-5xl mx-auto fade-in-section text-center">
+      <h2 class="text-3xl font-black text-white">Contact</h2>
+      <div class="accent-line"></div>
+
+      <p class="text-slate-400 mb-10 max-w-md mx-auto">
+        프로젝트 협업, 채용 제안, 기술적인 이야기 등 언제든지 편하게 연락해 주세요.
+      </p>
+
+      <div class="contact-card inline-flex items-center gap-4 px-8 py-5 rounded-2xl mx-auto">
+        <div class="w-10 h-10 rounded-full bg-cyan-500/10 flex items-center justify-center flex-shrink-0">
+          <svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg>
+        </div>
+        <div class="text-left">
+          <p class="text-slate-500 text-xs mb-0.5">Email</p>
+          <a href="mailto:hobin.kim.dev@gmail.com"
+             class="text-white font-semibold hover:text-cyan-400 transition-colors">
+            hobin.kim.dev@gmail.com
+          </a>
+        </div>
+      </div>
+
+      <div class="mt-10">
+        <a href="mailto:hobin.kim.dev@gmail.com"
+           class="btn-gradient inline-block px-10 py-3 rounded-full text-white font-semibold text-sm shadow-lg">
+          Send Email
+        </a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════
+       FOOTER
+  ════════════════════════════════ -->
+  <footer class="py-8 px-6 border-t border-slate-800 text-center">
+    <p class="text-slate-500 text-sm">
+      &copy; 2025 김호빈. Designed &amp; Built with
+      <span class="text-gradient font-semibold">Tailwind CSS</span>.
+    </p>
+  </footer>
+
+
+  <!-- Custom JS -->
+  <script src="js/main.js"></script>
+</body>
+</html>

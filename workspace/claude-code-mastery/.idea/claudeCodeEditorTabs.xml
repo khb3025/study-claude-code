@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ClaudeCodeEditorTabs">
+    <option name="activeSessionId" value="6b9476cf-beaa-4b52-8b26-47097376124e" />
+    <option name="openSessionIds">
+      <list>
+        <option value="f698f487-ab85-42cf-b2b2-183d2d3f6637" />
+        <option value="6b9476cf-beaa-4b52-8b26-47097376124e" />
+      </list>
+    </option>
+    <option name="sessionPaths">
+      <map>
+        <entry key="6b9476cf-beaa-4b52-8b26-47097376124e" value="/sessions/new" />
+        <entry key="f698f487-ab85-42cf-b2b2-183d2d3f6637" value="/sessions/3314280b-1559-41f3-ba49-0ba9ff674de4" />
+      </map>
+    </option>
+    <option name="sessionTitles">
+      <map>
+        <entry key="6b9476cf-beaa-4b52-8b26-47097376124e" value="Claude Code" />
+        <entry key="f698f487-ab85-42cf-b2b2-183d2d3f6637" value="수정사항 : \ - 웹의 전체적인 컨테이너 폭을 줄여주세요. - 안보이는 이미지는 웹에서" />
+      </map>
+    </option>
+  </component>
+</project>
