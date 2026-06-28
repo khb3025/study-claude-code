@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Counter Component</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f0f2f5;
+            font-family: sans-serif;
+        }
+
+        .counter-card {
+            background: white;
+            border-radius: 16px;
+            padding: 40px 60px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .counter-title {
+            font-size: 1.2rem;
+            color: #888;
+            margin-bottom: 24px;
+        }
+
+        .counter-display {
+            font-size: 4rem;
+            font-weight: bold;
+            color: #333;
+            min-width: 120px;
+            display: inline-block;
+            margin-bottom: 32px;
+            transition: color 0.2s;
+        }
+
+        .counter-display.positive { color: #2196f3; }
+        .counter-display.negative { color: #f44336; }
+        .counter-display.zero     { color: #333; }
+
+        .counter-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .btn {
+            width: 52px;
+            height: 52px;
+            border: none;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.1s, opacity 0.2s;
+        }
+
+        .btn:active { transform: scale(0.93); }
+
+        .btn-decrement { background-color: #ff7675; color: white; }
+        .btn-increment { background-color: #74b9ff; color: white; }
+        .btn-reset     { background-color: #dfe6e9; color: #636e72; font-size: 0.9rem; }
+
+        .btn:hover { opacity: 0.85; }
+
+        .counter-step-label {
+            font-size: 0.85rem;
+            color: #aaa;
+            margin-top: 20px;
+        }
+
+        .step-input {
+            width: 60px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 4px 8px;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="counter-card">
+    <div class="counter-title">카운터</div>
+    <div class="counter-display zero" id="counter-display">0</div>
+    <div class="counter-buttons">
+        <button class="btn btn-decrement" id="btn-decrement">−</button>
+        <button class="btn btn-reset"     id="btn-reset">초기화</button>
+        <button class="btn btn-increment" id="btn-increment">+</button>
+    </div>
+    <div class="counter-step-label">
+        증감 단위: <input class="step-input" id="step-input" type="number" value="1" min="1">
+    </div>
+</div>
+
+<script>
+    const INITIAL_COUNT = 0;
+
+    const displayEl  = document.getElementById('counter-display');
+    const btnInc     = document.getElementById('btn-increment');
+    const btnDec     = document.getElementById('btn-decrement');
+    const btnReset   = document.getElementById('btn-reset');
+    const stepInput  = document.getElementById('step-input');
+
+    let count = INITIAL_COUNT;
+
+    /** 현재 count 값을 화면에 반영 */
+    function renderCount() {
+        displayEl.textContent = count;
+        displayEl.className = 'counter-display ' + (count > 0 ? 'positive' : count < 0 ? 'negative' : 'zero');
+    }
+
+    /** 증감 단위 반환 (최소 1) */
+    function getStep() {
+        const value = parseInt(stepInput.value, 10);
+        return isNaN(value) || value < 1 ? 1 : value;
+    }
+
+    btnInc.addEventListener('click', () => {
+        count += getStep();
+        renderCount();
+    });
+
+    btnDec.addEventListener('click', () => {
+        count -= getStep();
+        renderCount();
+    });
+
+    btnReset.addEventListener('click', () => {
+        count = INITIAL_COUNT;
+        renderCount();
+    });
+
+    renderCount();
+</script>
+
+</body>
+</html>
