@@ -1,0 +1,102 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "MyStarter" [ref=e4] [cursor=pointer]:
+        - /url: /
+      - navigation [ref=e5]:
+        - link "홈" [ref=e6] [cursor=pointer]:
+          - /url: /
+        - link "기능" [ref=e7] [cursor=pointer]:
+          - /url: "#features"
+        - link "예제" [ref=e8] [cursor=pointer]:
+          - /url: /examples
+      - button "테마 전환" [ref=e10]:
+        - img
+  - generic [ref=e11]:
+    - complementary [ref=e12]:
+      - paragraph [ref=e13]: 예제 모음
+      - navigation [ref=e14]:
+        - link "전체 보기" [ref=e15] [cursor=pointer]:
+          - /url: /examples
+        - link "컴포넌트 쇼케이스" [ref=e16] [cursor=pointer]:
+          - /url: /examples/components
+        - link "폼 예제" [ref=e17] [cursor=pointer]:
+          - /url: /examples/forms
+        - link "레이아웃 예제" [ref=e18] [cursor=pointer]:
+          - /url: /examples/layouts
+        - link "usehooks-ts 예제" [ref=e19] [cursor=pointer]:
+          - /url: /examples/hooks
+        - link "데이터 페칭" [ref=e20] [cursor=pointer]:
+          - /url: /examples/data-fetching
+        - link "설정 및 최적화" [ref=e21] [cursor=pointer]:
+          - /url: /examples/optimization
+    - main [ref=e22]:
+      - generic [ref=e23]:
+        - generic [ref=e25]:
+          - heading "예제 모음" [level=1] [ref=e26]
+          - paragraph [ref=e27]: 실제 동작하는 예제를 통해 스타터킷의 모든 기능을 탐색해보세요. 각 예제는 소스 코드와 함께 제공됩니다.
+        - generic [ref=e28]:
+          - generic [ref=e29]:
+            - generic [ref=e30]:
+              - img [ref=e32]
+              - heading "컴포넌트 쇼케이스" [level=2] [ref=e38]
+            - paragraph [ref=e39]: 모든 UI 컴포넌트의 실제 동작을 확인하고 코드 예제를 살펴보세요.
+            - generic [ref=e40]:
+              - generic [ref=e41]: UI/UX
+              - generic [ref=e42]: 인터랙티브
+            - link "예제 보기" [ref=e43] [cursor=pointer]:
+              - /url: /examples/components
+          - generic [ref=e44]:
+            - generic [ref=e45]:
+              - img [ref=e47]
+              - heading "폼 예제" [level=2] [ref=e50]
+            - paragraph [ref=e51]: react-hook-form과 zod를 활용한 다양한 폼 구현 예제입니다.
+            - generic [ref=e52]:
+              - generic [ref=e53]: 검증
+              - generic [ref=e54]: 상태관리
+            - link "예제 보기" [ref=e55] [cursor=pointer]:
+              - /url: /examples/forms
+          - generic [ref=e56]:
+            - generic [ref=e57]:
+              - img [ref=e59]
+              - heading "레이아웃 예제" [level=2] [ref=e63]
+            - paragraph [ref=e64]: 다양한 레이아웃 패턴과 반응형 디자인 구현 방법을 확인하세요.
+            - generic [ref=e65]:
+              - generic [ref=e66]: 반응형
+              - generic [ref=e67]: 레이아웃
+            - link "예제 보기" [ref=e68] [cursor=pointer]:
+              - /url: /examples/layouts
+          - generic [ref=e69]:
+            - generic [ref=e70]:
+              - img [ref=e72]
+              - heading "usehooks-ts 예제" [level=2] [ref=e76]
+            - paragraph [ref=e77]: usehooks-ts 라이브러리의 다양한 훅 사용법과 실용적인 예제들입니다.
+            - generic [ref=e78]:
+              - generic [ref=e79]: 훅
+              - generic [ref=e80]: 유틸리티
+            - link "예제 보기" [ref=e81] [cursor=pointer]:
+              - /url: /examples/hooks
+          - generic [ref=e82]:
+            - generic [ref=e83]:
+              - img [ref=e85]
+              - heading "데이터 페칭" [level=2] [ref=e89]
+            - paragraph [ref=e90]: API 호출, 로딩 상태, 에러 처리 등 데이터 관리 예제입니다.
+            - generic [ref=e91]:
+              - generic [ref=e92]: API
+              - generic [ref=e93]: 비동기
+            - link "예제 보기" [ref=e94] [cursor=pointer]:
+              - /url: /examples/data-fetching
+          - generic [ref=e95]:
+            - generic [ref=e96]:
+              - img [ref=e98]
+              - heading "설정 및 최적화" [level=2] [ref=e101]
+            - paragraph [ref=e102]: 성능 최적화, SEO 설정, PWA 구현 등 프로덕션 환경을 위한 설정입니다.
+            - generic [ref=e103]:
+              - generic [ref=e104]: 최적화
+              - generic [ref=e105]: SEO
+            - link "예제 보기" [ref=e106] [cursor=pointer]:
+              - /url: /examples/optimization
+  - region "Notifications alt+T"
+  - button "Open Next.js Dev Tools" [ref=e112] [cursor=pointer]:
+    - img [ref=e113]
+  - alert [ref=e116]

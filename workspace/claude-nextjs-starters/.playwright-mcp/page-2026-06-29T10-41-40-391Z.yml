@@ -1,0 +1,79 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "MyStarter" [ref=e4] [cursor=pointer]:
+        - /url: /
+      - navigation [ref=e5]:
+        - link "홈" [ref=e6] [cursor=pointer]:
+          - /url: /
+        - link "기능" [ref=e7] [cursor=pointer]:
+          - /url: "#features"
+        - link "예제" [ref=e8] [cursor=pointer]:
+          - /url: /examples
+  - generic [ref=e11]:
+    - complementary [ref=e12]:
+      - paragraph [ref=e13]: 예제 모음
+      - navigation [ref=e14]:
+        - link "전체 보기" [ref=e15] [cursor=pointer]:
+          - /url: /examples
+        - link "컴포넌트 쇼케이스" [ref=e16] [cursor=pointer]:
+          - /url: /examples/components
+        - link "폼 예제" [ref=e17] [cursor=pointer]:
+          - /url: /examples/forms
+        - link "레이아웃 예제" [ref=e18] [cursor=pointer]:
+          - /url: /examples/layouts
+        - link "usehooks-ts 예제" [ref=e19] [cursor=pointer]:
+          - /url: /examples/hooks
+        - link "데이터 페칭" [ref=e20] [cursor=pointer]:
+          - /url: /examples/data-fetching
+        - link "설정 및 최적화" [ref=e21] [cursor=pointer]:
+          - /url: /examples/optimization
+    - main [ref=e22]:
+      - generic [ref=e23]:
+        - generic [ref=e25]:
+          - heading "폼 & 입력" [level=1] [ref=e26]
+          - paragraph [ref=e27]: react-hook-form + Zod v4 유효성 검사 패턴 예제
+        - generic [ref=e28]:
+          - generic [ref=e29]:
+            - generic [ref=e30]: 이름
+            - textbox "이름" [ref=e31]:
+              - /placeholder: 홍길동
+          - generic [ref=e32]:
+            - generic [ref=e33]: 이메일
+            - textbox "이메일" [ref=e34]:
+              - /placeholder: hello@example.com
+          - generic [ref=e35]:
+            - generic [ref=e36]: 역할
+            - combobox "역할" [ref=e37]:
+              - generic: 역할을 선택하세요
+              - img
+            - combobox [ref=e38]
+          - generic [ref=e39]:
+            - generic [ref=e40]: 자기소개 (선택)
+            - textbox "자기소개 (선택)" [ref=e41]:
+              - /placeholder: 간단한 자기소개를 입력하세요.
+            - paragraph [ref=e42]: 최대 200자
+          - generic [ref=e43]:
+            - generic [ref=e44]:
+              - generic [ref=e45]: 이메일 알림
+              - paragraph [ref=e46]: 새 소식을 이메일로 받아보세요.
+            - switch "이메일 알림" [checked] [ref=e47]
+            - checkbox [checked]
+          - generic [ref=e48]:
+            - checkbox "이용약관 동의" [ref=e49]
+            - checkbox
+            - generic [ref=e51]: 이용약관 동의
+          - button "제출하기" [ref=e52]
+        - generic [ref=e53]:
+          - heading "폼 구현 코드" [level=2] [ref=e54]
+          - paragraph [ref=e55]: 위 폼의 react-hook-form + Zod v4 연동 패턴입니다.
+          - generic [ref=e56]:
+            - generic [ref=e57]:
+              - generic [ref=e58]: tsx
+              - button "복사" [ref=e59]:
+                - img [ref=e60]
+                - text: 복사
+            - code [ref=e64]: "// react-hook-form + Zod v4 연동 패턴 \"use client\"; import { zodResolver } from \"@hookform/resolvers/zod\"; import { useForm } from \"react-hook-form\"; import { z } from \"zod\"; import { toast } from \"sonner\"; import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage, } from \"@/components/ui/form\"; import { Input } from \"@/components/ui/input\"; import { Button } from \"@/components/ui/button\"; // 1. Zod 스키마 정의 // - required_error 제거됨 (Zod v4) // - .default() 대신 defaultValues 사용 const schema = z.object({ name: z.string().min(2, \"이름은 2자 이상 입력하세요.\").max(50), email: z.string().email(\"올바른 이메일 주소를 입력하세요.\"), role: z.string().min(1, \"역할을 선택하세요.\"), notifications: z.boolean(), terms: z.boolean().refine((v) => v === true, { message: \"이용약관에 동의해야 합니다.\", }), }); type FormValues = z.infer<typeof schema>; // 2. useForm 설정 const form = useForm<FormValues>({ resolver: zodResolver(schema), defaultValues: { // .default()를 스키마에 쓰지 말고 여기서 처리 name: \"\", email: \"\", role: \"\", notifications: true, terms: false, }, }); // 3. 제출 핸들러 function onSubmit(values: FormValues) { toast.success(\"제출 완료!\"); console.log(values); } // 4. FormField 패턴 <Form {...form}> <form onSubmit={form.handleSubmit(onSubmit)}> <FormField control={form.control} name=\"name\" render={({ field }) => ( <FormItem> <FormLabel>이름</FormLabel> <FormControl> <Input placeholder=\"홍길동\" {...field} /> </FormControl> <FormMessage /> {/* 유효성 검사 오류 자동 표시 */} </FormItem> )} /> <Button type=\"submit\">제출하기</Button> </form> </Form>"
+  - region "Notifications alt+T"
+  - button "Open Next.js Dev Tools" [ref=e70] [cursor=pointer]:
+    - img [ref=e71]
