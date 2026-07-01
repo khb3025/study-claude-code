@@ -5,16 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6476f6e2-8222-4fb8-b4c4-a86247f803c4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../claude-nextjs-starters/.claude/settings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../PPT정리/19. 커스텀 커맨드 생성.pptx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../PPT정리/20. 커스텀 커맨드-동적파라미터.pptx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../PPT정리/~$20. 커스텀 커맨드-동적파라미터.pptx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../claude-nextjs-starters/.claude/commands/git/diff.md" beforeDir="false" afterPath="$PROJECT_DIR$/../claude-nextjs-starters/.claude/commands/git/diff.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../claude-nextjs-starters/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../claude-nextjs-starters/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../claude-nextjs-starters/.mcp.json" beforeDir="false" afterPath="$PROJECT_DIR$/../claude-nextjs-starters/.mcp.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../claude-nextjs-starters/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../claude-nextjs-starters/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../claude-nextjs-starters/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../claude-nextjs-starters/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../claude-nextjs-starters/src/lib/constants.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../claude-nextjs-starters/src/lib/constants.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,7 +13,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="170" />
+    <option name="cachedIndexableFilesCount" value="172" />
     <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
   </component>
   <component name="Git.Settings">
@@ -64,14 +55,14 @@
     "js.debugger.nextJs.config.created.client": "true",
     "js.debugger.nextJs.config.created.server": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/Study/ClaudeAI/workspace/invoice-web/.claude/agents",
+    "last_opened_file_path": "D:/Study/ClaudeAI/workspace/invoice-web",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "settings.editor.selected.configurable": "preferences.pluginManager",
-    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\IntelliJ IDEA 2026.1.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
+    "ts.external.directory.path": "D:\\Study\\ClaudeAI\\workspace\\invoice-web\\node_modules\\typescript\\lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -126,7 +117,7 @@
       <workItem from="1782818209438" duration="8999000" />
       <workItem from="1782884458356" duration="217000" />
       <workItem from="1782884685807" duration="2878000" />
-      <workItem from="1782887598333" duration="4533000" />
+      <workItem from="1782887598333" duration="9666000" />
     </task>
     <task id="LOCAL-00001" summary="next.JS 및 shadcnUI 직접 설치">
       <option name="closed" value="true" />
