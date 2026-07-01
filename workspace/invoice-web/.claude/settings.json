@@ -1,0 +1,57 @@
+{
+  "env": {
+    "SLACK_WEBHOOK_URL": "https://hooks.slack.com/services/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"
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "& 'C:\\Users\\khb\\.claude\\hooks\\trigger-code-review.ps1'",
+            "shell": "powershell",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '테스트 훅!' >> ./hook-test.txt"
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "Set-ExecutionPolicy Bypass -Scope Process -Force; & 'C:\\Users\\khb\\.claude\\hooks\\notify-slack.ps1'",
+            "shell": "powershell",
+            "timeout": 10,
+            "async": true
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "Set-ExecutionPolicy Bypass -Scope Process -Force; & 'C:\\Users\\khb\\.claude\\hooks\\notify-slack.ps1'",
+            "shell": "powershell",
+            "timeout": 10,
+            "async": true
+          }
+        ]
+      }
+    ]
+  }
+}

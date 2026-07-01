@@ -1,0 +1,178 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "MyStarter" [ref=e4] [cursor=pointer]:
+        - /url: /
+      - navigation [ref=e5]:
+        - link "홈" [ref=e6] [cursor=pointer]:
+          - /url: /
+        - link "기능" [ref=e7] [cursor=pointer]:
+          - /url: "#features"
+        - link "예제" [ref=e8] [cursor=pointer]:
+          - /url: /examples
+      - button "테마 전환" [ref=e10]:
+        - img
+  - main [ref=e11]:
+    - generic [ref=e12]:
+      - generic [ref=e13]: Next.js 15 + shadcn/ui + Tailwind v4
+      - heading "빠르게 시작하는 모던 웹 스타터 킷" [level=1] [ref=e14]:
+        - text: 빠르게 시작하는
+        - text: 모던 웹 스타터 킷
+      - paragraph [ref=e15]:
+        - text: Next.js, TypeScript, Tailwind CSS v4, shadcn/ui가 사전 구성된
+        - text: 프로덕션 레디 스타터 킷입니다.
+      - generic [ref=e16]:
+        - link "기능 살펴보기" [ref=e17] [cursor=pointer]:
+          - /url: "#features"
+          - text: 기능 살펴보기
+          - img
+        - link "예제 살펴보기" [ref=e18] [cursor=pointer]:
+          - /url: /examples
+    - generic [ref=e20]:
+      - generic [ref=e21]:
+        - heading "포함된 기능들" [level=2] [ref=e22]
+        - paragraph [ref=e23]: 개발 시작에 필요한 모든 것이 이미 준비되어 있습니다
+      - generic [ref=e24]:
+        - generic [ref=e26]:
+          - img [ref=e27]
+          - generic [ref=e29]: 빠른 성능
+          - generic [ref=e30]: Next.js 15 App Router 기반 최적화 렌더링으로 빠른 페이지 로딩
+        - generic [ref=e32]:
+          - img [ref=e33]
+          - generic [ref=e39]: 다크 모드
+          - generic [ref=e40]: next-themes로 구현된 OS 연동 자동 다크/라이트 테마 전환
+        - generic [ref=e42]:
+          - img [ref=e43]
+          - generic [ref=e45]: 타입 안전
+          - generic [ref=e46]: TypeScript strict 모드로 런타임 오류를 컴파일 타임에 방지
+        - generic [ref=e48]:
+          - img [ref=e49]
+          - generic [ref=e53]: shadcn/ui
+          - generic [ref=e54]: radix-nova 스타일의 접근성 높은 UI 컴포넌트 사전 구성
+        - generic [ref=e56]:
+          - img [ref=e57]
+          - generic [ref=e60]: 반응형 디자인
+          - generic [ref=e61]: 모바일부터 데스크톱까지 완벽한 반응형 레이아웃 기본 제공
+        - generic [ref=e63]:
+          - img [ref=e64]
+          - generic [ref=e68]: Tailwind CSS v4
+          - generic [ref=e69]: 최신 CSS 변수 기반 Tailwind v4로 유연하고 일관된 스타일링
+    - generic [ref=e71]:
+      - generic [ref=e72]:
+        - heading "예제 모음" [level=2] [ref=e73]
+        - paragraph [ref=e74]: 실제 동작하는 예제를 통해 스타터킷의 모든 기능을 탐색해보세요. 각 예제는 소스 코드와 함께 제공됩니다.
+      - generic [ref=e75]:
+        - generic [ref=e76]:
+          - generic [ref=e77]:
+            - img [ref=e79]
+            - heading "컴포넌트 쇼케이스" [level=3] [ref=e85]
+          - paragraph [ref=e86]: 모든 UI 컴포넌트의 실제 동작을 확인하고 코드 예제를 살펴보세요.
+          - generic [ref=e87]:
+            - generic [ref=e88]: UI/UX
+            - generic [ref=e89]: 인터랙티브
+          - link "예제 보기" [ref=e90] [cursor=pointer]:
+            - /url: /examples/components
+        - generic [ref=e91]:
+          - generic [ref=e92]:
+            - img [ref=e94]
+            - heading "폼 예제" [level=3] [ref=e97]
+          - paragraph [ref=e98]: react-hook-form과 zod를 활용한 다양한 폼 구현 예제입니다.
+          - generic [ref=e99]:
+            - generic [ref=e100]: 검증
+            - generic [ref=e101]: 상태관리
+          - link "예제 보기" [ref=e102] [cursor=pointer]:
+            - /url: /examples/forms
+        - generic [ref=e103]:
+          - generic [ref=e104]:
+            - img [ref=e106]
+            - heading "레이아웃 예제" [level=3] [ref=e110]
+          - paragraph [ref=e111]: 다양한 레이아웃 패턴과 반응형 디자인 구현 방법을 확인하세요.
+          - generic [ref=e112]:
+            - generic [ref=e113]: 반응형
+            - generic [ref=e114]: 레이아웃
+          - link "예제 보기" [ref=e115] [cursor=pointer]:
+            - /url: /examples/layouts
+        - generic [ref=e116]:
+          - generic [ref=e117]:
+            - img [ref=e119]
+            - heading "usehooks-ts 예제" [level=3] [ref=e123]
+          - paragraph [ref=e124]: usehooks-ts 라이브러리의 다양한 훅 사용법과 실용적인 예제들입니다.
+          - generic [ref=e125]:
+            - generic [ref=e126]: 훅
+            - generic [ref=e127]: 유틸리티
+          - link "예제 보기" [ref=e128] [cursor=pointer]:
+            - /url: /examples/hooks
+        - generic [ref=e129]:
+          - generic [ref=e130]:
+            - img [ref=e132]
+            - heading "데이터 페칭" [level=3] [ref=e136]
+          - paragraph [ref=e137]: API 호출, 로딩 상태, 에러 처리 등 데이터 관리 예제입니다.
+          - generic [ref=e138]:
+            - generic [ref=e139]: API
+            - generic [ref=e140]: 비동기
+          - link "예제 보기" [ref=e141] [cursor=pointer]:
+            - /url: /examples/data-fetching
+        - generic [ref=e142]:
+          - generic [ref=e143]:
+            - img [ref=e145]
+            - heading "설정 및 최적화" [level=3] [ref=e148]
+          - paragraph [ref=e149]: 성능 최적화, SEO 설정, PWA 구현 등 프로덕션 환경을 위한 설정입니다.
+          - generic [ref=e150]:
+            - generic [ref=e151]: 최적화
+            - generic [ref=e152]: SEO
+          - link "예제 보기" [ref=e153] [cursor=pointer]:
+            - /url: /examples/optimization
+    - generic [ref=e155]:
+      - heading "지금 바로 시작하세요" [level=2] [ref=e156]
+      - paragraph [ref=e157]: 설정 없이 클론 후 즉시 개발을 시작할 수 있습니다
+      - link "예제 살펴보기" [ref=e158] [cursor=pointer]:
+        - /url: /examples
+        - text: 예제 살펴보기
+        - img
+  - contentinfo [ref=e159]:
+    - generic [ref=e160]:
+      - generic [ref=e161]:
+        - generic [ref=e162]:
+          - paragraph [ref=e163]: MyStarter
+          - paragraph [ref=e164]: Next.js 15 + TypeScript + Tailwind CSS v4 + shadcn/ui 기반 프로덕션 레디 스타터 킷
+        - generic [ref=e165]:
+          - paragraph [ref=e166]: 제품
+          - list [ref=e167]:
+            - listitem [ref=e168]:
+              - link "기능 소개" [ref=e169] [cursor=pointer]:
+                - /url: "#features"
+            - listitem [ref=e170]:
+              - link "예제" [ref=e171] [cursor=pointer]:
+                - /url: /examples
+            - listitem [ref=e172]:
+              - link "대시보드" [ref=e173] [cursor=pointer]:
+                - /url: /dashboard
+        - generic [ref=e174]:
+          - paragraph [ref=e175]: 예제
+          - list [ref=e176]:
+            - listitem [ref=e177]:
+              - link "컴포넌트" [ref=e178] [cursor=pointer]:
+                - /url: /examples/components
+            - listitem [ref=e179]:
+              - link "폼" [ref=e180] [cursor=pointer]:
+                - /url: /examples/forms
+            - listitem [ref=e181]:
+              - link "레이아웃" [ref=e182] [cursor=pointer]:
+                - /url: /examples/layouts
+            - listitem [ref=e183]:
+              - link "훅" [ref=e184] [cursor=pointer]:
+                - /url: /examples/hooks
+        - generic [ref=e185]:
+          - paragraph [ref=e186]: 더 보기
+          - list [ref=e187]:
+            - listitem [ref=e188]:
+              - link "데이터 페칭" [ref=e189] [cursor=pointer]:
+                - /url: /examples/data-fetching
+            - listitem [ref=e190]:
+              - link "설정 및 최적화" [ref=e191] [cursor=pointer]:
+                - /url: /examples/optimization
+      - paragraph [ref=e192]: © 2026 MyStarter. All rights reserved.
+  - region "Notifications alt+T"
+  - button "Open Next.js Dev Tools" [ref=e198] [cursor=pointer]:
+    - img [ref=e199]
+  - alert [ref=e202]

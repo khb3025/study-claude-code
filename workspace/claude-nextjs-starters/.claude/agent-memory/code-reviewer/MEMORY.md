@@ -1,0 +1,2 @@
+- [shadcn asChild + Slot.Root 패턴](feedback_shadcn_pattern.md) — 링크 역할 컴포넌트는 반드시 asChild/Slot.Root 지원 (Next.js Link 합성용)
+- [buttonVariants 재사용](feedback_buttonvariants_reuse.md) — 버튼 스타일 수동 복제 금지, buttonVariants import 사용. ButtonProps는 export 안 됨

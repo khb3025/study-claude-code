@@ -1,0 +1,25 @@
+- generic [ref=e1]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5]: 로그인
+      - generic [ref=e6]: 이메일과 비밀번호를 입력하세요
+    - generic [ref=e8]:
+      - generic [ref=e9]:
+        - generic [ref=e10]: 이메일
+        - textbox "이메일" [active] [invalid] [ref=e11]:
+          - /placeholder: hello@example.com
+        - paragraph [ref=e29]: 올바른 이메일을 입력하세요.
+      - generic [ref=e12]:
+        - generic [ref=e13]: 비밀번호
+        - textbox "비밀번호" [invalid] [ref=e14]:
+          - /placeholder: 비밀번호를 입력하세요
+        - paragraph [ref=e30]: 비밀번호를 입력하세요.
+      - button "로그인 하기" [ref=e15]
+    - paragraph [ref=e17]:
+      - text: 계정이 없으신가요?
+      - link "회원가입" [ref=e18] [cursor=pointer]:
+        - /url: /signup
+  - region "Notifications alt+T"
+  - button "Open Next.js Dev Tools" [ref=e25] [cursor=pointer]:
+    - img [ref=e26]
+  - alert [ref=e19]

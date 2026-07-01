@@ -1,0 +1,211 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "MyStarter" [ref=e4] [cursor=pointer]:
+        - /url: /
+      - navigation [ref=e5]:
+        - link "홈" [ref=e6] [cursor=pointer]:
+          - /url: /
+        - link "기능" [ref=e7] [cursor=pointer]:
+          - /url: "#features"
+        - link "예제" [ref=e8] [cursor=pointer]:
+          - /url: /examples
+  - generic [ref=e11]:
+    - complementary [ref=e12]:
+      - paragraph [ref=e13]: 예제 모음
+      - navigation [ref=e14]:
+        - link "전체 보기" [ref=e15] [cursor=pointer]:
+          - /url: /examples
+        - link "컴포넌트 쇼케이스" [ref=e16] [cursor=pointer]:
+          - /url: /examples/components
+        - link "폼 예제" [ref=e17] [cursor=pointer]:
+          - /url: /examples/forms
+        - link "레이아웃 예제" [ref=e18] [cursor=pointer]:
+          - /url: /examples/layouts
+        - link "usehooks-ts 예제" [ref=e19] [cursor=pointer]:
+          - /url: /examples/hooks
+        - link "데이터 페칭" [ref=e20] [cursor=pointer]:
+          - /url: /examples/data-fetching
+        - link "설정 및 최적화" [ref=e21] [cursor=pointer]:
+          - /url: /examples/optimization
+    - main [ref=e22]:
+      - generic [ref=e23]:
+        - generic [ref=e25]:
+          - heading "컴포넌트 쇼케이스" [level=1] [ref=e26]
+          - paragraph [ref=e27]: shadcn/ui 컴포넌트의 실제 동작과 코드 예제를 확인하세요.
+        - generic [ref=e28]:
+          - heading "Button" [level=2] [ref=e29]
+          - generic [ref=e30]:
+            - generic [ref=e31]:
+              - paragraph [ref=e32]: Variant
+              - generic [ref=e33]:
+                - button "Default" [ref=e34]
+                - button "Secondary" [ref=e35]
+                - button "Outline" [ref=e36]
+                - button "Ghost" [ref=e37]
+                - button "Destructive" [ref=e38]
+                - button "Link" [ref=e39]
+            - generic [ref=e40]:
+              - paragraph [ref=e41]: Size
+              - generic [ref=e42]:
+                - button "XSmall" [ref=e43]
+                - button "Small" [ref=e44]
+                - button "Default" [ref=e45]
+                - button "Large" [ref=e46]
+            - generic [ref=e47]:
+              - paragraph [ref=e48]: 아이콘 + 상태
+              - generic [ref=e49]:
+                - button "이메일 보내기" [ref=e50]:
+                  - img
+                  - text: 이메일 보내기
+                - button "다운로드" [ref=e51]:
+                  - img
+                  - text: 다운로드
+                - button "다음" [ref=e52]:
+                  - text: 다음
+                  - img
+                - button "처리 중…" [disabled]:
+                  - img
+                  - text: 처리 중…
+          - generic [ref=e53]:
+            - generic [ref=e54]:
+              - generic [ref=e55]: tsx
+              - button "복사" [ref=e56]:
+                - img [ref=e57]
+                - text: 복사
+            - code [ref=e61]: "import { Button } from \"@/components/ui/button\"; import { Mail, Loader2 } from \"lucide-react\"; // Variant <Button variant=\"default\">Default</Button> <Button variant=\"secondary\">Secondary</Button> <Button variant=\"outline\">Outline</Button> <Button variant=\"ghost\">Ghost</Button> <Button variant=\"destructive\">Destructive</Button> <Button variant=\"link\">Link</Button> // Size <Button size=\"xs\">XSmall</Button> <Button size=\"sm\">Small</Button> <Button size=\"default\">Default</Button> <Button size=\"lg\">Large</Button> // 아이콘 포함 <Button> <Mail className=\"size-4\" /> 이메일 보내기 </Button> // 로딩 상태 (disabled + animate-spin) <Button disabled> <Loader2 className=\"size-4 animate-spin\" /> 처리 중… </Button>"
+        - generic [ref=e62]:
+          - heading "Badge" [level=2] [ref=e63]
+          - generic [ref=e64]:
+            - generic [ref=e65]:
+              - generic [ref=e66]: Default
+              - generic [ref=e67]: Secondary
+              - generic [ref=e68]: Outline
+              - generic [ref=e69]: Destructive
+            - generic [ref=e70]:
+              - generic [ref=e71]: 신규
+              - generic [ref=e72]: 온라인
+              - generic [ref=e74]: 오류
+              - generic [ref=e75]: v2.0.0
+          - generic [ref=e76]:
+            - generic [ref=e77]:
+              - generic [ref=e78]: tsx
+              - button "복사" [ref=e79]:
+                - img [ref=e80]
+                - text: 복사
+            - code [ref=e84]: "import { Badge } from \"@/components/ui/badge\"; <Badge variant=\"default\">Default</Badge> <Badge variant=\"secondary\">Secondary</Badge> <Badge variant=\"outline\">Outline</Badge> <Badge variant=\"destructive\">Destructive</Badge> // 온라인 상태 표시 <Badge variant=\"default\"> <span className=\"mr-1 inline-block size-1.5 rounded-full bg-emerald-400\" /> 온라인 </Badge>"
+        - generic [ref=e85]:
+          - heading "입력 요소" [level=2] [ref=e86]
+          - generic [ref=e87]:
+            - generic [ref=e88]:
+              - textbox "이름을 입력하세요" [ref=e89]
+              - textbox "이메일" [ref=e90]
+              - textbox "비밀번호" [ref=e91]
+              - combobox [ref=e92]:
+                - generic: 역할을 선택하세요
+                - img
+              - combobox [ref=e93]
+            - textbox "내용을 입력하세요" [ref=e94]
+            - generic [ref=e95]:
+              - generic [ref=e96]:
+                - switch [checked] [ref=e97]
+                - checkbox [checked]
+                - generic [ref=e98]: 이메일 알림 켜짐
+              - generic [ref=e99]:
+                - checkbox [ref=e100]
+                - checkbox
+                - generic [ref=e101]: 이용약관 동의
+          - generic [ref=e102]:
+            - generic [ref=e103]:
+              - generic [ref=e104]: tsx
+              - button "복사" [ref=e105]:
+                - img [ref=e106]
+                - text: 복사
+            - code [ref=e110]: "import { Input } from \"@/components/ui/input\"; import { Textarea } from \"@/components/ui/textarea\"; import { Switch } from \"@/components/ui/switch\"; import { Checkbox } from \"@/components/ui/checkbox\"; import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, } from \"@/components/ui/select\"; <Input placeholder=\"이름을 입력하세요\" /> <Input type=\"email\" placeholder=\"이메일\" /> <Input type=\"password\" placeholder=\"비밀번호\" /> <Textarea placeholder=\"내용을 입력하세요\" rows={3} /> <Switch checked={value} onCheckedChange={setValue} /> <Checkbox checked={value} onCheckedChange={setValue} /> <Select onValueChange={setValue}> <SelectTrigger> <SelectValue placeholder=\"선택하세요\" /> </SelectTrigger> <SelectContent> <SelectItem value=\"a\">옵션 A</SelectItem> <SelectItem value=\"b\">옵션 B</SelectItem> </SelectContent> </Select>"
+        - generic [ref=e111]:
+          - heading "Avatar & Progress" [level=2] [ref=e112]
+          - generic [ref=e113]:
+            - generic [ref=e114]:
+              - generic [ref=e115]:
+                - generic [ref=e117]: 김철
+                - generic [ref=e118]: 김철수
+              - generic [ref=e119]:
+                - generic [ref=e121]: 이영
+                - generic [ref=e122]: 이영희
+              - generic [ref=e123]:
+                - generic [ref=e125]: 박민
+                - generic [ref=e126]: 박민준
+              - generic [ref=e127]:
+                - generic [ref=e129]: 최지
+                - generic [ref=e130]: 최지은
+            - generic [ref=e131]:
+              - generic [ref=e132]:
+                - generic [ref=e133]:
+                  - generic [ref=e134]: 스토리지
+                  - generic [ref=e135]: 72%
+                - progressbar [ref=e136]
+              - generic [ref=e138]:
+                - generic [ref=e139]:
+                  - generic [ref=e140]: 목표 달성률
+                  - generic [ref=e141]: 45%
+                - progressbar [ref=e142]
+              - generic [ref=e144]:
+                - generic [ref=e145]:
+                  - generic [ref=e146]: 온보딩
+                  - generic [ref=e147]: 90%
+                - progressbar [ref=e148]
+          - generic [ref=e150]:
+            - generic [ref=e151]:
+              - generic [ref=e152]: tsx
+              - button "복사" [ref=e153]:
+                - img [ref=e154]
+                - text: 복사
+            - code [ref=e158]: "import { Avatar, AvatarFallback, AvatarImage } from \"@/components/ui/avatar\"; import { Progress } from \"@/components/ui/progress\"; import { getInitials } from \"@/lib/utils\"; // Avatar — 이미지 없으면 이니셜 폴백 <Avatar> <AvatarImage src={user.avatarUrl} alt={user.name} /> <AvatarFallback>{getInitials(user.name)}</AvatarFallback> </Avatar> // Progress <Progress value={72} />"
+        - generic [ref=e159]:
+          - heading "Skeleton (로딩 상태)" [level=2] [ref=e160]
+          - generic [ref=e171]:
+            - generic [ref=e172]:
+              - generic [ref=e173]: tsx
+              - button "복사" [ref=e174]:
+                - img [ref=e175]
+                - text: 복사
+            - code [ref=e179]: "import { Skeleton } from \"@/components/ui/skeleton\"; // 카드 로딩 상태 예시 <div className=\"flex items-center gap-3\"> <Skeleton className=\"size-10 rounded-full\" /> <div className=\"space-y-2\"> <Skeleton className=\"h-4 w-32\" /> <Skeleton className=\"h-3 w-24\" /> </div> </div> <Skeleton className=\"h-40 w-full rounded-lg\" />"
+        - generic [ref=e180]:
+          - heading "피드백 & 오버레이" [level=2] [ref=e181]
+          - generic [ref=e182]:
+            - generic [ref=e183]:
+              - alert [ref=e184]:
+                - img [ref=e185]
+                - generic [ref=e187]: 안내
+                - generic [ref=e188]: 일반 정보를 전달하는 알림입니다.
+              - alert [ref=e189]:
+                - img [ref=e190]
+                - generic [ref=e194]: 오류
+                - generic [ref=e195]: 처리 중 오류가 발생했습니다.
+            - generic [ref=e196]:
+              - button "성공 토스트" [ref=e197]:
+                - img
+                - text: 성공 토스트
+              - button "오류 토스트" [ref=e198]:
+                - img
+                - text: 오류 토스트
+              - button "경고 토스트" [ref=e199]:
+                - img
+                - text: 경고 토스트
+              - button "안내 토스트" [ref=e200]:
+                - img
+                - text: 안내 토스트
+            - generic [ref=e201]:
+              - button "모달 열기" [ref=e202]
+              - button "툴팁" [ref=e203]
+              - button "드롭다운" [ref=e204]
+          - generic [ref=e205]:
+            - generic [ref=e206]:
+              - generic [ref=e207]: tsx
+              - button "복사" [ref=e208]:
+                - img [ref=e209]
+                - text: 복사
+            - code [ref=e213]: "import { Alert, AlertDescription, AlertTitle } from \"@/components/ui/alert\"; import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, } from \"@/components/ui/dialog\"; import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, } from \"@/components/ui/dropdown-menu\"; import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger, } from \"@/components/ui/tooltip\"; import { toast } from \"sonner\"; // Alert (정적 알림) <Alert> <Info className=\"size-4\" /> <AlertTitle>안내</AlertTitle> <AlertDescription>메시지 내용</AlertDescription> </Alert> // Dialog (모달) <Dialog> <DialogTrigger asChild> <Button>모달 열기</Button> </DialogTrigger> <DialogContent> <DialogHeader> <DialogTitle>제목</DialogTitle> </DialogHeader> <p>내용</p> </DialogContent> </Dialog> // Toast (Sonner) toast.success(\"성공!\", { description: \"작업이 완료되었습니다.\" }); toast.error(\"오류\", { description: \"처리 중 문제가 생겼습니다.\" }); // Tooltip <TooltipProvider> <Tooltip> <TooltipTrigger asChild> <Button variant=\"outline\">툴팁</Button> </TooltipTrigger> <TooltipContent>설명 텍스트</TooltipContent> </Tooltip> </TooltipProvider> // DropdownMenu <DropdownMenu> <DropdownMenuTrigger asChild> <Button variant=\"outline\">메뉴</Button> </DropdownMenuTrigger> <DropdownMenuContent> <DropdownMenuItem>항목 1</DropdownMenuItem> <DropdownMenuItem>항목 2</DropdownMenuItem> </DropdownMenuContent> </DropdownMenu>"
+  - region "Notifications alt+T"
+  - button "Open Next.js Dev Tools" [ref=e219] [cursor=pointer]:
+    - img [ref=e220]

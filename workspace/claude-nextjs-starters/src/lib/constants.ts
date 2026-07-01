@@ -33,6 +33,7 @@ export const NAV_ITEMS: NavItem[] = [
   { label: "홈", href: "/" },
   { label: "기능", href: "#features" },
   { label: "예제", href: "/examples" },
+  { label: "로그인", href: "/login" },
 ];
 
 // 푸터 섹션 타입

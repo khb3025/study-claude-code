@@ -1,0 +1,107 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - complementary [ref=e3]:
+      - link "MyStarter" [ref=e5] [cursor=pointer]:
+        - /url: /dashboard
+      - navigation [ref=e6]:
+        - link "대시보드" [ref=e7] [cursor=pointer]:
+          - /url: /dashboard
+          - img [ref=e8]
+          - text: 대시보드
+        - link "사용자" [ref=e13] [cursor=pointer]:
+          - /url: /dashboard/users
+          - img [ref=e14]
+          - text: 사용자
+        - link "통계" [ref=e19] [cursor=pointer]:
+          - /url: /dashboard/analytics
+          - img [ref=e20]
+          - text: 통계
+        - link "설정" [ref=e22] [cursor=pointer]:
+          - /url: /dashboard/settings
+          - img [ref=e23]
+          - text: 설정
+    - generic [ref=e26]:
+      - banner [ref=e27]
+      - main [ref=e29]:
+        - generic [ref=e30]:
+          - generic [ref=e32]:
+            - heading "대시보드" [level=1] [ref=e33]
+            - paragraph [ref=e34]: 사이트 전반의 현황을 한눈에 확인하세요.
+          - generic [ref=e35]:
+            - generic [ref=e36]:
+              - generic [ref=e37]:
+                - generic [ref=e38]: 총 매출
+                - img [ref=e39]
+              - generic [ref=e41]:
+                - paragraph [ref=e42]: ₩48,350,000
+                - paragraph [ref=e43]: +12.5% 지난달 대비
+            - generic [ref=e44]:
+              - generic [ref=e45]:
+                - generic [ref=e46]: 신규 사용자
+                - img [ref=e47]
+              - generic [ref=e52]:
+                - paragraph [ref=e53]: 2,340
+                - paragraph [ref=e54]: +8.2% 지난달 대비
+            - generic [ref=e55]:
+              - generic [ref=e56]:
+                - generic [ref=e57]: 주문 수
+                - img [ref=e58]
+              - generic [ref=e62]:
+                - paragraph [ref=e63]: 1,893
+                - paragraph [ref=e64]: +3.1% 지난달 대비
+            - generic [ref=e65]:
+              - generic [ref=e66]:
+                - generic [ref=e67]: 성장률
+                - img [ref=e68]
+              - generic [ref=e71]:
+                - paragraph [ref=e72]: 18.2%
+                - paragraph [ref=e73]: +4.6% 지난달 대비
+          - generic [ref=e74]:
+            - generic [ref=e76]: 최근 주문
+            - table [ref=e79]:
+              - rowgroup [ref=e80]:
+                - row "주문 번호 고객 상태 금액 일시" [ref=e81]:
+                  - columnheader "주문 번호" [ref=e82]
+                  - columnheader "고객" [ref=e83]
+                  - columnheader "상태" [ref=e84]
+                  - columnheader "금액" [ref=e85]
+                  - columnheader "일시" [ref=e86]
+              - rowgroup [ref=e87]:
+                - row "#1234 김철수 완료 ₩125,000 5분 전" [ref=e88]:
+                  - cell "#1234" [ref=e89]
+                  - cell "김철수" [ref=e90]
+                  - cell "완료" [ref=e91]:
+                    - generic [ref=e92]: 완료
+                  - cell "₩125,000" [ref=e93]
+                  - cell "5분 전" [ref=e94]
+                - row "#1235 이영희 처리중 ₩89,000 32분 전" [ref=e95]:
+                  - cell "#1235" [ref=e96]
+                  - cell "이영희" [ref=e97]
+                  - cell "처리중" [ref=e98]:
+                    - generic [ref=e99]: 처리중
+                  - cell "₩89,000" [ref=e100]
+                  - cell "32분 전" [ref=e101]
+                - row "#1236 박민준 완료 ₩342,000 2시간 전" [ref=e102]:
+                  - cell "#1236" [ref=e103]
+                  - cell "박민준" [ref=e104]
+                  - cell "완료" [ref=e105]:
+                    - generic [ref=e106]: 완료
+                  - cell "₩342,000" [ref=e107]
+                  - cell "2시간 전" [ref=e108]
+                - row "#1237 최지은 취소 ₩56,000 5시간 전" [ref=e109]:
+                  - cell "#1237" [ref=e110]
+                  - cell "최지은" [ref=e111]
+                  - cell "취소" [ref=e112]:
+                    - generic [ref=e113]: 취소
+                  - cell "₩56,000" [ref=e114]
+                  - cell "5시간 전" [ref=e115]
+                - row "#1238 정우성 처리중 ₩198,000 12시간 전" [ref=e116]:
+                  - cell "#1238" [ref=e117]
+                  - cell "정우성" [ref=e118]
+                  - cell "처리중" [ref=e119]:
+                    - generic [ref=e120]: 처리중
+                  - cell "₩198,000" [ref=e121]
+                  - cell "12시간 전" [ref=e122]
+  - region "Notifications alt+T"
+  - button "Open Next.js Dev Tools" [ref=e128] [cursor=pointer]:
+    - img [ref=e129]

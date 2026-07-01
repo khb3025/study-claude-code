@@ -4,11 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6476f6e2-8222-4fb8-b4c4-a86247f803c4" name="Changes" comment="next.JS 및 shadcnUI 직접 설치">
-      <change afterPath="$PROJECT_DIR$/.claude/commands/git/commit-arguments.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.claude/commands/git/commit.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.claude/commands/git/diff.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.claude/commands/commit.md" beforeDir="false" />
+    <list default="true" id="6476f6e2-8222-4fb8-b4c4-a86247f803c4" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.claude/settings.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../invoice-web/.claude/agents/docs/prd-generator.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PPT정리/19. 커스텀 커맨드 생성.pptx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PPT정리/20. 커스텀 커맨드-동적파라미터.pptx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PPT정리/~$20. 커스텀 커맨드-동적파라미터.pptx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.claude/commands/git/diff.md" beforeDir="false" afterPath="$PROJECT_DIR$/.claude/commands/git/diff.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.mcp.json" beforeDir="false" afterPath="$PROJECT_DIR$/.mcp.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lib/constants.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/constants.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,10 +29,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
-  &quot;lastFilter&quot;: {
-    &quot;state&quot;: &quot;OPEN&quot;,
-    &quot;assignee&quot;: &quot;khb3025&quot;
-  }
+  &quot;lastFilter&quot;: {}
 }</component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
@@ -115,7 +119,12 @@
       <workItem from="1782647390031" duration="4777000" />
       <workItem from="1782655726060" duration="7330000" />
       <workItem from="1782717823088" duration="5261000" />
-      <workItem from="1782724208863" duration="10834000" />
+      <workItem from="1782724208863" duration="17536000" />
+      <workItem from="1782802780719" duration="9760000" />
+      <workItem from="1782818209438" duration="8999000" />
+      <workItem from="1782883549628" duration="834000" />
+      <workItem from="1782884687629" duration="601000" />
+      <workItem from="1782887577758" duration="622000" />
     </task>
     <task id="LOCAL-00001" summary="next.JS 및 shadcnUI 직접 설치">
       <option name="closed" value="true" />

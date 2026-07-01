@@ -71,6 +71,13 @@
         "MYSQL_PASS": "",
         "MYSQL_DB": ""
       }
+    },
+    "shadcn": {
+      "command": "npx",
+      "args": [
+        "shadcn@latest",
+        "mcp"
+      ]
     }
   }
 }
