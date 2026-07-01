@@ -1,0 +1,93 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "MyStarter" [ref=e4] [cursor=pointer]:
+        - /url: /
+      - navigation [ref=e5]:
+        - link "홈" [ref=e6] [cursor=pointer]:
+          - /url: /
+        - link "기능" [ref=e7] [cursor=pointer]:
+          - /url: "#features"
+        - link "예제" [ref=e8] [cursor=pointer]:
+          - /url: /examples
+  - generic [ref=e11]:
+    - complementary [ref=e12]:
+      - paragraph [ref=e13]: 예제 모음
+      - navigation [ref=e14]:
+        - link "전체 보기" [ref=e15] [cursor=pointer]:
+          - /url: /examples
+        - link "컴포넌트 쇼케이스" [ref=e16] [cursor=pointer]:
+          - /url: /examples/components
+        - link "폼 예제" [ref=e17] [cursor=pointer]:
+          - /url: /examples/forms
+        - link "레이아웃 예제" [ref=e18] [cursor=pointer]:
+          - /url: /examples/layouts
+        - link "usehooks-ts 예제" [ref=e19] [cursor=pointer]:
+          - /url: /examples/hooks
+        - link "데이터 페칭" [ref=e20] [cursor=pointer]:
+          - /url: /examples/data-fetching
+        - link "설정 및 최적화" [ref=e21] [cursor=pointer]:
+          - /url: /examples/optimization
+    - main [ref=e22]:
+      - generic [ref=e23]:
+        - generic [ref=e25]:
+          - heading "데이터 페칭" [level=1] [ref=e26]
+          - paragraph [ref=e27]: Client Component fetch 패턴, Server Component async/await, 로딩·에러 처리
+        - generic [ref=e28]:
+          - generic [ref=e29]:
+            - generic [ref=e30]:
+              - heading "Client Component 데이터 페칭" [level=2] [ref=e31]
+              - paragraph [ref=e32]: useEffect + useState로 JSONPlaceholder API에서 게시물을 가져옵니다.
+            - button "새로고침" [ref=e33]:
+              - img
+              - text: 새로고침
+          - generic [ref=e51]:
+            - generic [ref=e52]:
+              - generic [ref=e53]: tsx
+              - button "복사" [ref=e54]:
+                - img [ref=e55]
+                - text: 복사
+            - code [ref=e59]: "// Client Component — useEffect + fetch 패턴 \"use client\"; import { useEffect, useState } from \"react\"; type Post = { id: number; title: string; body: string }; export function PostList() { const [posts, setPosts] = useState<Post[]>([]); const [loading, setLoading] = useState(true); const [error, setError] = useState<string | null>(null); useEffect(() => { let cancelled = false; async function fetchPosts() { setLoading(true); setError(null); try { const res = await fetch( \"https://jsonplaceholder.typicode.com/posts?_limit=5\" ); if (!res.ok) throw new Error(\"데이터를 불러오지 못했습니다.\"); const data: Post[] = await res.json(); if (!cancelled) setPosts(data); } catch (err) { if (!cancelled) setError(err instanceof Error ? err.message : \"알 수 없는 오류\"); } finally { if (!cancelled) setLoading(false); } } fetchPosts(); return () => { cancelled = true; }; // 언마운트 시 race condition 방지 }, []); if (loading) return <Skeleton className=\"h-40 w-full\" />; if (error) return <Alert variant=\"destructive\"><p>{error}</p></Alert>; return ( <ul> {posts.map((post) => ( <li key={post.id}>{post.title}</li> ))} </ul> ); }"
+        - generic [ref=e60]:
+          - heading "Server Component 데이터 페칭" [level=2] [ref=e61]
+          - paragraph [ref=e62]:
+            - text: Next.js App Router에서는 async Server Component로 직접 데이터를 가져올 수 있습니다. fetch에
+            - code [ref=e63]: next.revalidate
+            - text: 를 전달해 ISR(Incremental Static Regeneration)을 구성할 수 있습니다.
+          - generic [ref=e64]:
+            - generic [ref=e65]:
+              - generic [ref=e66]: tsx
+              - button "복사" [ref=e67]:
+                - img [ref=e68]
+                - text: 복사
+            - code [ref=e72]: "// Server Component — async/await 직접 사용 (Next.js App Router) // app/posts/page.tsx type Post = { id: number; title: string; body: string }; async function getPosts(): Promise<Post[]> { const res = await fetch( \"https://jsonplaceholder.typicode.com/posts?_limit=5\", { next: { revalidate: 3600 } } // 1시간마다 재검증 (ISR) ); if (!res.ok) throw new Error(\"Failed to fetch posts\"); return res.json(); } export default async function PostsPage() { const posts = await getPosts(); // Server Component — await 직접 사용 return ( <ul className=\"space-y-2\"> {posts.map((post) => ( <li key={post.id} className=\"rounded border p-3\"> <p className=\"font-medium\">{post.title}</p> </li> ))} </ul> ); }"
+        - generic [ref=e73]:
+          - heading "loading.tsx — 자동 Suspense 폴백" [level=2] [ref=e74]
+          - paragraph [ref=e75]:
+            - text: Next.js는
+            - code [ref=e76]: loading.tsx
+            - text: 를 자동으로 Suspense 바운더리로 감싸줍니다. 데이터 페칭 중 표시됩니다.
+          - generic [ref=e77]:
+            - generic [ref=e78]:
+              - generic [ref=e79]: tsx
+              - button "복사" [ref=e80]:
+                - img [ref=e81]
+                - text: 복사
+            - code [ref=e85]: "// loading.tsx — 자동 Suspense 폴백 (Next.js App Router) // app/posts/loading.tsx import { Skeleton } from \"@/components/ui/skeleton\"; export default function Loading() { return ( <div className=\"space-y-3\"> {[...Array(5)].map((_, i) => ( <div key={i} className=\"space-y-1.5\"> <Skeleton className=\"h-4 w-3/4\" /> <Skeleton className=\"h-3 w-full\" /> </div> ))} </div> ); }"
+        - generic [ref=e86]:
+          - heading "error.tsx — 자동 에러 바운더리" [level=2] [ref=e87]
+          - paragraph [ref=e88]:
+            - code [ref=e89]: error.tsx
+            - text: 는 Server Component에서 발생한 에러를 자동으로 포착합니다.
+            - code [ref=e90]: reset()
+            - text: 함수로 재시도할 수 있습니다.
+          - generic [ref=e91]:
+            - generic [ref=e92]:
+              - generic [ref=e93]: tsx
+              - button "복사" [ref=e94]:
+                - img [ref=e95]
+                - text: 복사
+            - code [ref=e99]: "// error.tsx — 자동 에러 바운더리 (Next.js App Router) // app/posts/error.tsx \"use client\"; export default function Error({ error, reset, }: { error: Error; reset: () => void; }) { return ( <div className=\"flex flex-col items-center gap-4 py-12 text-center\"> <p className=\"text-destructive\">{error.message}</p> <Button onClick={reset}>다시 시도</Button> </div> ); }"
+  - region "Notifications alt+T"
+  - button "Open Next.js Dev Tools" [ref=e105] [cursor=pointer]:
+    - img [ref=e106]

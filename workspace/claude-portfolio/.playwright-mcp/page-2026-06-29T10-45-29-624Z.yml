@@ -1,0 +1,81 @@
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - complementary [ref=e3]:
+      - link "MyStarter" [ref=e5] [cursor=pointer]:
+        - /url: /dashboard
+      - navigation [ref=e6]:
+        - link "대시보드" [ref=e7] [cursor=pointer]:
+          - /url: /dashboard
+          - img [ref=e8]
+          - text: 대시보드
+        - link "사용자" [ref=e13] [cursor=pointer]:
+          - /url: /dashboard/users
+          - img [ref=e14]
+          - text: 사용자
+        - link "통계" [ref=e19] [cursor=pointer]:
+          - /url: /dashboard/analytics
+          - img [ref=e20]
+          - text: 통계
+        - link "설정" [ref=e22] [cursor=pointer]:
+          - /url: /dashboard/settings
+          - img [ref=e23]
+          - text: 설정
+    - generic [ref=e26]:
+      - banner [ref=e27]:
+        - button "테마 전환" [ref=e28]:
+          - img
+      - main [ref=e29]:
+        - generic [ref=e30]:
+          - generic [ref=e32]:
+            - heading "설정" [level=1] [ref=e33]
+            - paragraph [ref=e34]: 사이트 전반의 설정을 관리하세요.
+          - generic [ref=e35]:
+            - generic [ref=e36]:
+              - generic [ref=e37]: 기본 정보
+              - generic [ref=e38]: 사이트 이름, URL, 관리자 이메일을 설정합니다.
+            - generic [ref=e40]:
+              - generic [ref=e41]:
+                - generic [ref=e42]: 사이트 이름
+                - textbox "사이트 이름" [ref=e43]: MyStarter
+              - generic [ref=e44]:
+                - generic [ref=e45]: 사이트 URL
+                - textbox "사이트 URL" [ref=e46]: https://example.com
+              - generic [ref=e47]:
+                - generic [ref=e48]: 관리자 이메일
+                - textbox "관리자 이메일" [ref=e49]: admin@example.com
+                - paragraph [ref=e50]: 시스템 알림이 이 이메일로 발송됩니다.
+              - button "저장" [active] [ref=e51]
+          - generic [ref=e52]:
+            - generic [ref=e53]:
+              - generic [ref=e54]: 알림 설정
+              - generic [ref=e55]: 시스템 알림 수신 방식을 설정합니다.
+            - generic [ref=e56]:
+              - generic [ref=e57]:
+                - generic [ref=e58]:
+                  - paragraph [ref=e59]: 이메일 알림
+                  - paragraph [ref=e60]: 주문, 사용자 가입 등 주요 이벤트를 이메일로 받습니다.
+                - switch [checked] [ref=e61]
+              - generic [ref=e62]:
+                - generic [ref=e63]:
+                  - paragraph [ref=e64]: 방문자 분석
+                  - paragraph [ref=e65]: 페이지 뷰 및 트래픽 데이터를 수집합니다.
+                - switch [checked] [ref=e66]
+          - generic [ref=e67]:
+            - generic [ref=e68]:
+              - generic [ref=e69]: 위험 구역
+              - generic [ref=e70]: 아래 설정은 서비스에 즉각적인 영향을 미칩니다.
+            - generic [ref=e72]:
+              - generic [ref=e73]:
+                - paragraph [ref=e74]: 유지보수 모드
+                - paragraph [ref=e75]: 활성화하면 방문자에게 점검 중 안내 페이지가 표시됩니다.
+              - switch [ref=e76]
+  - region "Notifications alt+T":
+    - list:
+      - listitem [ref=e87]:
+        - img [ref=e89]
+        - generic [ref=e92]:
+          - generic [ref=e93]: 설정이 저장되었습니다.
+          - generic [ref=e94]: "사이트 이름: MyStarter"
+  - button "Open Next.js Dev Tools" [ref=e82] [cursor=pointer]:
+    - img [ref=e83]
+  - alert [ref=e86]
