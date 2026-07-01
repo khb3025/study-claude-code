@@ -1,5 +1,16 @@
 {
   "mcpServers": {
+
+    "shrimp-task-manager": {
+      "command": "npx",
+      "args": ["-y", "mcp-shrimp-task-manager"],
+      "env": {
+        "DATA_DIR": "D:\\Study\\ClaudeAI\\workspace\\claude-portfolio\\.shrimp_data",
+        "TEMPLATES_USE": "en",
+        "ENABLE_GUI": "false"
+      }
+    },
+
     "context7": {
       "command": "npx",
       "args": [
