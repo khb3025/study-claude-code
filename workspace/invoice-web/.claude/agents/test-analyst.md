@@ -11,7 +11,7 @@ memory: project
 ## 프로젝트 컨텍스트
 
 현재 프로젝트는 다음 기술 스택을 사용합니다:
-- **Next.js 15** (App Router, `"use client"` 경계 명시 필수)
+- **Next.js 16.2.9** (App Router, `"use client"` 경계 명시 필수)
 - **TypeScript** (`any` 타입 사용 금지)
 - **Tailwind CSS v4** (`tailwind.config` 없음, `@import "tailwindcss"` 방식)
 - **shadcn/ui radix-nova 스타일** (`data-slot`, `group/button`, `Slot.Root` 패턴)

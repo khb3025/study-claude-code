@@ -1,36 +1,71 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 노션 기반 견적서 관리 시스템 (invoice-web)
 
-## Getting Started
+노션(Notion)을 데이터베이스로 활용하여 견적서를 관리하고, 클라이언트가 회원가입이나 별도 인증 없이 고유 URL로 웹에서 조회 및 PDF 다운로드할 수 있게 하는 MVP 서비스입니다.
 
-First, run the development server:
+## 🎯 프로젝트 개요
+
+**목적**: 노션을 데이터베이스로 활용하여 견적서를 관리하고, 클라이언트가 웹에서 조회 및 PDF 다운로드할 수 있는 시스템을 제공한다.
+**범위**: 노션 데이터베이스 연동 조회, 고유 URL 기반 견적서 조회, PDF 다운로드 (MVP). 이메일 인증, 관리자 대시보드, 견적서 상태 관리, 전자 서명, 다국어 지원 등은 범위 밖.
+**사용자**: 견적서를 노션 데이터베이스로 관리하는 프리랜서/소규모 기업(발행자)과, 고유 링크로 견적서를 받아 확인하는 클라이언트(수신자).
+
+## 📱 주요 페이지
+
+1. **견적서 조회 페이지** (`/invoice/[notionPageId]`) — 노션 데이터베이스 ID 기반 고유 URL로 접근하는 공개 페이지. 공급자/클라이언트 정보, 항목별 내역, 총 금액, 발행일·유효기간을 표시하고 PDF 다운로드 버튼 제공
+2. **404 에러 페이지** — 존재하지 않는 견적서 ID로 접근 시 자동 표시, "견적서를 찾을 수 없습니다" 안내 및 발행자 문의 가이드
+
+> 별도의 홈페이지나 로그인/인증 페이지는 없습니다. MVP에서는 관리자용 별도 페이지 없이 노션 데이터베이스를 직접 사용합니다.
+
+## ⚡ 핵심 기능
+
+- **노션 데이터베이스 연동 (F001)**: Notion API를 통해 견적서 데이터를 읽기 전용으로 조회
+- **견적서 조회 (F002)**: 고유 URL로 특정 견적서의 내용(공급자/클라이언트 정보, 항목, 금액, 발행일, 유효기간, 상태)을 웹에 표시
+- **PDF 다운로드 (F003)**: 조회 중인 견적서를 PDF 파일로 즉시 생성하여 다운로드
+- **견적서 URL 생성 (F010)**: 노션 데이터베이스 ID 기반 고유 URL 생성
+- **견적서 유효성 검증 (F011)**: 존재하지 않는 견적서 ID 접근 시 404 에러 처리
+- **반응형 레이아웃 (F012)**: 모바일/태블릿/데스크톱 대응
+
+상세 기능 명세와 데이터 모델(Invoices, Items)은 [docs/PRD.md](./docs/PRD.md) 참조.
+
+## 🛠️ 기술 스택
+
+- **Framework**: Next.js 16.2.9 (App Router)
+- **Runtime**: React 19
+- **Language**: TypeScript
+- **Styling**: TailwindCSS v4
+- **UI Components**: shadcn/ui (`radix-nova` 스타일)
+- **폼 & 검증**: React Hook Form + Zod
+- **외부 연동**: `@notionhq/client` — 노션 견적서 원본 데이터 읽기 전용 조회 *(예정)*
+- **PDF 생성**: `@react-pdf/renderer` *(예정)*
+- **배포**: Vercel
+
+## 🚀 시작하기
 
 ```bash
+# 의존성 설치
+npm install
+
+# 개발 서버 실행 (Turbopack, 기본 포트 3000)
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# 프로덕션 빌드
+npm run build
+
+# 타입 검사
+npx tsc --noEmit
+
+# 린트 검사
+npm run lint
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📋 개발 상태
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- ✅ Next.js 스타터킷 초기화 (데모/예제 코드 및 이전 스코프 산출물 제거, 핵심 인프라만 유지)
+- ⏳ 견적서 조회 페이지(`/invoice/[notionPageId]`) 구현
+- ⏳ 404 에러 페이지 구현
+- ⏳ 노션 API 연동 (읽기 전용)
+- ⏳ PDF 다운로드 기능
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📖 문서
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [PRD 문서](./docs/PRD.md) — 상세 요구사항
+- [개발 가이드](./CLAUDE.md) — 개발 지침

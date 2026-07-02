@@ -5,7 +5,65 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6476f6e2-8222-4fb8-b4c4-a86247f803c4" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.claude/agents/dev/development-planner.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.claude/agents/dev/starter-cleaner.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.claude/agents/dev/ui-markup-specialist.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../claude-portfolio/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../claude-portfolio/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.claude/agents/code-reviewer.md" beforeDir="false" afterPath="$PROJECT_DIR$/.claude/agents/dev/code-reviewer.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.claude/agents/docs/prd-generator.md" beforeDir="false" afterPath="$PROJECT_DIR$/.claude/agents/docs/prd-generator.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.claude/agents/docs/prd-validator.md" beforeDir="false" afterPath="$PROJECT_DIR$/.claude/agents/docs/prd-validator.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.claude/agents/notion-api-database-expert.md" beforeDir="false" afterPath="$PROJECT_DIR$/.claude/agents/notion-api-database-expert.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.claude/agents/test-analyst.md" beforeDir="false" afterPath="$PROJECT_DIR$/.claude/agents/test-analyst.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/claudeCodeEditorTabs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/claudeCodeEditorTabs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CLAUDE.md" beforeDir="false" afterPath="$PROJECT_DIR$/CLAUDE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dashboard-analytics.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dashboard-settings.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dashboard-users.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/PRD.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/PRD.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/final-home.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/home-footer.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hook-test.txt" beforeDir="false" afterPath="$PROJECT_DIR$/hook-test.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/login-block-initial.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/login-block-toast.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/login-block-toast2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/login-block-validation.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/login-page-initial.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/login-validation-empty.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/file.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/globe.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/next.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/vercel.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/window.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings-toast.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(dashboard)/dashboard/analytics/page.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(dashboard)/dashboard/page.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(dashboard)/dashboard/settings/page.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(dashboard)/dashboard/users/page.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(dashboard)/layout.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(marketing)/_components/examples-section.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(marketing)/layout.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(marketing)/page.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/examples/buttons/page.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/examples/components/page.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/examples/data-display/page.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/examples/data-fetching/page.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/examples/feedback/page.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/examples/forms/page.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/examples/hooks/page.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/examples/layout.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/examples/layouts/page.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/examples/optimization/page.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/examples/page.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/login/page.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/layout/footer.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/layout/header.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/layout/mobile-nav.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/layout/sidebar.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/login-form.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/shared/code-block.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lib/constants.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/constants.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -13,7 +71,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="172" />
+    <option name="cachedIndexableFilesCount" value="130" />
     <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
   </component>
   <component name="Git.Settings">
@@ -28,6 +86,9 @@
     &quot;accountId&quot;: &quot;b51cf18a-6025-4ce6-a2d1-8766ab3e427a&quot;
   }
 }</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/.claude/agents/test-analyst.md" root0="FORCE_HIGHLIGHTING" root1="SKIP_INSPECTION" />
+  </component>
   <component name="McpProjectServerCommands">
     <commands />
     <urls />
@@ -55,7 +116,7 @@
     "js.debugger.nextJs.config.created.client": "true",
     "js.debugger.nextJs.config.created.server": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/Study/ClaudeAI/workspace/invoice-web",
+    "last_opened_file_path": "D:/Study/ClaudeAI/workspace/invoice-web/.claude/agents/dev",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -68,11 +129,14 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Study\ClaudeAI\workspace\invoice-web\.claude\agents\dev" />
+      <recent name="D:\Study\ClaudeAI\workspace\invoice-web\docs" />
       <recent name="D:\Study\ClaudeAI\workspace\invoice-web\.claude\agents" />
       <recent name="D:\Study\ClaudeAI\workspace\invoice-web\.claude\agents\docs" />
       <recent name="D:\Study\ClaudeAI\workspace\claude-nextjs-starters" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Study\ClaudeAI\workspace\invoice-web\.claude\agents\dev" />
       <recent name="D:\Study\ClaudeAI\workspace\claude-nextjs-starters\.claude\commands\git" />
     </key>
   </component>
@@ -118,6 +182,8 @@
       <workItem from="1782884458356" duration="217000" />
       <workItem from="1782884685807" duration="2878000" />
       <workItem from="1782887598333" duration="9666000" />
+      <workItem from="1782984654748" duration="1950000" />
+      <workItem from="1782986614959" duration="2388000" />
     </task>
     <task id="LOCAL-00001" summary="next.JS 및 shadcnUI 직접 설치">
       <option name="closed" value="true" />
