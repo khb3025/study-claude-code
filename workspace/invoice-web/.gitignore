@@ -2,6 +2,8 @@
 
 # dependencies
 /node_modules
+/mcp-shrimp-task-manager/node_modules
+/mcp-shrimp-task-manager/dist
 /.pnp
 .pnp.*
 .yarn/*

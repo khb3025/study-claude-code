@@ -5,16 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6476f6e2-8222-4fb8-b4c4-a86247f803c4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../claude-portfolio/.claude/agents/development-planner.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../PPT정리/28. Shrimp Task Master AI.pptx" beforeDir="false" afterPath="$PROJECT_DIR$/../../PPT정리/28. Shrimp Task Master AI.pptx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../PPT정리/31. 서브에이전트 활용 - RoadMap.pptx" beforeDir="false" afterPath="$PROJECT_DIR$/../../PPT정리/31. 서브에이전트 활용 - RoadMap.pptx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../claude-portfolio/.idea/claudeCodeEditorTabs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../claude-portfolio/.idea/claudeCodeEditorTabs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../claude-portfolio/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../claude-portfolio/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../claude-portfolio/CLAUDE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../claude-portfolio/CLAUDE.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.mcp.json" beforeDir="false" afterPath="$PROJECT_DIR$/.mcp.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hook-test.txt" beforeDir="false" afterPath="$PROJECT_DIR$/hook-test.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mcp-shrimp-task-manager/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/mcp-shrimp-task-manager/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mcp-shrimp-task-manager/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/mcp-shrimp-task-manager/package.json" afterDir="false" />
     </list>
@@ -136,7 +126,7 @@
       <workItem from="1782884685807" duration="2878000" />
       <workItem from="1782887598333" duration="9666000" />
       <workItem from="1782984654748" duration="1950000" />
-      <workItem from="1782986614959" duration="8666000" />
+      <workItem from="1782986614959" duration="8970000" />
     </task>
     <task id="LOCAL-00001" summary="next.JS 및 shadcnUI 직접 설치">
       <option name="closed" value="true" />
