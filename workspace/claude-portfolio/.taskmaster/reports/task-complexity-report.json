@@ -1,0 +1,93 @@
+{
+	"meta": {
+		"generatedAt": "2026-07-02T07:27:34.776Z",
+		"tasksAnalyzed": 10,
+		"totalTasks": 10,
+		"analysisCount": 10,
+		"thresholdScore": 5,
+		"projectName": "Task Master",
+		"usedResearch": false
+	},
+	"complexityAnalysis": [
+		{
+			"taskId": 1,
+			"taskTitle": "Notion API 의존성 설치 및 환경 변수 설정",
+			"complexityScore": 3,
+			"recommendedSubtasks": 4,
+			"expansionPrompt": "Break down into: (1) npm package installation with version compatibility check, (2) .env.local file creation with security warnings, (3) Zod v4 schema creation in src/lib/env.ts with proper error messages, (4) Integration into app layout for startup validation. Ensure Korean error messages and proper NEXT_PUBLIC_ prefix avoidance.",
+			"reasoning": "This is a straightforward setup task. The codebase already uses Zod v4 (package.json shows zod: ^4.4.3), has existing form validation patterns, and follows the expected Next.js structure. The main work involves package installation and environment variable schema creation. Risk is low as it's configuration-focused with clear specifications. Zod v4 syntax is already established in the project (.min(1, { message }) pattern confirmed in docs)."
+		},
+		{
+			"taskId": 2,
+			"taskTitle": "Notion 클라이언트 래퍼 및 타입 정의",
+			"complexityScore": 4,
+			"recommendedSubtasks": 5,
+			"expansionPrompt": "Split into: (1) Create singleton client wrapper in src/lib/notion/client.ts with Korean comments, (2) Define ResumeProject type with all required fields (id, slug, title, category, tags, status, publishedDate, lastEditedTime, blocks), (3) Create NotionBlock discriminated union for all supported block types, (4) Define RichTextSpan type for text annotations, (5) Create NotionBlockType enum. Ensure TypeScript strict mode compatibility and proper type narrowing support for discriminated unions.",
+			"reasoning": "Moderate complexity due to TypeScript type system requirements. The codebase already has a strong TypeScript foundation (src/lib/types/index.ts exists with well-structured types). This task requires creating a new type hierarchy for Notion data models with discriminated unions, which needs careful design for type safety. The singleton pattern is straightforward, but the type definitions need to be comprehensive to support all subsequent tasks. No external integrations at this stage reduces risk."
+		},
+		{
+			"taskId": 3,
+			"taskTitle": "Notion 데이터베이스 쿼리 레이어 구현",
+			"complexityScore": 7,
+			"recommendedSubtasks": 8,
+			"expansionPrompt": "Decompose into: (1) Implement queryDatabase with filter/sort parameters, (2) Handle Category/Status filtering logic, (3) Implement recursive getPageContent with pagination (has_more handling), (4) Create getPageMetadata for property extraction, (5) Integrate unstable_cache with proper tag structure, (6) Implement rate limit error handling with Korean messages, (7) Add recursive block children fetching with depth limit (max 3), (8) Write comprehensive error handling for all Notion API failure modes (network, auth, 429, malformed responses). Consider using a retry mechanism for rate limits.",
+			"reasoning": "High complexity due to multiple integration points: Notion API pagination, recursive block fetching, Next.js caching layer (unstable_cache), rate limiting, and error handling. The PRD specifies handling 100+ blocks with pagination, which requires careful state management. Rate limit 429 handling needs queue logic. The caching strategy with tags (notion-db, notion-page-{id}) requires understanding Next.js 15+ cache invalidation patterns. Recursive depth limiting adds algorithmic complexity. This is the foundation for all data operations, making it critical path work."
+		},
+		{
+			"taskId": 4,
+			"taskTitle": "Notion 블록 렌더러 컴포넌트 구현",
+			"complexityScore": 6,
+			"recommendedSubtasks": 7,
+			"expansionPrompt": "Break down into: (1) Create NotionBlockRenderer.tsx Server Component with block type switching, (2) Implement RichText.tsx for annotation rendering (bold/italic/code/link), (3) Handle recursive children rendering with depth limit, (4) Integrate syntax highlighting library (react-syntax-highlighter or Prism.js) for code blocks, (5) Implement Next.js Image component for image blocks with signed URL handling, (6) Apply Tailwind CSS v4 prose classes for typography, (7) Add fallback rendering for unsupported block types with Korean message. Consider performance for large block trees.",
+			"reasoning": "Moderate-high complexity due to multiple rendering concerns. The codebase already uses shadcn/ui with Tailwind v4 (globals.css shows @theme inline pattern), which provides a styling foundation. Challenges include: recursive rendering (max 3 levels), syntax highlighting integration (new dependency), Next.js Image optimization, and handling Notion's signed URLs (which expire). The discriminated union types from Task 2 will enable type-safe rendering. The project's existing component patterns (src/components/ui/) provide good scaffolding. Risk is in handling edge cases (empty blocks, malformed data, image timeouts)."
+		},
+		{
+			"taskId": 5,
+			"taskTitle": "프로젝트 목록 및 필터링 페이지 구현",
+			"complexityScore": 6,
+			"recommendedSubtasks": 7,
+			"expansionPrompt": "Split into: (1) Create src/app/(marketing)/projects/page.tsx Server Component, (2) Implement server-side filter logic using searchParams (category, status, tags), (3) Build filter UI as client component with shadcn Select/Command/Popover, (4) Handle URL searchParams updates with useRouter/useSearchParams, (5) Create project card component with badge tags, (6) Implement empty state UI with Korean message, (7) Update NAV_ITEMS in constants.ts. Ensure SSR compatibility and proper hydration for filters.",
+			"reasoning": "Moderate-high complexity due to server/client boundary management. The codebase has existing examples of this pattern (examples pages use Server Components with client islands). Challenges: searchParams filtering logic needs to be performant, multi-select tags require AND filtering, client-side filter state must sync with URL. The existing (marketing) route group (src/app/(marketing)/layout.tsx) provides layout scaffolding. shadcn components (Select, Command, Popover) are already installed. Risk is in ensuring smooth UX for filter updates without full page reloads. SEO considerations for filtered URLs."
+		},
+		{
+			"taskId": 6,
+			"taskTitle": "프로젝트 상세 페이지 구현",
+			"complexityScore": 5,
+			"recommendedSubtasks": 6,
+			"expansionPrompt": "Decompose into: (1) Create [slug]/page.tsx dynamic route with params handling, (2) Implement getProjectBySlug in queries.ts with error handling, (3) Add generateStaticParams for ISR, (4) Build page layout with PageHeader component integration, (5) Integrate NotionBlockRenderer for content display, (6) Implement Breadcrumb navigation and 404 handling with notFound(). Optimize for Core Web Vitals (LCP, CLS).",
+			"reasoning": "Moderate complexity, primarily integration work. The task leverages components from Tasks 3 (queries) and 4 (renderer). The existing PageHeader component (src/components/shared/page-header.tsx) simplifies layout. generateStaticParams is a standard Next.js pattern. Challenges: ISR cache revalidation timing (300s per PRD), handling stale data during revalidation, proper 404 handling for invalid slugs. The project already has examples of dynamic routing (though not visible in current structure, Next.js patterns are standard). Risk is minimal as it's mostly composition of existing pieces."
+		},
+		{
+			"taskId": 7,
+			"taskTitle": "관리자 편집 페이지 - 읽기 전용 뷰 구현",
+			"complexityScore": 6,
+			"recommendedSubtasks": 7,
+			"expansionPrompt": "Break down into: (1) Create dashboard/resume/page.tsx client component, (2) Implement getProjectForEdit Server Action with Zod validation, (3) Build project selector dropdown, (4) Create metadata form with react-hook-form + Zod schema (Category/Tags/Status/Published/lastEditedTime), (5) Add form to SIDEBAR_ITEMS in constants.ts with FileText icon, (6) Implement form dirty state tracking, (7) Create two-column layout (properties left, preview placeholder right). Ensure proper Server Action error handling with Korean messages.",
+			"reasoning": "Moderate-high complexity due to Server Actions integration and form state management. The codebase has existing form examples (src/app/examples/forms/page.tsx shows react-hook-form + Zod patterns). The (dashboard) route group exists (src/app/(dashboard)/layout.tsx) with sidebar navigation. Challenges: Server Actions are async and require proper error boundaries, form schema needs to match Notion property types exactly, dirty state tracking for unsaved changes warning. Zod v4 syntax is critical (.min(1, { message }) pattern, no .default() in schemas per PRD). The sidebar (src/components/layout/sidebar.tsx) already has usePathname for active links, making menu addition straightforward."
+		},
+		{
+			"taskId": 8,
+			"taskTitle": "BlockNote 에디터 통합 및 본문 편집 구현",
+			"complexityScore": 8,
+			"recommendedSubtasks": 9,
+			"expansionPrompt": "Split into: (1) Install and configure BlockNote packages (@blocknote/core, @blocknote/react), (2) Create BlockNoteEditor.tsx client component with custom schema (paragraph/heading/list/code/image only), (3) Build notionToBlockNote converter in block-converter.ts, (4) Build blockNoteToNotion converter with discriminated union handling, (5) Integrate Tailwind v4 theme into editor styles, (6) Implement dark mode support using globals.css .dark class, (7) Add editor change tracking (dirty state), (8) Handle image URL input (temporary, no upload), (9) Update Task 7 page to replace preview with editor. Ensure type safety across conversion boundaries.",
+			"reasoning": "High complexity due to schema mapping between two different systems. BlockNote has its own type system that must be bidirectionally mapped to Notion's block structure. The codebase uses Tailwind v4 with custom CSS variables (@theme inline in globals.css), which may conflict with BlockNote's default styles. Dark mode requires careful integration (ThemeProvider uses next-themes with attribute='class'). Type-safe converters with discriminated unions are algorithmically complex. Risk: BlockNote may not support all Notion block nuances, requiring workarounds. Performance concerns with large documents (100+ blocks). The existing form patterns help, but this introduces a new third-party editor with its own API surface."
+		},
+		{
+			"taskId": 9,
+			"taskTitle": "Write-back 구현 - 속성 및 본문 저장 Server Actions",
+			"complexityScore": 9,
+			"recommendedSubtasks": 10,
+			"expansionPrompt": "Decompose into: (1) Create updateProjectMetadata Server Action with pages.update API, (2) Implement optimistic locking conflict check using lastEditedTime, (3) Build deleteAllChildren helper with proper error handling, (4) Create appendChildrenInBatches with 100-block batching and rate limit queuing (200ms delay), (5) Implement snapshot-based rollback mechanism, (6) Add revalidateTag for cache invalidation (notion-page-${pageId}), (7) Integrate Server Actions into Task 8 save button with useTransition, (8) Add loading states and Korean toast messages (success/failure/conflict), (9) Implement Zod validation for all Server Action inputs, (10) Build conflict warning UI banner. Test extensively with concurrent edits and network failures.",
+			"reasoning": "Very high complexity - this is the most critical and risky task. It involves: transactional semantics (delete-all → append with rollback), distributed conflict detection (optimistic locking via lastEditedTime), rate limiting with queuing, batch processing (100 blocks), Next.js cache invalidation, and error recovery. The PRD specifies a delete-all-children → append strategy, which is destructive and requires atomic-like behavior (hence snapshot rollback). Rate limit handling (429 responses) needs a queue with delays. Conflict detection requires comparing timestamps, with UX for informing users of stale edits. Server Actions are async, requiring proper useTransition integration for pending states. This task has the highest potential for data loss if not implemented correctly. Extensive testing needed (edge cases: partial failures, network timeouts, concurrent edits)."
+		},
+		{
+			"taskId": 10,
+			"taskTitle": "스타일링 최적화 및 반응형 검증",
+			"complexityScore": 5,
+			"recommendedSubtasks": 6,
+			"expansionPrompt": "Break down into: (1) Update homepage Hero section with project link, (2) Add Notion API to tech stack section, (3) Implement responsive grid layouts (1/2/3 columns for mobile/tablet/desktop), (4) Add keyboard navigation and ARIA labels for accessibility (WCAG AA compliance), (5) Optimize Next.js Image settings and verify ISR cache (300s revalidation), (6) Run Lighthouse audit and fix performance/accessibility issues (target 90+ score). Test across Chrome, Safari, Firefox and verify dark mode consistency.",
+			"reasoning": "Moderate complexity, primarily QA and polish work. The codebase already has responsive patterns (Tailwind breakpoints in existing components) and dark mode setup (ThemeProvider + globals.css .dark class). Tasks are mostly verification and minor adjustments rather than new features. Challenges: Lighthouse optimization may reveal unexpected bottlenecks, cross-browser testing can surface edge cases, BlockNote editor dark mode may need custom CSS. The existing component library (shadcn/ui) is already accessible (Radix UI primitives). Risk is low as this is refinement rather than core functionality. However, accessibility testing requires domain knowledge (WCAG AA, keyboard nav, screen readers)."
+		}
+	]
+}

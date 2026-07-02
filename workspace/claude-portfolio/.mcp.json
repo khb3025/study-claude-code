@@ -1,6 +1,14 @@
 {
   "mcpServers": {
 
+    "taskmaster-ai": {
+      "command": "npx",
+      "args": ["-y", "task-master-ai"],
+      "env": {
+      }
+    },
+
+
     "shrimp-task-manager": {
       "command": "npx",
       "args": ["-y", "mcp-shrimp-task-manager"],
@@ -17,7 +25,7 @@
         "-y",
         "@upstash/context7-mcp",
         "--api-key",
-        "ctx7sk-d5a67bc7-8e7f-4eb5-9e6e-69746ee5143b"
+        "${CONTEXT7_API_KEY}"
       ]
     },
     "filesystem": {
@@ -47,7 +55,7 @@
         "@modelcontextprotocol/server-github"
       ],
       "env": {
-        "GITHUB_PERSONAL_ACCESS_TOKEN": "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"
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_PERSONAL_ACCESS_TOKEN}"
       }
     },
     "sequential-thinking": {

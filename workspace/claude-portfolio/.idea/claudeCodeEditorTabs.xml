@@ -1,29 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ClaudeCodeEditorTabs">
-    <option name="activeSessionId" value="d3669c28-b75a-4ef8-a59f-5eb2408d7c15" />
+    <option name="activeSessionId" value="4c75f2e5-cb31-4cab-9828-ef2ed594dce4" />
     <option name="openSessionIds">
       <list>
         <option value="112204cd-45f7-4481-9fdf-beb9f0f0b481" />
         <option value="459ac8cb-3510-4222-8861-738c15357c71" />
         <option value="8405cabd-9f33-47d0-b92b-68448311f0f3" />
-        <option value="d3669c28-b75a-4ef8-a59f-5eb2408d7c15" />
+        <option value="a47b14fe-305f-4ee7-9b55-cb34953e1ab2" />
+        <option value="4c75f2e5-cb31-4cab-9828-ef2ed594dce4" />
       </list>
     </option>
     <option name="sessionPaths">
       <map>
         <entry key="112204cd-45f7-4481-9fdf-beb9f0f0b481" value="/sessions/new" />
         <entry key="459ac8cb-3510-4222-8861-738c15357c71" value="/sessions/cd2fe9f4-7193-4bd3-8e7a-e477459d0291" />
+        <entry key="4c75f2e5-cb31-4cab-9828-ef2ed594dce4" value="/sessions/new" />
         <entry key="8405cabd-9f33-47d0-b92b-68448311f0f3" value="/sessions/4e24b01a-f6e7-4275-81d9-42c0a4f911a9" />
-        <entry key="d3669c28-b75a-4ef8-a59f-5eb2408d7c15" value="/sessions/a5393266-8422-4525-8fc0-bab33b6b6a39" />
+        <entry key="a47b14fe-305f-4ee7-9b55-cb34953e1ab2" value="/sessions/59d68b7a-2a10-4768-822e-110db102fc07" />
       </map>
     </option>
     <option name="sessionTitles">
       <map>
         <entry key="112204cd-45f7-4481-9fdf-beb9f0f0b481" value="Claude Code" />
         <entry key="459ac8cb-3510-4222-8861-738c15357c71" value="/ㄱ" />
+        <entry key="4c75f2e5-cb31-4cab-9828-ef2ed594dce4" value="Claude Code" />
         <entry key="8405cabd-9f33-47d0-b92b-68448311f0f3" value="taskmaster는 IntelliJ지원은 없는거야?" />
-        <entry key="d3669c28-b75a-4ef8-a59f-5eb2408d7c15" value="claude code 에 shrimp task manager 설정을 추가하는게 좋을까? i" />
+        <entry key="a47b14fe-305f-4ee7-9b55-cb34953e1ab2" value="task-manager mcp를 사용하려고 하는데 공식 문서를 보니 API key가 필요없" />
       </map>
     </option>
   </component>
