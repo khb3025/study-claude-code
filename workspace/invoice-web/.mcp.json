@@ -1,5 +1,15 @@
 {
   "mcpServers": {
+   "shrimp-task-manager": {
+      "command": "node",
+      "args": ["D:\\Study\\ClaudeAI\\workspace\\invoice-web\\mcp-shrimp-task-manager\\dist\\index.js"],
+      "env": {
+        "DATA_DIR": "D:\\Study\\ClaudeAI\\workspace\\invoice-web\\.shrimp_data",
+        "TEMPLATES_USE": "en",
+        "ENABLE_GUI": "false"
+      }
+    },
+
     "context7": {
       "command": "npx",
       "args": [

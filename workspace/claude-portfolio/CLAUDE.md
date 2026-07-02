@@ -86,3 +86,8 @@ src/
 **shadcn 컴포넌트 주의**
 - `components/ui/` 파일은 shadcn CLI가 덮어쓸 수 있음 (특히 `form.tsx`는 수동 작성본이므로 보호 필요)
 - 스타일 커스터마이징은 `cn()` + className prop으로 처리
+
+
+## 참고 컨텍스트
+- PRD 문서: @docs/PRD.md
+- 개발 로드맵: @docs/ROADMAP.md

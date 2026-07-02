@@ -4,14 +4,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6476f6e2-8222-4fb8-b4c4-a86247f803c4" name="Changes" comment="✨ feat: Notion API 데이터베이스 전문 서브에이전트 추가&#10;&#10;Notion API 연동, 스키마 설계, CRUD 작업을 전문으로 다루는&#10;서브에이전트를 추가하여 Notion 기반 기능 개발 시 활용할 수 있도록 함" />
+    <list default="true" id="6476f6e2-8222-4fb8-b4c4-a86247f803c4" name="Changes" comment="✨ feat: Notion API 데이터베이스 전문 서브에이전트 추가&#10;&#10;Notion API 연동, 스키마 설계, CRUD 작업을 전문으로 다루는&#10;서브에이전트를 추가하여 Notion 기반 기능 개발 시 활용할 수 있도록 함">
+      <change afterPath="$PROJECT_DIR$/.claude/agents/development-planner.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PPT정리/28. Shrimp Task Master AI.pptx" beforeDir="false" afterPath="$PROJECT_DIR$/../../PPT정리/28. Shrimp Task Master AI.pptx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PPT정리/31. 서브에이전트 활용 - RoadMap.pptx" beforeDir="false" afterPath="$PROJECT_DIR$/../../PPT정리/31. 서브에이전트 활용 - RoadMap.pptx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/claudeCodeEditorTabs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/claudeCodeEditorTabs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CLAUDE.md" beforeDir="false" afterPath="$PROJECT_DIR$/CLAUDE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../invoice-web/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../invoice-web/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../invoice-web/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../invoice-web/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../invoice-web/.mcp.json" beforeDir="false" afterPath="$PROJECT_DIR$/../invoice-web/.mcp.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../invoice-web/hook-test.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../invoice-web/hook-test.txt" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="178" />
+    <option name="cachedIndexableFilesCount" value="180" />
     <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
   </component>
   <component name="Git.Settings">
@@ -39,31 +50,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;js.debugger.nextJs.config.created.client&quot;: &quot;true&quot;,
-    &quot;js.debugger.nextJs.config.created.server&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Study/ClaudeAI/workspace/claude-portfolio/.claude/agents&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\IntelliJ IDEA 2026.1.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "js.debugger.nextJs.config.created.client": "true",
+    "js.debugger.nextJs.config.created.server": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/Study/ClaudeAI/workspace/claude-portfolio",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\IntelliJ IDEA 2026.1.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Study\ClaudeAI\workspace\claude-portfolio\.claude\agents" />
@@ -119,6 +130,8 @@
       <workItem from="1782898608724" duration="16816000" />
       <workItem from="1782972206497" duration="6215000" />
       <workItem from="1782983640822" duration="704000" />
+      <workItem from="1782993019449" duration="3651000" />
+      <workItem from="1782996878225" duration="671000" />
     </task>
     <task id="LOCAL-00001" summary="next.JS 및 shadcnUI 직접 설치">
       <option name="closed" value="true" />
