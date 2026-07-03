@@ -3,7 +3,7 @@
 **노션 기반 견적서 관리 시스템**은 노션(Notion)을 데이터베이스로 활용하여 견적서를 관리하고, 클라이언트가 고유 URL로 웹에서 조회하고 PDF로 다운로드할 수 있게 하는 MVP 서비스입니다. 회원가입/이메일 인증 없이 노션 데이터베이스 ID 기반의 공개 URL(`/invoice/[notionPageId]`)로 누구나 접근합니다.
 
 📋 상세 프로젝트 요구사항은 @/docs/PRD.md 참조
-
+📋 프로젝트 계획은 @/docs/ROADMAP.md 참조
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 @AGENTS.md
@@ -76,3 +76,4 @@ src/
 **라우트 추가 시 주의**
 - PRD의 페이지 구조(견적서 조회 페이지 `/invoice/[notionPageId]` / 404 에러 페이지)에 맞춰 `src/app/` 하위에 라우트를 구성할 것. 별도의 홈페이지나 이메일 인증 페이지는 없음 (이전 스코프였던 `/`, `/verify/[token]`, `/quotes/[id]`, `/error` 및 `src/lib/mock-data.ts`는 새 PRD와 맞지 않아 제거됨)
 - Route Group을 사용할 경우, 서로 다른 그룹이 동일한 URL 경로를 갖지 않도록 주의 (Next.js 빌드 오류 원인)
+
