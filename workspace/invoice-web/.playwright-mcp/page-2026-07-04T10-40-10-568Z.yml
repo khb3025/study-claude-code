@@ -1,0 +1,87 @@
+- generic [active] [ref=f23e1]:
+  - main [ref=f23e2]:
+    - generic [ref=f23e5]:
+      - navigation [ref=f23e6]:
+        - generic [ref=f23e7]:
+          - link "관리자" [ref=f23e8] [cursor=pointer]:
+            - /url: /admin
+          - link "견적서 목록" [ref=f23e9] [cursor=pointer]:
+            - /url: /admin/invoices
+        - button "로그아웃" [ref=f23e13]
+      - generic [ref=f23e14]:
+        - generic [ref=f23e16]:
+          - heading "견적서 목록" [level=1] [ref=f23e17]
+          - paragraph [ref=f23e18]: 전체 1건 · 1/1페이지
+        - generic [ref=f23e19]:
+          - generic [ref=f23e20]:
+            - img [ref=f23e21]
+            - textbox "견적서 번호 또는 클라이언트명 검색" [ref=f23e24]
+          - generic [ref=f23e25]:
+            - generic [ref=f23e26]:
+              - generic [ref=f23e27]: 상태
+              - combobox "상태" [ref=f23e28]:
+                - img
+              - combobox [ref=f23e29]
+            - generic [ref=f23e30]:
+              - generic [ref=f23e31]: 발행일(시작)
+              - textbox "발행일(시작)" [ref=f23e32]
+            - generic [ref=f23e33]:
+              - generic [ref=f23e34]: 발행일(종료)
+              - textbox "발행일(종료)" [ref=f23e35]
+        - table [ref=f23e37]:
+          - rowgroup [ref=f23e38]:
+            - row "견적서 번호 클라이언트명 발행일 유효기간 상태 총 금액 링크" [ref=f23e39]:
+              - columnheader "견적서 번호" [ref=f23e40]:
+                - link "견적서 번호" [ref=f23e41] [cursor=pointer]:
+                  - /url: /admin/invoices?page=1&sort=invoiceNumber&dir=asc
+                  - text: 견적서 번호
+                  - img [ref=f23e42]
+              - columnheader "클라이언트명" [ref=f23e45]:
+                - link "클라이언트명" [ref=f23e46] [cursor=pointer]:
+                  - /url: /admin/invoices?page=1&sort=clientName&dir=asc
+                  - text: 클라이언트명
+                  - img [ref=f23e47]
+              - columnheader "발행일" [ref=f23e50]:
+                - link "발행일" [ref=f23e51] [cursor=pointer]:
+                  - /url: /admin/invoices?page=1&sort=issueDate&dir=asc
+                  - text: 발행일
+                  - img [ref=f23e52]
+              - columnheader "유효기간" [ref=f23e55]:
+                - link "유효기간" [ref=f23e56] [cursor=pointer]:
+                  - /url: /admin/invoices?page=1&sort=validUntil&dir=asc
+                  - text: 유효기간
+                  - img [ref=f23e57]
+              - columnheader "상태" [ref=f23e60]:
+                - link "상태" [ref=f23e61] [cursor=pointer]:
+                  - /url: /admin/invoices?page=1&sort=status&dir=asc
+                  - text: 상태
+                  - img [ref=f23e62]
+              - columnheader "총 금액" [ref=f23e65]:
+                - link "총 금액" [ref=f23e66] [cursor=pointer]:
+                  - /url: /admin/invoices?page=1&sort=totalAmount&dir=asc
+                  - text: 총 금액
+                  - img [ref=f23e67]
+              - columnheader "링크" [ref=f23e70]
+          - rowgroup [ref=f23e71]:
+            - row "INV-2026-001 ABC회사 2026년 7월 3일 2026년 7월 10일 대기 ₩5,000,000 /invoice/3920d3f5-6d2e-… 링크 복사 이메일로 공유" [ref=f23e72]:
+              - cell "INV-2026-001" [ref=f23e73]
+              - cell "ABC회사" [ref=f23e74]
+              - cell "2026년 7월 3일" [ref=f23e75]
+              - cell "2026년 7월 10일" [ref=f23e76]
+              - cell "대기" [ref=f23e77]:
+                - generic [ref=f23e78]: 대기
+              - cell "₩5,000,000" [ref=f23e79]
+              - cell "/invoice/3920d3f5-6d2e-… 링크 복사 이메일로 공유" [ref=f23e80]:
+                - generic [ref=f23e81]:
+                  - link "/invoice/3920d3f5-6d2e-…" [ref=f23e82] [cursor=pointer]:
+                    - /url: /invoice/3920d3f5-6d2e-8035-9bc4-c12c5ac98d25
+                    - text: /invoice/3920d3f5-6d2e-…
+                    - img [ref=f23e83]
+                  - button "링크 복사" [ref=f23e87]:
+                    - img
+                  - link "이메일로 공유" [ref=f23e88] [cursor=pointer]:
+                    - /url: mailto:?subject=%EA%B2%AC%EC%A0%81%EC%84%9C%20INV-2026-001%20%EC%95%88%EB%82%B4&body=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94.%0A%EC%95%84%EB%9E%98%20%EB%A7%81%ED%81%AC%EC%97%90%EC%84%9C%20%EA%B2%AC%EC%A0%81%EC%84%9C%EB%A5%BC%20%ED%99%95%EC%9D%B8%ED%95%B4%20%EC%A3%BC%EC%84%B8%EC%9A%94.%0A%0Ahttp%3A%2F%2Flocalhost%3A3000%2Finvoice%2F3920d3f5-6d2e-8035-9bc4-c12c5ac98d25
+                    - img
+  - region "Notifications alt+T"
+  - button "Open Next.js Dev Tools" [ref=f23e94] [cursor=pointer]:
+    - img [ref=f23e95]

@@ -43,3 +43,27 @@ export type PageProps = {
   params: Promise<Record<string, string>>;
   searchParams: Promise<Record<string, string | string[]>>;
 };
+
+// 견적서 상태 (Notion Select 옵션과 매핑됨)
+export type InvoiceStatus = "pending" | "approved" | "rejected";
+
+// 견적서 항목 (항목 DB의 단일 페이지)
+export type InvoiceItem = {
+  id: string;
+  description: string;
+  quantity: number;
+  unitPrice: number;
+  amount: number;
+};
+
+// 견적서 (견적서 DB의 단일 페이지 + 연결된 항목들)
+export type Invoice = {
+  id: string;
+  invoiceNumber: string;
+  clientName: string;
+  issueDate: string;
+  validUntil: string;
+  status: InvoiceStatus;
+  totalAmount: number;
+  items: InvoiceItem[];
+};

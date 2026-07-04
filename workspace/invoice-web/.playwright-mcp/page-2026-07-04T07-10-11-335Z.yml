@@ -1,0 +1,70 @@
+- generic [ref=f5e1]:
+  - main [ref=f5e2]:
+    - generic [ref=f5e5]:
+      - navigation [ref=f5e6]:
+        - generic [ref=f5e7]:
+          - link "관리자" [ref=f5e8] [cursor=pointer]:
+            - /url: /admin
+          - link "견적서 목록" [ref=f5e9] [cursor=pointer]:
+            - /url: /admin/invoices
+        - button "로그아웃" [ref=f5e11]
+      - generic [ref=f5e12]:
+        - generic [ref=f5e14]:
+          - heading "견적서 목록" [level=1] [ref=f5e15]
+          - paragraph [ref=f5e16]: 전체 0건 · 1/1페이지
+        - generic [ref=f5e17]:
+          - generic [ref=f5e18]:
+            - img [ref=f5e19]
+            - textbox "견적서 번호 또는 클라이언트명 검색" [ref=f5e22]
+          - generic [ref=f5e23]:
+            - generic [ref=f5e24]:
+              - generic [ref=f5e25]: 상태
+              - combobox "상태" [active] [ref=f5e26]:
+                - generic: 승인
+                - img
+            - generic [ref=f5e28]:
+              - generic [ref=f5e29]: 발행일(시작)
+              - textbox "발행일(시작)" [ref=f5e30]
+            - generic [ref=f5e31]:
+              - generic [ref=f5e32]: 발행일(종료)
+              - textbox "발행일(종료)" [ref=f5e33]
+        - table [ref=f5e35]:
+          - rowgroup [ref=f5e36]:
+            - row "견적서 번호 클라이언트명 발행일 유효기간 상태 총 금액" [ref=f5e37]:
+              - columnheader "견적서 번호" [ref=f5e38]:
+                - link "견적서 번호" [ref=f5e39] [cursor=pointer]:
+                  - /url: /admin/invoices?page=1&sort=invoiceNumber&dir=asc&status=approved
+                  - text: 견적서 번호
+                  - img [ref=f5e40]
+              - columnheader "클라이언트명" [ref=f5e43]:
+                - link "클라이언트명" [ref=f5e44] [cursor=pointer]:
+                  - /url: /admin/invoices?page=1&sort=clientName&dir=asc&status=approved
+                  - text: 클라이언트명
+                  - img [ref=f5e45]
+              - columnheader "발행일" [ref=f5e48]:
+                - link "발행일" [ref=f5e49] [cursor=pointer]:
+                  - /url: /admin/invoices?page=1&sort=issueDate&dir=asc&status=approved
+                  - text: 발행일
+                  - img [ref=f5e50]
+              - columnheader "유효기간" [ref=f5e53]:
+                - link "유효기간" [ref=f5e54] [cursor=pointer]:
+                  - /url: /admin/invoices?page=1&sort=validUntil&dir=asc&status=approved
+                  - text: 유효기간
+                  - img [ref=f5e55]
+              - columnheader "상태" [ref=f5e58]:
+                - link "상태" [ref=f5e59] [cursor=pointer]:
+                  - /url: /admin/invoices?page=1&sort=status&dir=asc&status=approved
+                  - text: 상태
+                  - img [ref=f5e60]
+              - columnheader "총 금액" [ref=f5e63]:
+                - link "총 금액" [ref=f5e64] [cursor=pointer]:
+                  - /url: /admin/invoices?page=1&sort=totalAmount&dir=asc&status=approved
+                  - text: 총 금액
+                  - img [ref=f5e65]
+          - rowgroup [ref=f5e68]:
+            - row "등록된 견적서가 없습니다." [ref=f5e96]:
+              - cell "등록된 견적서가 없습니다." [ref=f5e97]
+  - region "Notifications alt+T"
+  - button "Open Next.js Dev Tools" [ref=f5e82] [cursor=pointer]:
+    - img [ref=f5e83]
+  - alert [ref=f5e86]

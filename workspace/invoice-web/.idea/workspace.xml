@@ -5,7 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6476f6e2-8222-4fb8-b4c4-a86247f803c4" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.claude/agents/dev/nextjs-app-developer.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PPT정리/~$15.메모리 관리 CLAUDE.md.pptx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.claude/agent-memory/code-reviewer/MEMORY.md" beforeDir="false" afterPath="$PROJECT_DIR$/.claude/agent-memory/code-reviewer/MEMORY.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.shrimp_data/tasks.json" beforeDir="false" afterPath="$PROJECT_DIR$/.shrimp_data/tasks.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hook-test.txt" beforeDir="false" afterPath="$PROJECT_DIR$/hook-test.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lib/constants.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/constants.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lib/types/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/types/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lib/utils.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/utils.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -13,7 +23,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="585" />
+    <option name="cachedIndexableFilesCount" value="592" />
     <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
   </component>
   <component name="Git.Settings">
@@ -58,7 +68,7 @@
     &quot;js.debugger.nextJs.config.created.client&quot;: &quot;true&quot;,
     &quot;js.debugger.nextJs.config.created.server&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Study/ClaudeAI/workspace/invoice-web/docs/roadmaps&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Study/ClaudeAI/workspace/invoice-web/.claude/agents&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -71,10 +81,10 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Study\ClaudeAI\workspace\invoice-web\.claude\agents" />
       <recent name="D:\Study\ClaudeAI\workspace\invoice-web\docs\roadmaps" />
       <recent name="D:\Study\ClaudeAI\workspace\invoice-web\docs" />
       <recent name="D:\Study\ClaudeAI\workspace\invoice-web\.claude\agents\dev" />
-      <recent name="D:\Study\ClaudeAI\workspace\invoice-web\.claude\agents" />
       <recent name="D:\Study\ClaudeAI\workspace\invoice-web\.claude\agents\docs" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -126,7 +136,9 @@
       <workItem from="1782887598333" duration="9666000" />
       <workItem from="1782984654748" duration="1950000" />
       <workItem from="1782986614959" duration="13293000" />
-      <workItem from="1783063636638" duration="6643000" />
+      <workItem from="1783063636638" duration="8765000" />
+      <workItem from="1783083488859" duration="4787000" />
+      <workItem from="1783135998260" duration="7153000" />
     </task>
     <task id="LOCAL-00001" summary="next.JS 및 shadcnUI 직접 설치">
       <option name="closed" value="true" />

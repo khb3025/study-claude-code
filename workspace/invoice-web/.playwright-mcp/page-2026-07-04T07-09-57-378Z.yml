@@ -1,0 +1,96 @@
+- generic:
+  - main:
+    - generic:
+      - generic:
+        - generic:
+          - navigation:
+            - generic:
+              - link:
+                - /url: /admin
+                - text: 관리자
+              - link:
+                - /url: /admin/invoices
+                - text: 견적서 목록
+            - generic:
+              - button: 로그아웃
+          - generic:
+            - generic:
+              - generic:
+                - heading [level=1]: 견적서 목록
+                - paragraph: 전체 1건 · 1/1페이지
+            - generic:
+              - generic:
+                - img
+                - textbox:
+                  - /placeholder: 견적서 번호 또는 클라이언트명 검색
+              - generic:
+                - generic:
+                  - generic: 상태
+                  - combobox [expanded]:
+                    - generic: 전체
+                    - img
+                - generic:
+                  - generic: 발행일(시작)
+                  - textbox
+                - generic:
+                  - generic: 발행일(종료)
+                  - textbox
+            - generic:
+              - table:
+                - rowgroup:
+                  - row:
+                    - columnheader:
+                      - link:
+                        - /url: /admin/invoices?page=1&sort=invoiceNumber&dir=asc
+                        - text: 견적서 번호
+                        - img
+                    - columnheader:
+                      - link:
+                        - /url: /admin/invoices?page=1&sort=clientName&dir=asc
+                        - text: 클라이언트명
+                        - img
+                    - columnheader:
+                      - link:
+                        - /url: /admin/invoices?page=1&sort=issueDate&dir=asc
+                        - text: 발행일
+                        - img
+                    - columnheader:
+                      - link:
+                        - /url: /admin/invoices?page=1&sort=validUntil&dir=asc
+                        - text: 유효기간
+                        - img
+                    - columnheader:
+                      - link:
+                        - /url: /admin/invoices?page=1&sort=status&dir=asc
+                        - text: 상태
+                        - img
+                    - columnheader:
+                      - link:
+                        - /url: /admin/invoices?page=1&sort=totalAmount&dir=asc
+                        - text: 총 금액
+                        - img
+                - rowgroup:
+                  - row:
+                    - cell: INV-2026-001
+                    - cell: ABC회사
+                    - cell: 2026년 7월 3일
+                    - cell: 2026년 7월 10일
+                    - cell:
+                      - generic: 대기
+                    - cell: ₩5,000,000
+  - region "Notifications alt+T"
+  - button "Open Next.js Dev Tools" [ref=f5e82] [cursor=pointer]:
+    - img [ref=f5e83]
+  - alert
+  - listbox [ref=f5e87]:
+    - option "전체" [active] [selected] [ref=f5e88]:
+      - generic:
+        - generic:
+          - img
+      - generic [ref=f5e89]: 전체
+    - option "대기" [ref=f5e90]:
+      - generic [ref=f5e91]: 대기
+    - option "승인" [ref=f5e92]:
+      - generic [ref=f5e93]: 승인
+    - option "거절" [ref=f5e94]:
+      - generic [ref=f5e95]: 거절

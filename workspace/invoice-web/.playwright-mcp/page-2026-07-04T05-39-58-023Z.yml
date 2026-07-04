@@ -1,0 +1,58 @@
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - generic [ref=e5]:
+      - generic [ref=e6]:
+        - heading "견적서 조회" [level=1] [ref=e8]
+        - generic [ref=e9]:
+          - button "PDF 다운로드" [disabled]:
+            - img
+            - text: PDF 다운로드
+      - generic [ref=e11]:
+        - generic [ref=e12]:
+          - generic [ref=e13]: INV-2026-001
+          - generic [ref=e15]: 대기
+        - generic [ref=e16]:
+          - generic [ref=e17]:
+            - img [ref=e18]
+            - generic [ref=e20]:
+              - paragraph [ref=e21]: 발행일
+              - paragraph [ref=e22]: 2026년 7월 3일
+          - generic [ref=e23]:
+            - img [ref=e24]
+            - generic [ref=e27]:
+              - paragraph [ref=e28]: 유효기간
+              - paragraph [ref=e29]: 2026년 7월 10일
+      - generic [ref=e30]:
+        - generic [ref=e32]: 클라이언트 정보
+        - paragraph [ref=e34]: ABC회사
+      - generic [ref=e35]:
+        - generic [ref=e37]: 항목별 내역
+        - table [ref=e40]:
+          - rowgroup [ref=e41]:
+            - row "항목명 수량 단가 금액" [ref=e42]:
+              - columnheader "항목명" [ref=e43]
+              - columnheader "수량" [ref=e44]
+              - columnheader "단가" [ref=e45]
+              - columnheader "금액" [ref=e46]
+          - rowgroup [ref=e47]:
+            - row "명함 디자인 100 ₩10,000 ₩1,000,000" [ref=e48]:
+              - cell "명함 디자인" [ref=e49]
+              - cell "100" [ref=e50]
+              - cell "₩10,000" [ref=e51]
+              - cell "₩1,000,000" [ref=e52]
+            - row "로고 제작 2 ₩500,000 ₩1,000,000" [ref=e53]:
+              - cell "로고 제작" [ref=e54]
+              - cell "2" [ref=e55]
+              - cell "₩500,000" [ref=e56]
+              - cell "₩1,000,000" [ref=e57]
+            - row "웹 사이트 디자인 1 ₩3,000,000 ₩3,000,000" [ref=e58]:
+              - cell "웹 사이트 디자인" [ref=e59]
+              - cell "1" [ref=e60]
+              - cell "₩3,000,000" [ref=e61]
+              - cell "₩3,000,000" [ref=e62]
+        - generic [ref=e63]:
+          - generic [ref=e64]: 총 금액
+          - generic [ref=e65]: ₩5,000,000
+  - region "Notifications alt+T"
+  - button "Open Next.js Dev Tools" [ref=e71] [cursor=pointer]:
+    - img [ref=e72]

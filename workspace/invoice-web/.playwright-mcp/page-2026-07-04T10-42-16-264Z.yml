@@ -1,0 +1,14 @@
+- generic [active] [ref=f29e1]:
+  - main [ref=f29e2]:
+    - generic [ref=f29e3]:
+      - generic [ref=f29e5]: 관리자 로그인
+      - generic [ref=f29e7]:
+        - generic [ref=f29e8]:
+          - generic [ref=f29e9]: 패스워드
+          - textbox "패스워드" [ref=f29e10]
+        - paragraph [ref=f29e22]: 패스워드가 올바르지 않습니다.
+        - button "로그인" [ref=f29e11]
+  - region "Notifications alt+T"
+  - button "Open Next.js Dev Tools" [ref=f29e17] [cursor=pointer]:
+    - img [ref=f29e18]
+  - alert [ref=f29e21]

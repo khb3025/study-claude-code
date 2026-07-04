@@ -1,0 +1,22 @@
+- generic [active] [ref=f29e1]:
+  - main [ref=f29e23]:
+    - generic [ref=f29e26]:
+      - navigation [ref=f29e27]:
+        - generic [ref=f29e28]:
+          - link "관리자" [ref=f29e29] [cursor=pointer]:
+            - /url: /admin
+          - link "견적서 목록" [ref=f29e30] [cursor=pointer]:
+            - /url: /admin/invoices
+        - generic [ref=f29e31]:
+          - button "테마 전환" [ref=f29e32]:
+            - img
+          - button "로그아웃" [ref=f29e34]
+      - generic [ref=f29e35]:
+        - generic [ref=f29e37]:
+          - heading "관리자 대시보드" [level=1] [ref=f29e38]
+          - paragraph [ref=f29e39]: 견적서 관리 기능은 추후 단계에서 추가됩니다.
+        - paragraph [ref=f29e42]: 준비 중입니다.
+  - region "Notifications alt+T"
+  - button "Open Next.js Dev Tools" [ref=f29e17] [cursor=pointer]:
+    - img [ref=f29e18]
+  - alert [ref=f29e21]

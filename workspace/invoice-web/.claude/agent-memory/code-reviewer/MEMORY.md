@@ -1,2 +1,6 @@
 - [shadcn asChild + Slot.Root 패턴](feedback_shadcn_pattern.md) — 링크 역할 컴포넌트는 반드시 asChild/Slot.Root 지원 (Next.js Link 합성용)
 - [buttonVariants 재사용](feedback_buttonvariants_reuse.md) — 버튼 스타일 수동 복제 금지, buttonVariants import 사용. ButtonProps는 export 안 됨
+- [Notion 빈 date 속성 → formatDate 크래시](feedback_notion_optional_date_format.md) — extractDateStart()는 빈 값이면 ""를 반환, formatDate("")는 RangeError throw. 견적서 페이지 리뷰 시 항상 확인
+- [Section className 위치 버그](feedback_section_classname_bug_pattern.md) — Section의 className은 children이 렌더링되는 container div가 아닌 바깥 section에 적용됨. src/app/page.tsx에 동일 버그 재현 중, 근본 수정은 Section 자체 리팩터링 필요
+- [PDFDownloadLink에 Button 중첩 금지](feedback_react_pdf_downloadlink_pattern.md) — PDFDownloadLink는 <a>를 렌더링, 자식으로 Button 중첩 시 button-in-anchor 무효 HTML. buttonVariants를 className으로 직접 적용할 것. error 상태 처리 여부도 확인
+- [getInvoiceByPageId 미캐싱](feedback_notion_no_react_cache.md) — React cache() 미적용으로 generateMetadata+page 중복 호출 시 Notion API 2배 호출됨

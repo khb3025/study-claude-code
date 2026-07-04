@@ -4,6 +4,8 @@
 
 📋 상세 프로젝트 요구사항은 @/docs/PRD.md 참조
 📋 프로젝트 계획은 @/docs/ROADMAP.md 참조
+📋 관리자 기능 사용법은 @/docs/ADMIN_GUIDE.md 참조
+📋 Vercel 배포 절차 및 체크리스트는 @/docs/DEPLOYMENT.md 참조
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 @AGENTS.md

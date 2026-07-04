@@ -41,6 +41,11 @@ export function formatCurrency(
   }).format(value);
 }
 
+// Notion 날짜 속성이 비어있을 수 있어(수동 입력 데이터 특성) formatDate 호출 전 가드
+export function formatDateOrFallback(date: string, fallback = "미정"): string {
+  return date ? formatDate(date) : fallback;
+}
+
 // 문자열 말줄임 (초과 시 "…" 추가)
 export function truncate(str: string, maxLength: number): string {
   if (str.length <= maxLength) return str;

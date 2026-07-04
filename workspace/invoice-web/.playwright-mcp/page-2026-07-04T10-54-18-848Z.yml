@@ -1,0 +1,13 @@
+- generic [active] [ref=f33e1]:
+  - main [ref=f33e2]:
+    - generic [ref=f33e3]:
+      - generic [ref=f33e5]: 관리자 로그인
+      - generic [ref=f33e7]:
+        - generic [ref=f33e8]:
+          - generic [ref=f33e9]: 패스워드
+          - textbox "패스워드" [ref=f33e10]
+        - button "로그인" [ref=f33e11]
+  - region "Notifications alt+T"
+  - button "Open Next.js Dev Tools" [ref=f33e17] [cursor=pointer]:
+    - img [ref=f33e18]
+  - alert [ref=f33e21]

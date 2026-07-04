@@ -1,0 +1,91 @@
+- generic [ref=f22e1]:
+  - main [ref=f22e2]:
+    - generic [ref=f22e5]:
+      - navigation [ref=f22e6]:
+        - generic [ref=f22e7]:
+          - link "관리자" [ref=f22e8] [cursor=pointer]:
+            - /url: /admin
+          - link "견적서 목록" [ref=f22e9] [cursor=pointer]:
+            - /url: /admin/invoices
+        - generic [ref=f22e10]:
+          - button "테마 전환" [ref=f22e98]:
+            - img
+          - button "로그아웃" [ref=f22e13]
+      - generic [ref=f22e14]:
+        - generic [ref=f22e16]:
+          - heading "견적서 목록" [level=1] [ref=f22e17]
+          - paragraph [ref=f22e18]: 전체 1건 · 1/1페이지
+        - generic [ref=f22e19]:
+          - generic [ref=f22e20]:
+            - img [ref=f22e21]
+            - textbox "견적서 번호 또는 클라이언트명 검색" [active] [ref=f22e24]: ABC
+          - generic [ref=f22e25]:
+            - generic [ref=f22e26]:
+              - generic [ref=f22e27]: 상태
+              - combobox "상태" [ref=f22e28]:
+                - generic: 전체
+                - img
+            - generic [ref=f22e30]:
+              - generic [ref=f22e31]: 발행일(시작)
+              - textbox "발행일(시작)" [ref=f22e32]
+            - generic [ref=f22e33]:
+              - generic [ref=f22e34]: 발행일(종료)
+              - textbox "발행일(종료)" [ref=f22e35]
+        - table [ref=f22e37]:
+          - rowgroup [ref=f22e38]:
+            - row "견적서 번호 클라이언트명 발행일 유효기간 상태 총 금액 링크" [ref=f22e39]:
+              - columnheader "견적서 번호" [ref=f22e40]:
+                - link "견적서 번호" [ref=f22e41] [cursor=pointer]:
+                  - /url: /admin/invoices?page=1&sort=invoiceNumber&dir=asc&search=ABC
+                  - text: 견적서 번호
+                  - img [ref=f22e42]
+              - columnheader "클라이언트명" [ref=f22e45]:
+                - link "클라이언트명" [ref=f22e46] [cursor=pointer]:
+                  - /url: /admin/invoices?page=1&sort=clientName&dir=asc&search=ABC
+                  - text: 클라이언트명
+                  - img [ref=f22e47]
+              - columnheader "발행일" [ref=f22e50]:
+                - link "발행일" [ref=f22e51] [cursor=pointer]:
+                  - /url: /admin/invoices?page=1&sort=issueDate&dir=asc&search=ABC
+                  - text: 발행일
+                  - img [ref=f22e52]
+              - columnheader "유효기간" [ref=f22e55]:
+                - link "유효기간" [ref=f22e56] [cursor=pointer]:
+                  - /url: /admin/invoices?page=1&sort=validUntil&dir=asc&search=ABC
+                  - text: 유효기간
+                  - img [ref=f22e57]
+              - columnheader "상태" [ref=f22e60]:
+                - link "상태" [ref=f22e61] [cursor=pointer]:
+                  - /url: /admin/invoices?page=1&sort=status&dir=asc&search=ABC
+                  - text: 상태
+                  - img [ref=f22e62]
+              - columnheader "총 금액" [ref=f22e65]:
+                - link "총 금액" [ref=f22e66] [cursor=pointer]:
+                  - /url: /admin/invoices?page=1&sort=totalAmount&dir=asc&search=ABC
+                  - text: 총 금액
+                  - img [ref=f22e67]
+              - columnheader "링크" [ref=f22e70]
+          - rowgroup [ref=f22e71]:
+            - row "INV-2026-001 ABC회사 2026년 7월 3일 2026년 7월 10일 대기 ₩5,000,000 /invoice/3920d3f5-6d2e-… 링크 복사 이메일로 공유" [ref=f22e72]:
+              - cell "INV-2026-001" [ref=f22e73]
+              - cell "ABC회사" [ref=f22e74]
+              - cell "2026년 7월 3일" [ref=f22e75]
+              - cell "2026년 7월 10일" [ref=f22e76]
+              - cell "대기" [ref=f22e77]:
+                - generic [ref=f22e78]: 대기
+              - cell "₩5,000,000" [ref=f22e79]
+              - cell "/invoice/3920d3f5-6d2e-… 링크 복사 이메일로 공유" [ref=f22e80]:
+                - generic [ref=f22e81]:
+                  - link "/invoice/3920d3f5-6d2e-…" [ref=f22e82] [cursor=pointer]:
+                    - /url: /invoice/3920d3f5-6d2e-8035-9bc4-c12c5ac98d25
+                    - text: /invoice/3920d3f5-6d2e-…
+                    - img [ref=f22e83]
+                  - button "링크 복사" [ref=f22e87]:
+                    - img
+                  - link "이메일로 공유" [ref=f22e88] [cursor=pointer]:
+                    - /url: mailto:?subject=%EA%B2%AC%EC%A0%81%EC%84%9C%20INV-2026-001%20%EC%95%88%EB%82%B4&body=%EC%95%88%EB%85%95%ED%95%98%EC%84%B8%EC%9A%94.%0A%EC%95%84%EB%9E%98%20%EB%A7%81%ED%81%AC%EC%97%90%EC%84%9C%20%EA%B2%AC%EC%A0%81%EC%84%9C%EB%A5%BC%20%ED%99%95%EC%9D%B8%ED%95%B4%20%EC%A3%BC%EC%84%B8%EC%9A%94.%0A%0Ahttp%3A%2F%2Flocalhost%3A3000%2Finvoice%2F3920d3f5-6d2e-8035-9bc4-c12c5ac98d25
+                    - img
+  - region "Notifications alt+T"
+  - button "Open Next.js Dev Tools" [ref=f22e94] [cursor=pointer]:
+    - img [ref=f22e95]
+  - alert [ref=f22e99]
