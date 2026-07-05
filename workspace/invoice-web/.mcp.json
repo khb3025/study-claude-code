@@ -67,21 +67,6 @@
       ],
       "env": {}
     },
-    "mysql": {
-      "type": "stdio",
-      "command": "npx",
-      "args": [
-        "-y",
-        "@benborla29/mcp-server-mysql"
-      ],
-      "env": {
-        "MYSQL_HOST": "localhost",
-        "MYSQL_PORT": "3306",
-        "MYSQL_USER": "",
-        "MYSQL_PASS": "",
-        "MYSQL_DB": ""
-      }
-    },
     "shadcn": {
       "command": "npx",
       "args": [

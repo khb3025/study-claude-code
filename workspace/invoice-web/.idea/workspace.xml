@@ -5,17 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6476f6e2-8222-4fb8-b4c4-a86247f803c4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.claude/agents/dev/nextjs-app-developer.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../PPT정리/~$15.메모리 관리 CLAUDE.md.pptx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.claude/agent-memory/code-reviewer/MEMORY.md" beforeDir="false" afterPath="$PROJECT_DIR$/.claude/agent-memory/code-reviewer/MEMORY.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.shrimp_data/tasks.json" beforeDir="false" afterPath="$PROJECT_DIR$/.shrimp_data/tasks.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hook-test.txt" beforeDir="false" afterPath="$PROJECT_DIR$/hook-test.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/constants.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/constants.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/types/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/types/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/utils.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/utils.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PPT정리/~$35. MVP 개발 이후 고도화.pptx" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -139,6 +129,7 @@
       <workItem from="1783063636638" duration="8765000" />
       <workItem from="1783083488859" duration="4787000" />
       <workItem from="1783135998260" duration="7153000" />
+      <workItem from="1783226685893" duration="3000" />
     </task>
     <task id="LOCAL-00001" summary="next.JS 및 shadcnUI 직접 설치">
       <option name="closed" value="true" />
