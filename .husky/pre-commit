@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+# 모노레포 공용 pre-commit 훅
+# workspace/nextjs-supabase-app 하위 파일이 스테이징된 경우에만
+# 해당 프로젝트의 lint-staged를 실행한다. 다른 하위 프로젝트에는 영향 없음.
+
+set -e
+
+if git diff --cached --name-only | grep -q '^workspace/nextjs-supabase-app/'; then
+  echo "[nextjs-supabase-app] lint-staged 실행 중..."
+  cd workspace/nextjs-supabase-app
+  npx lint-staged
+fi
