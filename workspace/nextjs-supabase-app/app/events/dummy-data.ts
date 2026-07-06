@@ -1,0 +1,481 @@
+import type {
+  Blacklist,
+  Carpool,
+  CarpoolPassenger,
+  Event,
+  Friendship,
+  Invitation,
+  Participant,
+  Settlement,
+  SettlementShare,
+} from "@/types/event";
+
+// 화면 표시용 주최자 정보(실제 DB에는 organizer_id만 저장, 이름은 auth.users 조인으로 대체 예정)
+export const DUMMY_ORGANIZERS: Record<
+  string,
+  { name: string; initial: string }
+> = {
+  "user-1": { name: "김민준", initial: "김" },
+  "user-2": { name: "이서연", initial: "이" },
+  "user-3": { name: "박지훈", initial: "박" },
+  "user-9": { name: "최도영", initial: "최" },
+};
+
+// 친구 목록/카풀 등 유저 카드에 쓰는 표시용 정보(위 DUMMY_ORGANIZERS와 병합해 참조)
+export const DUMMY_USERS: Record<
+  string,
+  { name: string; initial: string; email: string }
+> = {
+  "user-1": { name: "김민준", initial: "김", email: "khb3025@gmail.com" },
+  "user-2": { name: "이서연", initial: "이", email: "seoyeon@example.com" },
+  "user-3": { name: "박지훈", initial: "박", email: "jihoon@example.com" },
+  "user-4": { name: "최수아", initial: "최", email: "sua@example.com" },
+  "user-5": { name: "정하늘", initial: "정", email: "haneul@example.com" },
+};
+
+// 현재 로그인한 사용자를 흉내내는 더미 ID(로그인 연동 전까지 UI 목업 용도)
+export const CURRENT_USER_ID = "user-1";
+
+export const DUMMY_EVENTS: Event[] = [
+  {
+    id: "1",
+    organizer_id: "user-1",
+    title: "화요일 저녁 수영 강습",
+    description: "정규 강습입니다. 수모, 수경 지참해주세요.",
+    location: "올림픽수영장",
+    starts_at: "2026-07-14T19:00:00+09:00",
+    capacity: 10,
+    status: "recruiting",
+    join_type: "first_come",
+    password_hash: null,
+    schedule: "18:30 집합 → 19:00 강습 시작 → 21:00 종료",
+    items_to_bring: "수모, 수경, 개인 물병",
+    recurrence_type: "weekly",
+    settlement_visible: true,
+  },
+  {
+    id: "2",
+    organizer_id: "user-1",
+    title: "이번 주말 캠핑",
+    description: "1박 2일 캠핑, 집합 장소는 오전 9시 강변공영주차장.",
+    location: "가평 캠핑장",
+    starts_at: "2026-07-18T09:00:00+09:00",
+    capacity: 8,
+    status: "recruiting",
+    join_type: "approval",
+    password_hash: null,
+    schedule: "1일차 09:00 집합 → 오후 자유일정 → 2일차 10:00 정리 후 해산",
+    items_to_bring: "텐트, 침낭, 랜턴, 개인 세면도구",
+    recurrence_type: "none",
+    settlement_visible: true,
+  },
+  {
+    id: "3",
+    organizer_id: "user-2",
+    title: "목요일 헬스 PT 그룹",
+    description: "정원 마감되었습니다.",
+    location: "헬스클럽 2층",
+    starts_at: "2026-07-16T20:00:00+09:00",
+    capacity: 6,
+    status: "closed",
+    join_type: "password",
+    password_hash: "dummy-hash",
+    schedule: "20:00 워밍업 → 20:15 그룹 PT → 21:00 종료",
+    items_to_bring: "운동복, 실내화, 수건",
+    recurrence_type: "weekly",
+    // 특강 성격의 유료 강습 — 주최자가 정산 내역을 비공개로 설정한 데모
+    settlement_visible: false,
+  },
+  {
+    id: "4",
+    organizer_id: "user-2",
+    title: "지난주 등산 모임",
+    description: "북한산 등산 완료했습니다.",
+    location: "북한산 입구",
+    starts_at: "2026-06-28T08:00:00+09:00",
+    capacity: 12,
+    status: "finished",
+    join_type: "first_come",
+    password_hash: null,
+    schedule: "08:00 집합 → 08:30 등반 시작 → 13:00 하산 완료",
+    items_to_bring: "등산화, 스틱, 간식, 물",
+    recurrence_type: "none",
+    settlement_visible: true,
+  },
+];
+
+export const DUMMY_PARTICIPANTS: Participant[] = [
+  {
+    id: "p1",
+    event_id: "1",
+    user_id: "user-3",
+    status: "confirmed",
+    joined_at: "2026-07-01T10:00:00+09:00",
+    kicked_at: null,
+    kick_reason: null,
+    kick_reason_visible: true,
+  },
+  {
+    id: "p2",
+    event_id: "1",
+    user_id: "user-4",
+    status: "confirmed",
+    joined_at: "2026-07-02T11:00:00+09:00",
+    kicked_at: null,
+    kick_reason: null,
+    kick_reason_visible: true,
+  },
+  {
+    id: "p3",
+    event_id: "1",
+    user_id: "user-5",
+    status: "waitlisted",
+    joined_at: "2026-07-03T09:30:00+09:00",
+    kicked_at: null,
+    kick_reason: null,
+    kick_reason_visible: true,
+  },
+  {
+    id: "p21",
+    event_id: "1",
+    user_id: "user-11",
+    status: "kicked",
+    joined_at: "2026-07-04T09:00:00+09:00",
+    kicked_at: "2026-07-06T09:00:00+09:00",
+    kick_reason: "무단 지각이 반복되어 강퇴 처리되었습니다.",
+    kick_reason_visible: true,
+  },
+  {
+    id: "p22",
+    event_id: "2",
+    user_id: "user-12",
+    status: "pending_approval",
+    joined_at: "2026-07-07T09:00:00+09:00",
+    kicked_at: null,
+    kick_reason: null,
+    kick_reason_visible: true,
+  },
+  {
+    id: "p4",
+    event_id: "2",
+    user_id: "user-3",
+    status: "confirmed",
+    joined_at: "2026-07-05T10:00:00+09:00",
+    kicked_at: null,
+    kick_reason: null,
+    kick_reason_visible: true,
+  },
+  {
+    id: "p5",
+    event_id: "2",
+    user_id: "user-4",
+    status: "confirmed",
+    joined_at: "2026-07-05T12:00:00+09:00",
+    kicked_at: null,
+    kick_reason: null,
+    kick_reason_visible: true,
+  },
+  {
+    id: "p6",
+    event_id: "2",
+    user_id: "user-5",
+    status: "confirmed",
+    joined_at: "2026-07-06T09:00:00+09:00",
+    kicked_at: null,
+    kick_reason: null,
+    kick_reason_visible: true,
+  },
+  {
+    id: "p7",
+    event_id: "3",
+    user_id: "user-3",
+    status: "confirmed",
+    joined_at: "2026-07-08T10:00:00+09:00",
+    kicked_at: null,
+    kick_reason: null,
+    kick_reason_visible: true,
+  },
+  {
+    id: "p8",
+    event_id: "3",
+    user_id: "user-4",
+    status: "confirmed",
+    joined_at: "2026-07-08T11:00:00+09:00",
+    kicked_at: null,
+    kick_reason: null,
+    kick_reason_visible: true,
+  },
+  {
+    id: "p9",
+    event_id: "3",
+    user_id: "user-5",
+    status: "confirmed",
+    joined_at: "2026-07-08T12:00:00+09:00",
+    kicked_at: null,
+    kick_reason: null,
+    kick_reason_visible: true,
+  },
+  {
+    id: "p10",
+    event_id: "3",
+    user_id: "user-6",
+    status: "confirmed",
+    joined_at: "2026-07-08T13:00:00+09:00",
+    kicked_at: null,
+    kick_reason: null,
+    kick_reason_visible: true,
+  },
+  {
+    id: "p11",
+    event_id: "3",
+    user_id: "user-7",
+    status: "confirmed",
+    joined_at: "2026-07-08T14:00:00+09:00",
+    kicked_at: null,
+    kick_reason: null,
+    kick_reason_visible: true,
+  },
+  {
+    id: "p12",
+    event_id: "3",
+    user_id: "user-8",
+    status: "confirmed",
+    joined_at: "2026-07-08T15:00:00+09:00",
+    kicked_at: null,
+    kick_reason: null,
+    kick_reason_visible: true,
+  },
+  {
+    id: "p13",
+    event_id: "4",
+    user_id: "user-3",
+    status: "confirmed",
+    joined_at: "2026-06-20T10:00:00+09:00",
+    kicked_at: null,
+    kick_reason: null,
+    kick_reason_visible: true,
+  },
+  {
+    id: "p14",
+    event_id: "4",
+    user_id: "user-4",
+    status: "confirmed",
+    joined_at: "2026-06-20T11:00:00+09:00",
+    kicked_at: null,
+    kick_reason: null,
+    kick_reason_visible: true,
+  },
+  {
+    id: "p15",
+    event_id: "4",
+    user_id: "user-5",
+    status: "confirmed",
+    joined_at: "2026-06-20T12:00:00+09:00",
+    kicked_at: null,
+    kick_reason: null,
+    kick_reason_visible: true,
+  },
+  {
+    id: "p16",
+    event_id: "4",
+    user_id: "user-6",
+    status: "confirmed",
+    joined_at: "2026-06-20T13:00:00+09:00",
+    kicked_at: null,
+    kick_reason: null,
+    kick_reason_visible: true,
+  },
+  {
+    id: "p17",
+    event_id: "4",
+    user_id: "user-7",
+    status: "confirmed",
+    joined_at: "2026-06-20T14:00:00+09:00",
+    kicked_at: null,
+    kick_reason: null,
+    kick_reason_visible: true,
+  },
+  {
+    id: "p18",
+    event_id: "4",
+    user_id: "user-8",
+    status: "confirmed",
+    joined_at: "2026-06-20T15:00:00+09:00",
+    kicked_at: null,
+    kick_reason: null,
+    kick_reason_visible: true,
+  },
+  {
+    id: "p19",
+    event_id: "4",
+    user_id: "user-9",
+    status: "confirmed",
+    joined_at: "2026-06-20T16:00:00+09:00",
+    kicked_at: null,
+    kick_reason: null,
+    kick_reason_visible: true,
+  },
+  {
+    id: "p20",
+    event_id: "4",
+    user_id: "user-10",
+    status: "confirmed",
+    joined_at: "2026-06-20T17:00:00+09:00",
+    kicked_at: null,
+    kick_reason: null,
+    kick_reason_visible: true,
+  },
+];
+
+export const DUMMY_CARPOOLS: Carpool[] = [
+  {
+    id: "c1",
+    event_id: "1",
+    driver_id: "user-3",
+    seats_total: 3,
+    departure_point: "강남역 2번 출구",
+    departure_time: "2026-07-14T18:30:00+09:00",
+  },
+  {
+    // CURRENT_USER_ID가 운전자로 지원한 카풀 — "탑승자 초대" UI 데모용
+    id: "c2",
+    event_id: "1",
+    driver_id: CURRENT_USER_ID,
+    seats_total: 4,
+    departure_point: "신도림역 1번 출구",
+    departure_time: "2026-07-14T18:15:00+09:00",
+  },
+  {
+    // CURRENT_USER_ID가 탑승자로 초대된 카풀 — "카풀 수락/거절" UI 데모용
+    id: "c3",
+    event_id: "2",
+    driver_id: "user-3",
+    seats_total: 2,
+    departure_point: "가평 IC",
+    departure_time: "2026-07-18T08:30:00+09:00",
+  },
+];
+
+export const DUMMY_CARPOOL_PASSENGERS: CarpoolPassenger[] = [
+  {
+    id: "cp1",
+    carpool_id: "c1",
+    passenger_id: "user-4",
+    status: "confirmed",
+    initiated_by: "driver",
+  },
+  {
+    // 운전자가 초대했으나 아직 응답 전 — "초대중"으로 표시
+    id: "cp2",
+    carpool_id: "c1",
+    passenger_id: "user-5",
+    status: "invited",
+    initiated_by: "driver",
+  },
+  {
+    // CURRENT_USER_ID(운전자)가 초대한 탑승자 — 초대 수락/거절 데모
+    id: "cp3",
+    carpool_id: "c2",
+    passenger_id: "user-5",
+    status: "invited",
+    initiated_by: "driver",
+  },
+  {
+    // 운전자 user-3가 CURRENT_USER_ID를 초대 — 초대 수락/거절 UI 데모
+    id: "cp4",
+    carpool_id: "c3",
+    passenger_id: CURRENT_USER_ID,
+    status: "invited",
+    initiated_by: "driver",
+  },
+  {
+    // 탑승자가 CURRENT_USER_ID(운전자)에게 자발적으로 신청 — 운전자 수락/거절 데모
+    id: "cp5",
+    carpool_id: "c2",
+    passenger_id: "user-4",
+    status: "requested",
+    initiated_by: "passenger",
+  },
+  {
+    // CURRENT_USER_ID가 c1에 신청했다가 운전자에게 거절당함 — 재신청 불가 데모
+    id: "cp6",
+    carpool_id: "c1",
+    passenger_id: CURRENT_USER_ID,
+    status: "rejected",
+    initiated_by: "passenger",
+  },
+];
+
+export const DUMMY_SETTLEMENTS: Settlement[] = [
+  {
+    id: "s1",
+    event_id: "1",
+    title: "강습비",
+    total_amount: 60000,
+    created_by: "user-1",
+  },
+];
+
+export const DUMMY_SETTLEMENT_SHARES: SettlementShare[] = [
+  {
+    id: "ss1",
+    settlement_id: "s1",
+    user_id: "user-3",
+    amount: 30000,
+    is_paid: true,
+  },
+  {
+    id: "ss2",
+    settlement_id: "s1",
+    user_id: "user-4",
+    amount: 30000,
+    is_paid: false,
+  },
+];
+
+export const DUMMY_INVITATIONS: Invitation[] = [
+  {
+    id: "inv1",
+    event_id: "2",
+    inviter_id: "user-1",
+    invitee_email: "khb3025@gmail.com",
+    invitee_id: "user-1",
+    status: "pending",
+    created_at: "2026-07-09T10:00:00+09:00",
+  },
+  {
+    id: "inv2",
+    event_id: "3",
+    inviter_id: "user-2",
+    invitee_email: "khb3025@gmail.com",
+    invitee_id: "user-1",
+    status: "accepted",
+    created_at: "2026-07-05T10:00:00+09:00",
+  },
+];
+
+export const DUMMY_BLACKLISTS: Blacklist[] = [
+  {
+    id: "bl1",
+    blocker_id: "user-1",
+    blocked_organizer_id: "user-9",
+    created_at: "2026-06-01T10:00:00+09:00",
+  },
+];
+
+export const DUMMY_FRIENDSHIPS: Friendship[] = [
+  {
+    id: "f1",
+    user_id: "user-1",
+    friend_id: "user-2",
+    status: "accepted",
+    created_at: "2026-05-01T10:00:00+09:00",
+  },
+  {
+    id: "f2",
+    user_id: "user-1",
+    friend_id: "user-3",
+    status: "pending",
+    created_at: "2026-07-01T10:00:00+09:00",
+  },
+];

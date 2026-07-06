@@ -1,57 +1,80 @@
-import { DeployButton } from "@/components/deploy-button";
-import { EnvVarWarning } from "@/components/env-var-warning";
-import { AuthButton } from "@/components/auth-button";
-import { Hero } from "@/components/hero";
-import { ThemeSwitcher } from "@/components/theme-switcher";
-import { ConnectSupabaseSteps } from "@/components/tutorial/connect-supabase-steps";
-import { SignUpUserSteps } from "@/components/tutorial/sign-up-user-steps";
-import { hasEnvVars } from "@/lib/utils";
-import Link from "next/link";
+import { CalendarPlus, Link2, Users } from "lucide-react";
 import { Suspense } from "react";
+import Link from "next/link";
+import { AuthButton } from "@/components/auth-button";
+import { EnvVarWarning } from "@/components/env-var-warning";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { hasEnvVars } from "@/lib/utils";
+
+// 서비스 소개용 웰컴 페이지: "Gather" 브랜드, 핵심 기능 3가지, 시작하기 CTA로 구성
+const FEATURES = [
+  {
+    icon: CalendarPlus,
+    title: "간편한 이벤트 생성",
+    description: "제목, 날짜, 장소만 입력하면 즉시 이벤트 생성",
+  },
+  {
+    icon: Link2,
+    title: "원클릭 초대 시스템",
+    description: "자동 생성된 초대 링크를 카카오톡으로 간편 공유",
+  },
+  {
+    icon: Users,
+    title: "실시간 참여자 관리",
+    description: "참여자 목록 자동 업데이트로 현황 파악",
+  },
+] as const;
 
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center">
-      <div className="flex w-full flex-1 flex-col items-center gap-20">
-        <nav className="flex h-16 w-full justify-center border-b border-b-foreground/10">
-          <div className="flex w-full max-w-5xl items-center justify-between p-3 px-5 text-sm">
-            <div className="flex items-center gap-5 font-semibold">
-              <Link href={"/"}>Next.js Supabase Starter</Link>
-              <div className="flex items-center gap-2">
-                <DeployButton />
-              </div>
-            </div>
-            {!hasEnvVars ? (
-              <EnvVarWarning />
-            ) : (
-              <Suspense>
-                <AuthButton />
-              </Suspense>
-            )}
-          </div>
-        </nav>
-        <div className="flex max-w-5xl flex-1 flex-col gap-20 p-5">
-          <Hero />
-          <main className="flex flex-1 flex-col gap-6 px-4">
-            <h2 className="mb-4 text-xl font-medium">Next steps</h2>
-            {hasEnvVars ? <SignUpUserSteps /> : <ConnectSupabaseSteps />}
-          </main>
+      <nav className="flex h-16 w-full justify-center border-b border-b-foreground/10">
+        <div className="flex w-full max-w-5xl items-center justify-end p-3 px-5 text-sm">
+          {!hasEnvVars ? (
+            <EnvVarWarning />
+          ) : (
+            <Suspense>
+              <AuthButton />
+            </Suspense>
+          )}
+        </div>
+      </nav>
+
+      <div className="flex w-full max-w-sm flex-1 flex-col items-center justify-center gap-8 p-6 text-center">
+        <div className="flex flex-col gap-2">
+          <h1 className="text-4xl font-extrabold text-primary">Gather</h1>
+          <p className="text-sm text-muted-foreground">
+            초대 링크 하나로 모든 것을 해결하는
+            <br />
+            일회성 이벤트 관리 플랫폼
+          </p>
         </div>
 
-        <footer className="mx-auto flex w-full items-center justify-center gap-8 border-t py-16 text-center text-xs">
-          <p>
-            Powered by{" "}
-            <a
-              href="https://supabase.com/?utm_source=create-next-app&utm_medium=template&utm_term=nextjs"
-              target="_blank"
-              className="font-bold hover:underline"
-              rel="noreferrer"
-            >
-              Supabase
-            </a>
-          </p>
-          <ThemeSwitcher />
-        </footer>
+        <div className="flex w-full flex-col gap-3">
+          {FEATURES.map((feature) => {
+            const Icon = feature.icon;
+            return (
+              <Card key={feature.title}>
+                <CardContent className="flex flex-col items-center gap-2 p-5">
+                  <Icon className="h-6 w-6 text-primary" />
+                  <p className="font-semibold">{feature.title}</p>
+                  <p className="text-sm text-muted-foreground">
+                    {feature.description}
+                  </p>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </div>
+
+        <Button asChild size="lg" className="w-full">
+          <Link href="/auth/login">Google로 시작하기</Link>
+        </Button>
+
+        <p className="text-xs text-muted-foreground">
+          5-30명 규모의 소규모 이벤트에 최적화된 플랫폼
+        </p>
       </div>
     </main>
   );
