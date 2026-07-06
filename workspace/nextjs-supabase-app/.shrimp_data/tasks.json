@@ -1,0 +1,205 @@
+{
+  "tasks": [
+    {
+      "id": "66c7995e-4dc8-4afe-b6fc-f68a5a1376bf",
+      "name": "Task 002: 이벤트 라우트 구조 및 페이지 골격 생성 작업서 작성",
+      "description": "tasks/002-events-route-skeleton.md 작성. app/protected/events/(목록), app/protected/events/new(생성), app/protected/events/[eventId](상세, 공지/참여자/카풀/정산 4개 탭 골격) 빈 페이지 스캐폴딩과 app/protected/layout.tsx 네비게이션에 '모임 이벤트' 진입 링크 추가 계획을 문서화한다. 신규 라우트는 이미 app/protected/ 하위에 있어 proxy.ts의 전역 인증 게이트에 자동 포함되므로 페이지별 인증 체크 로직을 추가하지 않는다는 점을 명시한다.",
+      "notes": "레이아웃은 기존 app/protected 페이지의 max-w-5xl, flex gap-* 컨테이너 관례를 따른다.",
+      "status": "completed",
+      "dependencies": [
+        {
+          "taskId": "5fb0a2ef-9119-4305-a81a-3d69988df56a"
+        }
+      ],
+      "createdAt": "2026-07-05T10:10:05.107Z",
+      "updatedAt": "2026-07-05T11:27:44.700Z",
+      "relatedFiles": [
+        {
+          "path": "tasks/002-events-route-skeleton.md",
+          "type": "CREATE",
+          "description": "Task 002 작업 명세서"
+        },
+        {
+          "path": "app/protected/layout.tsx",
+          "type": "TO_MODIFY",
+          "description": "네비게이션에 '모임 이벤트' 링크 추가"
+        },
+        {
+          "path": "app/protected/page.tsx",
+          "type": "REFERENCE",
+          "description": "서버 컴포넌트 + 레이아웃 관례 참고"
+        },
+        {
+          "path": "app/protected/events/page.tsx",
+          "type": "CREATE",
+          "description": "이벤트 목록 페이지 골격"
+        },
+        {
+          "path": "app/protected/events/new/page.tsx",
+          "type": "CREATE",
+          "description": "이벤트 생성 페이지 골격"
+        },
+        {
+          "path": "app/protected/events/[eventId]/page.tsx",
+          "type": "CREATE",
+          "description": "이벤트 상세 페이지 골격(4개 탭)"
+        }
+      ],
+      "implementationGuide": "pseudocode:\n1. tasks/002-events-route-skeleton.md 생성.\n2. 구현 단계:\n   - app/protected/events/page.tsx: 서버 컴포넌트 골격, 'events' 페이지 placeholder\n   - app/protected/events/new/page.tsx: 서버 컴포넌트 골격, 생성 폼 위치 placeholder\n   - app/protected/events/[eventId]/page.tsx: 서버 컴포넌트, shadcn Tabs로 공지/참여자/카풀/정산 4개 탭 골격(빈 TabsContent)\n   - app/protected/layout.tsx 수정: 기존 nav의 Link 그룹에 '모임 이벤트' → /protected/events 링크 추가(기존 DeployButton/AuthButton 구조 유지)\n3. 확인 사항 섹션에 'proxy.ts matcher 수정 불필요, 페이지 내 별도 로그인 리다이렉트 작성 금지' 명시.\n4. 수락 기준: 4개 라우트가 빌드 에러 없이 접근 가능(임시 텍스트만 렌더), 네비게이션에서 링크 클릭 시 이동 확인.",
+      "verificationCriteria": "tasks/002-events-route-skeleton.md에 4개 라우트 파일 경로와 layout.tsx 수정 계획이 명시되고, '인증 체크 로직 추가 금지' 주의사항이 포함되어 있는지 확인.",
+      "analysisResult": "Phase 1: UI 우선 골격 구축 및 데이터 스키마 확정. 더미 데이터로 이벤트 목록/생성/상세(공지·참여자·카풀·정산 탭) UI를 먼저 완성해 화면 요구사항을 확정한 뒤, 마지막에 6개 테이블(events, participants, carpools, carpool_passengers, settlements, settlement_shares) DB 스키마와 RLS 정책을 구축한다. 기존 인증(app/auth/*, app/protected/*, proxy 세션 체크)과 Supabase 클라이언트 3분화(lib/supabase/client.ts, server.ts, proxy.ts)는 그대로 재사용하며 신규 인증 로직을 추가하지 않는다. shadcn/ui는 new-york 스타일, @/components/ui alias를 따르고, 도메인 컴포넌트는 components/ 바로 아래 평평한 kebab-case 파일로 추가한다. 폼은 React Hook Form + Zod, 상태관리는 Zustand 미도입. 산출물은 /tasks 디렉토리의 001~004 작업 명세서(고수준 명세, 관련 파일, 수락 기준, 구현 단계, 필요시 테스트 체크리스트)이며, 실제 코드 구현은 각 문서가 승인된 후 별도로 진행한다. Task 001~003은 상호 독립적으로 병렬 진행 가능하고, Task 004는 001~003에서 확정된 필드를 반영해야 하므로 반드시 마지막에 수행한다.",
+      "summary": "tasks/002-events-route-skeleton.md 작성 완료. 4개 라우트 파일 경로(events/page.tsx, events/new/page.tsx, events/[eventId]/page.tsx, layout.tsx 수정)와 각 구현 단계를 체크박스로 명시했고, '인증 체크 로직 추가 금지' 및 'proxy.ts matcher 수정 불필요' 주의사항을 확인 사항 섹션에 포함했다. 기존 app/protected/page.tsx의 레이아웃 컨테이너 관례를 참고 사항으로 반영했으며, 수락 기준에 빌드 무오류 접근과 네비게이션 링크 동작 확인 항목을 포함했다.",
+      "completedAt": "2026-07-05T11:27:44.697Z"
+    },
+    {
+      "id": "d1f3beb8-f2c3-4c18-a63c-2f5e951ce7c5",
+      "name": "Task 003: 공통 컴포넌트 및 더미 데이터로 UI 완성 작업서 작성",
+      "description": "tasks/003-ui-dummy-data.md 작성. 이벤트 카드/목록/상태 배지/필터 UI, 생성 폼 UI(calendar+popover 날짜 선택), 상세 페이지 4개 탭(공지/참여자/카풀/정산) UI를 하드코딩 더미 데이터로 완성하는 계획을 문서화한다. 반응형 디자인과 UI 작업 중 확인된 필드 요구사항을 Task 004로 전달하는 절차를 포함한다.",
+      "notes": "API 연동이 없는 순수 UI 작업이라 Playwright E2E 필수 규정 대상이 아니다. 대신 수동 브라우저 확인 체크리스트를 포함한다.",
+      "status": "completed",
+      "dependencies": [
+        {
+          "taskId": "5fb0a2ef-9119-4305-a81a-3d69988df56a"
+        },
+        {
+          "taskId": "66c7995e-4dc8-4afe-b6fc-f68a5a1376bf"
+        }
+      ],
+      "createdAt": "2026-07-05T10:10:05.107Z",
+      "updatedAt": "2026-07-05T11:28:23.551Z",
+      "relatedFiles": [
+        {
+          "path": "tasks/003-ui-dummy-data.md",
+          "type": "CREATE",
+          "description": "Task 003 작업 명세서"
+        },
+        {
+          "path": "components/event-card.tsx",
+          "type": "CREATE",
+          "description": "이벤트 카드 컴포넌트"
+        },
+        {
+          "path": "components/event-status-badge.tsx",
+          "type": "CREATE",
+          "description": "상태 배지 컴포넌트"
+        },
+        {
+          "path": "components/event-form.tsx",
+          "type": "CREATE",
+          "description": "이벤트 생성 폼 UI (RHF+Zod)"
+        },
+        {
+          "path": "components/login-form.tsx",
+          "type": "REFERENCE",
+          "description": "기존 폼 스타일 관례 참고"
+        },
+        {
+          "path": "types/event.ts",
+          "type": "DEPENDENCY",
+          "description": "Task 001에서 정의된 도메인 타입/Zod 스키마"
+        }
+      ],
+      "implementationGuide": "pseudocode:\n1. tasks/003-ui-dummy-data.md 생성.\n2. 구현 단계:\n   - components/event-card.tsx: 제목/일시/장소/상태 배지 표시, kebab-case 파일명, PascalCase 컴포넌트\n   - components/event-status-badge.tsx: Task 001 status enum 라벨 매핑 사용, shadcn Badge 활용\n   - app/protected/events/page.tsx에 더미 이벤트 배열과 상태별 필터(Tabs 또는 Select) 연결\n   - components/event-form.tsx: React Hook Form + zodResolver(Task 001 zod 스키마), Input/Textarea/Calendar+Popover(날짜)/Input(정원) 구성, 기존 login-form.tsx의 Card+Label+Input 스타일 관례 따름\n   - app/protected/events/[eventId]/page.tsx의 4개 TabsContent에 더미 참여자/카풀/정산 목록(Table 컴포넌트) 렌더\n   - 반응형: sm/md/lg 브레이크포인트로 카드 목록 grid 컬럼 조정\n3. UI 작업 중 발견된 필드 변경 요구사항을 문서 하단 '스키마 반영 필요 사항' 섹션에 기록하고 Task 004 입력으로 전달.\n4. 수락 기준: 모든 화면이 더미 데이터로 렌더되고 모바일/데스크톱 레이아웃 깨짐 없음, 브라우저 수동 확인 완료.",
+      "verificationCriteria": "tasks/003-ui-dummy-data.md에 컴포넌트별 더미 데이터 구현 계획, 반응형 확인 절차, '스키마 반영 필요 사항' 기록 섹션이 포함되어 있는지 확인.",
+      "analysisResult": "Phase 1: UI 우선 골격 구축 및 데이터 스키마 확정. 더미 데이터로 이벤트 목록/생성/상세(공지·참여자·카풀·정산 탭) UI를 먼저 완성해 화면 요구사항을 확정한 뒤, 마지막에 6개 테이블(events, participants, carpools, carpool_passengers, settlements, settlement_shares) DB 스키마와 RLS 정책을 구축한다. 기존 인증(app/auth/*, app/protected/*, proxy 세션 체크)과 Supabase 클라이언트 3분화(lib/supabase/client.ts, server.ts, proxy.ts)는 그대로 재사용하며 신규 인증 로직을 추가하지 않는다. shadcn/ui는 new-york 스타일, @/components/ui alias를 따르고, 도메인 컴포넌트는 components/ 바로 아래 평평한 kebab-case 파일로 추가한다. 폼은 React Hook Form + Zod, 상태관리는 Zustand 미도입. 산출물은 /tasks 디렉토리의 001~004 작업 명세서(고수준 명세, 관련 파일, 수락 기준, 구현 단계, 필요시 테스트 체크리스트)이며, 실제 코드 구현은 각 문서가 승인된 후 별도로 진행한다. Task 001~003은 상호 독립적으로 병렬 진행 가능하고, Task 004는 001~003에서 확정된 필드를 반영해야 하므로 반드시 마지막에 수행한다.",
+      "summary": "tasks/003-ui-dummy-data.md 작성 완료. 컴포넌트별(event-card, event-status-badge, event-form) 더미 데이터 구현 계획과 상세 페이지 4개 탭 더미 렌더 계획을 체크박스로 명시했고, 반응형 grid 조정 및 브라우저 수동 확인 체크리스트(카드 필터, 폼 검증, 탭 전환, 모바일/데스크톱 뷰포트)를 포함했다. '스키마 반영 필요 사항' 섹션을 두어 UI 구현 중 발견되는 필드 요구사항을 Task 004로 전달하는 절차를 문서화했다. login-form.tsx의 기존 Card+Label+Input 스타일 관례를 참고 사항으로 반영했다.",
+      "completedAt": "2026-07-05T11:28:23.549Z"
+    },
+    {
+      "id": "ed0c841f-b445-425a-a104-df62185d6a69",
+      "name": "Task 004: 데이터베이스 스키마 및 RLS 정책 구축 작업서 작성",
+      "description": "tasks/004-db-schema-rls.md 작성. Task 003까지 확정된 필드 요구사항을 반영해 supabase/migrations에 6개 테이블(events, participants, carpools, carpool_passengers, settlements, settlement_shares) 생성, auth.users 직접 FK 참조 및 status CHECK 제약, ON DELETE CASCADE, 전 테이블 RLS 정책을 정의하는 계획을 문서화한다. mcp__supabase__apply_migration 적용, generate_typescript_types로 database.types.ts 생성, Task 001 임시 타입 정합화, get_advisors 보안 점검까지의 절차를 포함한다.",
+      "notes": "이 Task는 Task 001~003에서 확정된 필드를 반영해야 하므로 반드시 마지막에 수행하며, Phase 2(Task 005 이벤트 CRUD)의 Server Action에서 재사용할 RLS 정책을 이번에 정확히 설계해 이후 정책 수정이 없도록 한다.",
+      "status": "pending",
+      "dependencies": [
+        {
+          "taskId": "5fb0a2ef-9119-4305-a81a-3d69988df56a"
+        },
+        {
+          "taskId": "66c7995e-4dc8-4afe-b6fc-f68a5a1376bf"
+        },
+        {
+          "taskId": "d1f3beb8-f2c3-4c18-a63c-2f5e951ce7c5"
+        }
+      ],
+      "createdAt": "2026-07-05T10:10:05.107Z",
+      "updatedAt": "2026-07-05T10:10:05.107Z",
+      "relatedFiles": [
+        {
+          "path": "tasks/004-db-schema-rls.md",
+          "type": "CREATE",
+          "description": "Task 004 작업 명세서"
+        },
+        {
+          "path": "docs/PRD.md",
+          "type": "REFERENCE",
+          "description": "6개 테이블 데이터 모델 정의",
+          "lineStart": 137,
+          "lineEnd": 202
+        },
+        {
+          "path": "supabase/migrations",
+          "type": "CREATE",
+          "description": "마이그레이션 SQL 파일 위치"
+        },
+        {
+          "path": "types/database.types.ts",
+          "type": "TO_MODIFY",
+          "description": "generate_typescript_types 결과로 갱신될 파일"
+        },
+        {
+          "path": "types/event.ts",
+          "type": "TO_MODIFY",
+          "description": "Task 001 임시 타입을 Database 제네릭 기반으로 정합화"
+        }
+      ],
+      "implementationGuide": "pseudocode:\n1. tasks/004-db-schema-rls.md 생성.\n2. 구현 단계:\n   - supabase/migrations/<timestamp>_create_events_tables.sql 작성: 6개 CREATE TABLE(PRD 필드 그대로), status 컬럼 CHECK IN (...), FK ON DELETE CASCADE(participants.event_id, carpools.event_id, carpool_passengers.carpool_id, settlements.event_id, settlement_shares.settlement_id)\n   - RLS 정책: 모든 테이블 ENABLE ROW LEVEL SECURITY; SELECT는 인증된 사용자 전체 허용; INSERT/UPDATE/DELETE는 소유자(events.organizer_id/carpools.driver_id/settlements.created_by = auth.uid()) 한정, participants/carpool_passengers/settlement_shares는 본인 행 또는 이벤트 주최자 권한으로 제한\n   - mcp__supabase__list_tables로 기존 스키마 확인 후 apply_migration 실행\n   - mcp__supabase__generate_typescript_types 실행하여 types/database.types.ts 갱신\n   - types/event.ts의 임시 인터페이스를 Database['public']['Tables'][...] 제네릭 기반으로 재정의\n   - mcp__supabase__get_advisors로 RLS/보안 경고 점검, 경고 0건 확인\n3. 수락 기준: 6개 테이블 생성 및 RLS 활성화 확인, database.types.ts에 6개 테이블 타입 반영, get_advisors 경고 0건, Task 001 타입과 필드 정합.\n4. 테스트 체크리스트(DB/로직 작업이므로 필수): apply_migration 성공 로그, generate_typescript_types 결과 diff 확인, get_advisors 결과 스크린샷/로그, 임시 타입-실제 타입 필드 비교표.",
+      "verificationCriteria": "tasks/004-db-schema-rls.md에 6개 테이블 CREATE TABLE 계획, RLS 정책(SELECT/INSERT/UPDATE/DELETE별), CASCADE 정책, apply_migration/generate_typescript_types/get_advisors 절차와 테스트 체크리스트가 모두 포함되어 있는지 확인.",
+      "analysisResult": "Phase 1: UI 우선 골격 구축 및 데이터 스키마 확정. 더미 데이터로 이벤트 목록/생성/상세(공지·참여자·카풀·정산 탭) UI를 먼저 완성해 화면 요구사항을 확정한 뒤, 마지막에 6개 테이블(events, participants, carpools, carpool_passengers, settlements, settlement_shares) DB 스키마와 RLS 정책을 구축한다. 기존 인증(app/auth/*, app/protected/*, proxy 세션 체크)과 Supabase 클라이언트 3분화(lib/supabase/client.ts, server.ts, proxy.ts)는 그대로 재사용하며 신규 인증 로직을 추가하지 않는다. shadcn/ui는 new-york 스타일, @/components/ui alias를 따르고, 도메인 컴포넌트는 components/ 바로 아래 평평한 kebab-case 파일로 추가한다. 폼은 React Hook Form + Zod, 상태관리는 Zustand 미도입. 산출물은 /tasks 디렉토리의 001~004 작업 명세서(고수준 명세, 관련 파일, 수락 기준, 구현 단계, 필요시 테스트 체크리스트)이며, 실제 코드 구현은 각 문서가 승인된 후 별도로 진행한다. Task 001~003은 상호 독립적으로 병렬 진행 가능하고, Task 004는 001~003에서 확정된 필드를 반영해야 하므로 반드시 마지막에 수행한다."
+    },
+    {
+      "id": "5fb0a2ef-9119-4305-a81a-3d69988df56a",
+      "name": "Task 001: 도메인 타입 정의 및 패키지/컴포넌트 사전 설치 작업서 작성",
+      "description": "tasks/001-domain-types-and-deps.md 작성. npm 패키지(react-hook-form, zod, @hookform/resolvers, date-fns) 설치와 신규 shadcn/ui 컴포넌트(form, dialog, select, table, tabs, textarea, avatar, calendar, popover, alert-dialog) 추가 계획, docs/PRD.md 데이터 모델(6개 테이블)에 대응하는 임시 도메인 타입/Zod 스키마/status enum을 types/event.ts에 정의하는 계획을 문서화한다. DB 경계 인터페이스 필드는 DB 컬럼명 그대로 스네이크케이스로 정의해 Task 004 정합화 비용을 최소화하고(전역 CLAUDE.md camelCase 기본 방침의 명시적 예외로 문서에 근거 기재), 상수는 SCREAMING_SNAKE_CASE, 스키마 변수는 camelCase+Schema 접미사로 통일한다. 이 산출물은 Task 002/003/004가 공통으로 참조하므로 필드 누락이 없어야 한다.",
+      "notes": "components.json alias(@/components/ui) 기준으로 shadcn CLI 실행. 문서 작성만 하며 실제 설치/코드 작성은 승인 후 별도 구현 단계에서 수행.",
+      "status": "completed",
+      "dependencies": [],
+      "createdAt": "2026-07-05T10:10:05.107Z",
+      "updatedAt": "2026-07-05T11:23:12.499Z",
+      "relatedFiles": [
+        {
+          "path": "tasks/001-domain-types-and-deps.md",
+          "type": "CREATE",
+          "description": "Task 001 작업 명세서"
+        },
+        {
+          "path": "docs/PRD.md",
+          "type": "REFERENCE",
+          "description": "데이터 모델 및 기능 요구사항 근거",
+          "lineStart": 137,
+          "lineEnd": 214
+        },
+        {
+          "path": "package.json",
+          "type": "REFERENCE",
+          "description": "현재 설치된 의존성 확인"
+        },
+        {
+          "path": "components.json",
+          "type": "REFERENCE",
+          "description": "shadcn alias/style 설정 확인"
+        },
+        {
+          "path": "types/event.ts",
+          "type": "CREATE",
+          "description": "도메인 타입/Zod 스키마/status enum 파일"
+        }
+      ],
+      "implementationGuide": "pseudocode:\n1. tasks/001-domain-types-and-deps.md 생성, 섹션: 목표/관련 파일/선행 작업(없음)/네이밍 규칙/구현 단계/수락 기준/이후 의존 작업.\n2. 네이밍 규칙 섹션: DB 경계 인터페이스 필드=스네이크케이스(DB 컬럼 그대로, Task004 Database 제네릭과 diff 최소화 목적), 상수 객체명=SCREAMING_SNAKE_CASE(EVENT_STATUS 등), zod 스키마 변수=camelCase+Schema 접미사(eventFormSchema 등), 컴포넌트=PascalCase, 파일명=kebab-case. 이는 전역 CLAUDE.md camelCase 기본 방침의 의도적 예외이며 이유를 명시.\n3. 구현 단계 체크박스: npm install 4종 / shadcn add 10종 / types/event.ts에 EVENT_STATUS·PARTICIPANT_STATUS·CARPOOL_PASSENGER_STATUS(코드+한국어 라벨 매핑) 정의 / Event·Participant·Carpool·CarpoolPassenger·Settlement·SettlementShare 인터페이스(PRD 필드 그대로) 정의 / 폼 입력 전용 zod 스키마(생성 필드 id/organizer_id/status 등 제외한 부분집합) 정의.\n4. 이후 의존 작업 섹션: Task 002(라우트)·Task 003(UI/폼)·Task 004(DB 정합화)가 이 파일에 의존하므로 필드 누락 시 하위 작업에 영향 전파됨을 경고.\n5. 수락 기준: 패키지 설치 완료, shadcn 10종 컴포넌트 생성, types/event.ts 타입 에러 없이 컴파일, PRD 6개 테이블 필드 전부 매핑.",
+      "verificationCriteria": "tasks/001-domain-types-and-deps.md가 목표/관련 파일/네이밍 규칙/구현 단계(체크박스)/수락 기준(체크박스)/이후 의존 작업 구조를 갖추고, PRD 6개 테이블 필드가 빠짐없이 매핑되며, 네이밍 규칙에 스네이크케이스 예외 근거가 명시되어 있는지 확인.",
+      "analysisResult": "Phase 1: UI 우선 골격 구축 및 데이터 스키마 확정. 더미 데이터로 이벤트 목록/생성/상세(공지·참여자·카풀·정산 탭) UI를 먼저 완성해 화면 요구사항을 확정한 뒤, 마지막에 6개 테이블 DB 스키마와 RLS 정책을 구축한다. 기존 인증/Supabase 3분화는 재사용, shadcn new-york 스타일, 도메인 컴포넌트는 components/ 평평한 kebab-case 구조. Task 001의 types/event.ts는 Task 002/003/004가 공통으로 의존하는 산출물이므로 네이밍 규칙(DB 경계 인터페이스=스네이크케이스, 상수=SCREAMING_SNAKE_CASE, 스키마 변수=camelCase+Schema 접미사)을 명확히 문서화해 전역 CLAUDE.md의 camelCase 기본 방침과의 트레이드오프를 절충한다.",
+      "summary": "tasks/001-domain-types-and-deps.md 작성 완료. 목표/관련 파일/선행 작업/네이밍 규칙(스네이크케이스 예외 근거 포함)/구현 단계 체크박스(npm 4종, shadcn 10종, status enum 3종, 도메인 인터페이스 6종, 폼 zod 스키마)/수락 기준/이후 의존 작업(Task 002/003/004 영향 경고) 구조를 모두 갖췄다. PRD의 6개 테이블 필드를 전부 인터페이스로 매핑했으며, DB 경계 필드는 스네이크케이스, 상수는 SCREAMING_SNAKE_CASE, 스키마 변수는 camelCase+Schema 접미사 규칙과 그 이유를 명시했다. 노트에 따라 실제 npm 설치/shadcn 추가/types/event.ts 코드 작성은 승인 후 별도 구현 단계로 남겨두고 문서 작성만 수행했다.",
+      "completedAt": "2026-07-05T11:23:12.495Z"
+    }
+  ]
+}
