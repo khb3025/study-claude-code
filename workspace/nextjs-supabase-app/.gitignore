@@ -43,3 +43,6 @@ next-env.d.ts
 
 # eslint
 .eslintcache
+
+# 로컬 MCP 서버 소스(별도 서브프로젝트, 이 앱의 lint/빌드 대상 아님)
+/mcp-shrimp-task-manager/
