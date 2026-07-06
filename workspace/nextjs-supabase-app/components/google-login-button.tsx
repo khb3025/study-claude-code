@@ -56,7 +56,7 @@ export function GoogleLoginButton({ onError }: GoogleLoginButtonProps) {
           d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.45-3.45C17.95 1.19 15.24 0 12 0 7.3 0 3.23 2.7 1.24 6.61l4.01 3.12c.95-2.84 3.61-4.98 6.75-4.98z"
         />
       </svg>
-      Continue with Google
+      Google로 계속하기
     </Button>
   );
 }

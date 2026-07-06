@@ -18,6 +18,7 @@ export default function ProtectedLayout({
           <div className="flex w-full max-w-5xl items-center justify-between p-3 px-5 text-sm">
             <div className="flex items-center gap-5 font-semibold">
               <Link href={"/"}>Next.js Supabase Starter</Link>
+              <Link href={"/events"}>모임 이벤트</Link>
               <div className="flex items-center gap-2">
                 <DeployButton />
               </div>
