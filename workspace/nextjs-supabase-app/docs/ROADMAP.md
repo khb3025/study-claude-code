@@ -59,7 +59,7 @@
 
 ## 개발 단계
 
-### Phase 1: UI 우선 골격 구축 및 데이터 스키마 확정
+### Phase 1: UI 우선 골격 구축 및 데이터 스키마 확정 ✅
 
 > UI/UX를 더미 데이터로 먼저 완성해 화면 요구사항을 확정한 뒤 마지막에 DB 스키마를 구축한다. 화면 작업 중 드러나는 필드/상태 변경 요구를 스키마에 한 번에 반영해 테이블 재작업을 줄이는 순서다. Task 001~003은 스키마와 독립적이므로 병렬 진행 가능하다.
 
@@ -90,7 +90,7 @@
     - 카풀 탭을 운전자별 카드 레이아웃으로 재구성: 운전자 등록(`CarpoolVolunteerDialog`), 운전자→탑승자 초대(`CarpoolInvitePassengerDialog`), 탑승자→운전자 신청(`CarpoolRequestButton`), 초대/신청 수락·거절(`CarpoolPassengerActions`, `viewerRole` 기반 분기)을 구현. 탑승 상태를 `초대중(invited)`/`신청(requested)`/`확정(confirmed)`/`거절(rejected)`로 세분화하고 `initiated_by`(운전자/탑승자)로 제안 주체를 구분해, 운전자가 신청을 거절하면 해당 탑승자는 재신청이 막히되(재초대는 가능) 탑승자가 초대를 거절한 경우는 재신청이 가능하도록 규칙을 분리했다.
     - 위 항목은 모두 마크업/더미데이터 단계이며 실제 Server Actions/DB 반영은 Task 004 이후로 이연.
 
-- **Task 004: 데이터베이스 스키마 및 RLS 정책 구축 (확장)**
+- **Task 004: 데이터베이스 스키마 및 RLS 정책 구축 (확장)** ✅
   - Task 003까지 확정된 화면/필드 요구사항과 신규 기능(F006~F011) 요구사항을 반영해 `supabase/migrations`에 기존 6개 테이블(events, participants, carpools, carpool_passengers, settlements, settlement_shares) + 신규 3개 테이블(invitations, blacklists, friendships) 생성 마이그레이션 작성
   - `events`에 `join_type`(선착순/비밀번호/승인) CHECK 제약 컬럼과 `password_hash` 컬럼 추가, 더불어 `schedule`/`items_to_bring`(nullable text), `recurrence_type`(CHECK IN none/daily/weekly/monthly_nth_weekday/monthly_date), `settlement_visible`(boolean, DEFAULT true) 컬럼 추가
   - `participants`에 `pending_approval`/`kicked` status 값 추가 및 `kicked_at`/`kick_reason`/`kick_reason_visible` 컬럼 추가
@@ -101,72 +101,107 @@
   - Task 001에서 임시로 작성한 도메인 타입/Zod 스키마를 `database.types.ts` 기반으로 정합화
   - `get_advisors`로 RLS/보안 경고 점검
 
-- **Task 004-1: 관리자 권한 부트스트랩**
+- **Task 004-1: 관리자 권한 부트스트랩** ✅
   - `admin_users` 테이블(user_id → auth.users.id PK, granted_at) 생성 마이그레이션 작성
   - RLS에서 사용할 `is_admin()` 헬퍼 함수(`EXISTS(SELECT 1 FROM admin_users WHERE user_id = auth.uid())`) 작성
   - 최초 관리자 계정을 수동 등록하는 SQL 스크립트 작성 및 문서화
+  - **[비고]** Task 004 실행 시 별도 문서 없이 마이그레이션(`0002_admin_users_and_helpers.sql`)으로 함께 적용 완료됨.
 
-### Phase 2: 핵심 기능 구현 (더미 → 실제 데이터 연동)
+- **Task 004-2: 이벤트 사진 업로드 기능** ✅ - 완료
+  - See: `tasks/004-2-event-image-upload.md`
+  - ✅ `events.image_url`(nullable text) 컬럼, `event-images` Storage 버킷 및 `storage.objects` RLS(업로드/삭제) 마이그레이션 적용 완료(`0014`~`0016`)
+  - ✅ 브라우저 클라이언트(`lib/supabase/client.ts`) 직접 업로드 방식으로 `EventForm`에 파일 검증·업로드·미리보기 구현
+  - ✅ 이벤트 상세 페이지 조건부 이미지 표시, `next.config.ts`(`images.remotePatterns`) 반영
+  - ✅ Task 005의 `createEvent`/`updateEvent`가 `image_url`을 다른 필드와 함께 그대로 저장
+
+### Phase 2: 핵심 기능 구현 (더미 → 실제 데이터 연동) ✅
 
 > 구현 순서(스키마→이벤트→참여자→카풀→정산)를 따른다. 각 Task는 Server Actions와 RLS를 통해 실제 데이터로 교체하며, Playwright MCP E2E 테스트로 검증한다.
 
-- **Task 005: 이벤트 CRUD 구현 (F001)** - 우선순위
-  - 이벤트 생성 Server Action (Zod 재검증, organizer_id = 현재 사용자, join_type 선택 및 password_hash 저장, schedule/items_to_bring/recurrence_type/settlement_visible 저장 포함)
-  - 목록 페이지 서버 컴포넌트에서 실제 events 조회 + 상태별 필터 + 블랙리스트 등록된 주최자 이벤트 제외
-  - 상세 페이지 공지 탭(설명/장소/일시/현재 확정 참석자 수/일정/준비물) 표시 및 주최자 수정, 이벤트 삭제(alert-dialog 확인)
-  - 주최자 권한 검증(RLS + 서버 액션 이중 확인), 저장 성공 시 상세 페이지 리다이렉트
-  - Playwright MCP로 생성(3가지 join_type, 반복 설정 각 유형)→목록노출→상세(참석자 수 표시 확인)→수정→삭제 E2E 테스트
+- **Task 005: 이벤트 CRUD 구현 (F001)** ✅ - 완료
+  - See: `tasks/005-event-crud.md`
+  - ✅ `app/events/actions.ts`: `createEvent`/`updateEvent`/`deleteEvent` Server Action (Zod 재검증, organizer_id = 현재 사용자, join_type별 password_hash(scrypt) 저장, schedule/items_to_bring/recurrence_type 및 세부 필드/settlement_visible/**image_url**(Task 004-2) 저장 포함)
+  - ✅ 목록 페이지(`app/events/page.tsx`) 서버 컴포넌트에서 실제 `events` 조회로 교체(상태별 필터는 기존 클라이언트 UI 유지)
+  - ✅ 상세 페이지 공지 탭을 실제 `events`/`participants`(확정 인원 수) 조회로 교체, 주최자 전용 "수정하기"/"삭제" 버튼 추가(`DeleteEventButton`, alert-dialog 확인)
+  - ✅ 주최자 권한 검증(RLS + 서버 액션 이중 확인), 저장 성공 시 상세 페이지 리다이렉트
+  - ✅ `EventForm`이 `mode`("create"|"edit")에 따라 `createEvent`/`updateEvent` 호출로 동작(기존 `console.log` 더미 제출 대체)
+  - **[비고]** `recurrence_weekday`/`recurrence_week_of_month`/`recurrence_day_of_month`/`recurrence_time` 컬럼이 Task 004 마이그레이션에 누락되어 있어 이번 Task에서 `0017_events_recurrence_details.sql`로 추가 적용함. 참여자/카풀/정산 탭은 계획대로 Task 006~008에서 실제 데이터로 전환 예정이며 이번 Task에서는 더미 데이터 유지. Playwright E2E 테스트는 미실행.
 
-- **Task 006: 참여자 관리, 대기자 자동 승격, 강퇴 구현 (F002)**
-  - 참여 신청 Server Action: `join_type`별 분기(선착순 확정/대기, 비밀번호 검증 후 확정/대기, 승인 유형은 `pending_approval` 등록)
-  - 참여 취소 Server Action: 확정자 취소 시 `joined_at` 최선순 대기자 자동 "확정" 승격 (동시성 고려, DB 트랜잭션/RPC)
-  - 참여자 탭에서 상태(확정/대기/승인대기/취소/강퇴) 목록 표시, 주최자 승인 처리, 강제 취소 처리
-  - 강퇴 Server Action: 강퇴 사유 입력 + "사유 비공개" 체크박스(alert-dialog), `kicked` 상태 전환 및 `kicked_at`/`kick_reason`/`kick_reason_visible` 기록
-  - 참여자 탭 조회 쿼리에 주최자/확정 참여자만 열람 가능하도록 접근 제어 적용(그 외 사용자는 잠금 안내)
-  - Playwright MCP로 정원 초과 대기 등록/취소 시 승격, 비밀번호 검증 실패, 승인 대기→승인, 강퇴(공개/비공개), 비확정 참여자의 탭 접근 차단 시나리오 E2E 테스트
+- **Task 005-1: 프로필 페이지 구현 (닉네임/아바타/공개 설정)** ✅ - 완료(Task 001~005 진행 중 누락 발견되어 추가)
+  - `profiles.nickname`(text, nullable), `profiles.name_visible`(boolean, default false) 컬럼 마이그레이션(`0018_profiles_nickname.sql`), `avatars` Storage 버킷 + 본인 폴더 한정 RLS(`0019_avatars_storage_policy.sql`)
+  - `app/profile/actions.ts`의 `updateProfile` Server Action, `app/profile/page.tsx`(아바타/닉네임/실명 공개 토글/만든·참여한 이벤트 수/계정 정보/로그아웃)
+  - 닉네임 미설정 사용자는 프로필 페이지가 곧 온보딩 화면으로 전환되어 안내(설정 전에는 통계 대신 설정 폼만 노출)
+  - Google OAuth 콜백(`app/auth/callback/route.ts`) 및 이메일/비밀번호 로그인(`login-form.tsx`) 양쪽에서, 닉네임 미설정 사용자는 `/events` 대신 `/profile`로 리다이렉트
+  - 모바일 하단 내비게이션의 "프로필" 탭과 데스크톱 상단 `AuthButton`(아바타+닉네임 링크)이 모두 `/profile`로 연결되도록 수정
+  - **[비고]** PRD 원문(400행)은 "별도 profiles 테이블 없음, auth.users 직접 FK 참조"를 원칙으로 전제했으나, `auth.users`는 Supabase Auth 스키마 소유라 PostgREST(REST API)로 직접 조회가 불가능하다(관리자 Admin API/서버 전용 클라이언트로만 접근 가능). 주최자·참여자 등 "타인"의 닉네임/아바타/실명 공개 여부를 클라이언트에서 표시하려면 조회 가능한 테이블이 필요해, Task 004에서 삭제되지 않고 남아있던 스타터킷 기본 `profiles` 테이블(가입 시 `handle_new_user()` 트리거로 auth.users 정보 자동 복제)을 되살려 사용자 표시 정보의 저장소로 채택함. PRD.md의 `profiles` 섹션에 근거를 보강 기재함.
 
-- **Task 007: 카풀 관리 구현 (F003)**
-  - 확정 참여자의 운전자 등록 Server Action (좌석 수, 출발지, 출발 시간)
-  - 운전자→탑승자 초대 Server Action(`initiated_by='driver'`, status `invited`) 및 탑승자→운전자 신청 Server Action(`initiated_by='passenger'`, status `requested`)
-  - 초대/신청에 대한 수락·거절 Server Action: 탑승자는 자신에게 온 `invited` 건을, 운전자는 자신의 카풀에 걸린 `requested` 건을 각각 수락/거절 가능
-  - 운전자가 신청을 거절(`rejected`+`initiated_by='passenger'`)하면 해당 탑승자의 동일 운전자 재신청을 서버에서 차단, 반대로 탑승자가 초대를 거절(`rejected`+`initiated_by='driver'`)한 경우는 재신청 허용
-  - 초대 대상자 조회 쿼리는 현재 활성(`invited`/`requested`/`confirmed`) 상태가 아닌 확정 참여자를 모두 포함(거절 이력 있어도 재초대 가능하도록), **단 이벤트 내 다른 카풀의 운전자와 다른 운전자에게 이미 `confirmed`된 참여자는 제외**
-  - 운전자 등록(운전자로 지원하기) Server Action: 신청자가 다른 운전자에게 `invited`/`requested`/`confirmed` 상태로 걸려 있으면 곧바로 등록하지 않고 상태별 확인 메시지를 반환, 클라이언트가 "무시하고 지원하기"를 확정 제출하면 기존 다른 운전자 카풀의 탑승자 레코드를 삭제한 뒤 운전자로 등록
-  - 카풀 탭 UI(운전자별 카드, 초대/신청 버튼, 수락/거절 버튼, 운전자 지원 시 상태별 확인 다이얼로그) 실제 데이터 연동
-  - Playwright MCP로 운전자 등록→상호 초대/신청→수락/거절→거절 후 재신청 차단·재초대 허용, 운전자 간 초대 불가, 타 운전자 확정 탑승자 초대 불가, 탑승 대상자의 운전자 지원 시 경고→무시하고 지원 시 기존 카풀 탑승 레코드 제거 E2E 테스트
+- **Task 006: 참여자 관리, 대기자 자동 승격, 강퇴 구현 (F002)** ✅ - 완료
+  - `join_event`/`cancel_participation`/`approve_participant` RPC(`SECURITY DEFINER`, 마이그레이션 `event_participant_rpcs`)로 정원 체크·대기자 승격을 원자적으로 처리
+  - `app/events/participant-actions.ts` Server Action(승인/거절/강퇴는 기존 RLS 업데이트 정책으로 보호되는 일반 update)
+  - `components/participant-row-actions.tsx`를 실제 액션 호출로 연결, `app/events/[eventId]/page.tsx`가 참여자 탭을 실제 DB 데이터로 렌더링하고 `isConfirmedParticipant` 판별을 실제 로그인 사용자(`supabase.auth.getUser()`)로 교체
+  - **[비고]** `get_advisors` security에 각 RPC의 "SECURITY DEFINER 함수를 익명/로그인 사용자가 호출 가능" 경고가 있으나, 함수 내부에서 `auth.uid()` 기반 권한 체크를 직접 수행하는 의도된 설계임(원자적 정원/대기열 처리를 위해 RLS 우회가 필요).
+  - **[2026-07-07 Playwright MCP E2E 검증 완료]** 실제 계정(주최자 Google 로그인, 참여자 이메일/비밀번호 로그인)으로 승인제 이벤트 생성 → 참가 신청(승인 대기) → 주최자 승인(확정 전환) → 강퇴(사유 노출) → 재초대 수락 시 강퇴 기록 삭제·재확정까지 전 과정 검증. 참가 방식별 참가 버튼(선착순 즉시/비밀번호 모달/승인 대기) UI(`components/join-event-button.tsx`)도 함께 추가 구현 및 검증됨.
+  - **[추가]** 참여자 본인 취소 UI(`components/participant-cancel-button.tsx`)를 참여자 탭에 연결하고, `cancel_participation` RPC(마이그레이션 `add_cancel_participation_cutoff`)에 이벤트 시작 24시간 전 취소 금지 컷오프를 추가함(confirmed 상태만 적용, waitlisted/pending_approval은 정원에 반영되지 않아 컷오프 없이 항상 취소 허용). 컷오프 여부는 서버 컴포넌트에서 `event.starts_at` 기준으로 미리 계산해 버튼 대신 안내 문구로 노출.
 
-- **Task 008: 정산 구현 (F004)**
-  - 정산 항목 생성 Server Action (총액 입력, 확정 참여자 수로 1/N 자동 계산 후 settlement_shares 일괄 생성)
-  - 참여자별 입금 완료/미완료 토글(주최자), 정산 탭 UI 실제 데이터 연동
-  - 나눗셈 나머지 처리 정책 정의(예: 첫 대상자에 잔액 가산) 및 표시
-  - `settlement_visible` 값에 따라 정산 탭 조회 쿼리/화면을 분기(주최자는 항상 조회, 참여자는 공개 설정 시에만 조회, 비공개 시 안내 문구 표시)
-  - Playwright MCP로 항목 생성→1/N 계산 검증→완료 체크, 공개/비공개 설정별 참여자 열람 가능 여부 E2E 테스트
+- **Task 007: 카풀 관리 구현 (F003)** ✅ - 완료
+  - `register_carpool`(force 파라미터로 충돌 확인/무시 지원)/`invite_passenger`/`request_carpool`/`respond_carpool_passenger` RPC(마이그레이션 `event_carpool_rpcs`)
+  - `app/events/carpool-actions.ts` Server Action, 기존 4개 카풀 컴포넌트(`carpool-volunteer-dialog.tsx`, `carpool-invite-passenger-dialog.tsx`, `carpool-request-button.tsx`, `carpool-passenger-actions.tsx`)를 신규 작성 없이 실제 액션 호출로 연결
+  - **[비고]** get_advisors 경고는 Task 006과 동일한 사유로 의도된 설계.
+  - **[2026-07-07 Playwright MCP E2E 검증 완료]** 운전자 등록 → 탑승자 초대 → 참여자 수락까지 실제 계정으로 검증, "확정" 상태 전환 확인.
 
-- **Task 008-1: 핵심 기능 통합 테스트**
-  - Playwright MCP로 두 사용자 시나리오(정기 수영 강습, 비정기 캠핑+카풀) 전체 플로우 E2E 테스트
-  - RLS 권한 경계(비주최자 수정 차단 등) 및 비즈니스 로직 검증
-  - 정원 경계, 좌석 0, 참여자 0명 정산 등 엣지 케이스 및 에러 핸들링 테스트
+- **Task 008: 정산 구현 (F004)** ✅ - 완료
+  - `create_settlement` RPC(마이그레이션 `event_settlement_rpc`, 확정 참여자 수 1/N + 나머지는 `joined_at` 최선순 참여자에게 가산)
+  - `app/events/settlement-actions.ts`의 `createSettlement`/`toggleSettlementPaid`, 신규 `components/create-settlement-dialog.tsx`(주최자 전용 정산 생성 다이얼로그), `components/settlement-share-toggle.tsx`(입금 완료 토글)
+  - 정산 탭 조회는 기존 RLS(`settlement_shares_select_self_or_visible_or_privileged`)가 `settlement_visible`/본인 여부를 이미 분기하고 있어 별도 쿼리 분기 없이 그대로 활용
+  - **[비고]** get_advisors 경고는 Task 006과 동일한 사유로 의도된 설계.
+  - **[2026-07-07 Playwright MCP E2E 검증 완료]** 정산 생성 시 1/N 자동 계산(확정 참여자 1명 → 전액 배분) 확인, 완료 처리 확인 알림창 및 되돌리기 불가 확인, **강퇴된 이후에도 정산 완료 확인증이 유지**되는 핵심 요구사항까지 실제 계정으로 검증.
 
-- **Task 008-2: 이메일 초대 구현 (F008)**
-  - 이벤트 상세에서 가입자 이메일로 초대 생성 Server Action (`invitations` insert, invitee_id는 이메일 매칭되는 가입자가 있으면 채움)
-  - 초대 목록 페이지(`app/events/invitations`) 서버 컴포넌트에서 본인 초대 조회, 수락/거절 Server Action
-  - 수락 시 참여자 등록(해당 이벤트 join_type 규칙 적용), 거절 시 상태만 변경
-  - Playwright MCP로 초대 생성→목록 노출→수락→참여자 반영, 거절 E2E 테스트
+- **Task 008-1: 핵심 기능 통합 테스트** ✅ - 완료(2026-07-07 Playwright MCP E2E로 재검증)
+  - See: `tasks/008-1-integration-test.md`
+  - Task 006~008-5 전 기능(참여 신청/승인/강퇴, 카풀 등록/초대/수락, 정산 생성/완료/확인증, 이메일 초대, 블랙리스트, 친구, 나의 주최/참여 목록)을 실제 계정(주최자 Google 로그인, 참여자 이메일/비밀번호 로그인)으로 Playwright MCP를 통해 브라우저에서 직접 검증 완료
+  - **[비고]** 관리자 페이지(Phase 3) 시나리오는 범위 밖이며 미실행
 
-- **Task 008-3: 블랙리스트 구현 (F009)**
-  - 초대 목록에서 주최자 차단 Server Action (`blacklists` insert, unique 제약 위반 처리)
-  - 이벤트 목록/초대 목록 조회 쿼리에 블랙리스트 필터링 반영
-  - Playwright MCP로 차단→이벤트 목록/초대 목록에서 해당 주최자 이벤트 미노출 검증 E2E 테스트
+- **Task 008-2: 이메일 초대 구현 (F008)** ✅ - 완료
+  - `app/events/invite-actions.ts`: `inviteByEmail`(가입자 이메일 매칭 후 `invitations` insert), `acceptInvitation`(RPC `accept_invitation`), `declineInvitation`, `blockOrganizer` Server Action
+  - 이벤트 상세 참여자 탭 상단에 주최자 전용 "초대하기" 버튼(`components/invite-by-email-dialog.tsx`) 추가
+  - 초대 목록 페이지(`app/events/invitations`)를 더미 데이터에서 실제 서버 컴포넌트 조회로 전환, `components/invitation-actions.tsx`로 수락/거절/차단 버튼을 실제 Server Action에 연결
+  - 초대 수락은 `accept_invitation` RPC(`SECURITY DEFINER`)로 승인 절차 없이 바로 confirmed/waitlisted 배정, 거절은 상태만 `declined`로 변경
+  - `invitations_insert_organizer_or_admin` RLS 정책을 "본인을 inviter로 지정하면 누구나 삽입 가능"에서 "실제 이벤트 주최자만 삽입 가능"하도록 보강(마이그레이션 `invitations_insert_organizer_only`)
+  - **[비고]** 코드 레벨 트레이싱으로 검증.
+  - **[2026-07-07 Playwright MCP E2E 검증 완료]** 초대 생성 → 초대 목록 노출 → 수락 → 참여자 등록(재초대 시 강퇴 기록 삭제 후 재확정 포함)까지 실제 계정으로 검증.
 
-- **Task 008-4: 친구 기능 구현 (F010)**
-  - 이메일/닉네임으로 사용자 검색, 친구 요청 생성 Server Action (`friendships` insert)
-  - 친구 요청 수락/거절 Server Action, 친구 목록 페이지(`app/friends`)
-  - Playwright MCP로 검색→요청→수락→목록 반영 E2E 테스트
+- **Task 008-3: 블랙리스트 구현 (F009)** ✅ - 완료
+  - See: `tasks/008-3-blacklists.md`
+  - ✅ 초대 목록의 "이 주최자 차단" 버튼(`components/invitation-actions.tsx`)은 Task 008-2에서 이미 `blockOrganizer` Server Action(`app/events/invite-actions.ts`)에 연결되어 있었음 — 신규 작성 없이 그대로 재사용
+  - ✅ `blacklists(blocker_id, blocked_organizer_id)` unique 제약은 Task 004 스키마에 이미 존재함을 확인(추가 마이그레이션 불필요), `blockOrganizer`가 `23505` 위반 시 조용히 무시 처리
+  - ✅ `app/events/page.tsx`(이벤트 목록), `app/events/invitations/page.tsx`(초대 목록) 조회에 "내 블랙리스트에 있는 주최자" 필터링 추가
+  - **[비고]** 코드 레벨 트레이싱으로 검증(`tasks/008-1-integration-test.md` 참고)
+  - **[2026-07-07 Playwright MCP E2E 검증 완료]** 주최자 검색 → 차단 → 전체 이벤트 목록에서 필터링(단, 이미 참여 중인 이벤트는 참여 이력에서 계속 노출) 실제 계정으로 검증.
 
-- **Task 008-5: 나의 주최/참여 이벤트 목록 구현 (F006, F007)**
-  - `app/events/mine`, `app/events/joined` 페이지 서버 컴포넌트 구현, 전체/모집중/마감/종료 탭 필터
-  - 주최 이벤트가 없을 때 "생성한 이벤트가 없습니다." 빈 상태 안내 컴포넌트
-  - Playwright MCP로 상태별 필터 노출 및 빈 상태 안내 E2E 테스트
+- **Task 008-4: 친구 기능 구현 (F010)** ✅ - 완료
+  - See: `tasks/008-4-friendships.md`
+  - ✅ `app/events/friends-actions.ts`: `searchUsers`(이메일/닉네임 ILIKE, 본인 제외), `sendFriendRequest`(양방향 중복/기존 친구 방지, 상대가 먼저 보낸 대기 요청이 있으면 즉시 수락 처리), `acceptFriendRequest`, `rejectFriendRequest`(행 삭제) Server Action
+  - ✅ `app/friends/page.tsx`를 서버 컴포넌트(얇은 wrapper + `Suspense` + async `FriendsContent`)로 전면 리팩토링, 검색/요청 UI는 `components/friend-search.tsx`, 수락/거절 버튼은 `components/friend-request-actions.tsx`로 분리
+  - ✅ 친구 목록은 `friendships`를 `user_id`/`friend_id` 양방향으로 조회해 병합(A가 B에게 요청해 accepted가 되면 B 쪽 목록에도 노출)
+  - **[비고]** `friendships(user_id, friend_id)` unique 제약은 Task 004 스키마에 이미 존재함을 확인.
+  - **[2026-07-07 Playwright MCP E2E 검증 완료]** 검색 시 이미 친구인 사용자에게 "이미 친구인 사용자입니다" 에러 노출을 확인하는 과정에서, 검색 결과 카드가 기존 관계 상태(친구/요청중)를 반영하지 않고 항상 "친구 추가" 버튼을 보여주는 것을 발견 → `searchUsers`가 `friendships` 조회로 `relationship`(none/pending/accepted) 필드를 함께 반환하도록 수정하고, `FriendSearch` 버튼을 관계 상태에 따라 "친구 추가"/"요청됨"/"친구"(비활성화)로 분기하도록 개선.
+
+- **Task 008-5: 나의 주최/참여 이벤트 목록 구현 (F006, F007)** ✅ - 완료
+  - See: `tasks/008-5-my-joined-events.md`
+  - ✅ `app/events/mine/page.tsx`, `app/events/joined/page.tsx`를 서버 컴포넌트(얇은 wrapper + `Suspense`)로 전환, 실제 `events`/`participants` 조회로 교체
+  - ✅ 상태별(전체/모집중/마감/종료/삭제됨) 탭 필터는 `components/event-list.tsx`가 클라이언트 사이드로 구현
+  - ✅ `joined` 목록은 `participants.status not in (cancelled, kicked)` 조건으로 취소/강퇴된 참여 기록을 제외(취소/강퇴 시 더 이상 "참여 중"이 아니므로 목록에 남기지 않는 것이 자연스러움)
+  - ✅ 빈 상태 안내("생성한 이벤트가 없습니다." / "참여 중인 이벤트가 없습니다.") 유지
+  - **[비고]** 프로필 페이지의 "만든 이벤트"/"참여한 이벤트" 통계 카드를 각각 `/events/mine`, `/events/joined`로 연결하는 링크를 추가 반영(`app/profile/page.tsx`). 이후 이벤트 소프트 삭제(주최자 삭제 시에도 참여자가 참여/정산 이력을 계속 조회할 수 있도록 `events.deleted_at` 도입) 대응으로 "삭제됨" 필터와 읽기 전용 상세 페이지가 추가됨.
+  - **[2026-07-07 Playwright MCP E2E 검증 완료]** 전체/모집중/마감/종료/삭제됨 필터 동작, 소프트 삭제된 이벤트도 참여 이력에 남아 조회 가능함을 실제 계정으로 검증.
+
+- **Task 009: 참가비 자동 정산 및 이벤트 문의 정보 추가** ✅ - 완료
+  - `events`에 `participation_fee_enabled`(boolean, default false), `participation_fee_amount`(nullable integer) 컬럼 추가(마이그레이션 `events_participation_fee`)
+  - `EventForm`에 "참가비 금액 설정" 체크박스와 활성화 시에만 노출되는 "이벤트 참가비(1인 기준)" 입력 필드 추가, `eventFormSchema`에 `superRefine`으로 활성화 시 1원 이상 필수 검증 추가
+  - 참가비 활성화 시 참여자가 confirmed로 전환될 때(신규 참여/승인/대기 승격/초대 수락 등 모든 경로) "참가비 정산" 항목에 자동으로 분담액이 추가되도록 `participants` 테이블에 `AFTER INSERT OR UPDATE` 트리거(`participants_settlement_fee_trigger`)를 추가(마이그레이션 `participation_fee_settlement_automation`) — 개별 RPC를 일일이 수정하지 않고 상태 전환 지점을 한 곳에서 감지해 일관되게 처리
+  - confirmed → cancelled/kicked 전환 시 **미납(is_paid=false) 상태의 참가비 분담액만 삭제**하고, 이미 입금 완료 처리된 분담액은 정산 기록 보존을 위해 유지하는 정책 채택
+  - 이벤트 상세 공지 탭에 "이벤트 문의" 섹션(주최자 표시 이름 + 가입 이메일) 추가. `profiles.email` 전체를 열람 가능하게 여는 대신, 주최자 본인 또는 확정 참여자만 호출 가능한 `get_event_organizer_contact` RPC(`SECURITY DEFINER`, 내부에서 권한 재검증)를 신설해 이메일 노출 범위를 좁힘
+  - **[비고]** 기존 3번 항목(정산 완료/미완료 토글)은 `components/settlement-share-toggle.tsx` + `toggleSettlementPaid`로 이미 구현되어 있어 그대로 재사용, 별도 변경 없음.
 
 ### Phase 3: 관리자 기능
 
