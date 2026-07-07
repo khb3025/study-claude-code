@@ -46,3 +46,9 @@ next-env.d.ts
 
 # 로컬 MCP 서버 소스(별도 서브프로젝트, 이 앱의 lint/빌드 대상 아님)
 /mcp-shrimp-task-manager/
+
+# Playwright MCP 실행 산출물(스크린샷/트레이스 등 로그성 파일)
+/.playwright-mcp/
+
+# 로컬 Claude Code 설정
+/.claude/settings.json
