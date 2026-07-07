@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { registerCarpool } from "@/app/events/carpool-actions";
 
 interface ExistingPassengerRecord {
   driverName: string;
@@ -33,16 +34,59 @@ const WARNING_MESSAGE: Record<
     `이미 ${driverName}님의 카풀에 탑승이 확정된 상태입니다. 그래도 운전자로 지원하시겠습니까?`,
 };
 
+// "HH:mm" 시간 입력값을 이벤트 날짜와 결합해 departure_time(timestamptz) 컬럼에 저장 가능한 ISO 문자열로 변환한다
+function toDepartureTimestamp(eventDate: string, time: string) {
+  if (!time) return "";
+  const base = new Date(eventDate);
+  const [hours, minutes] = time.split(":").map(Number);
+  base.setHours(hours, minutes, 0, 0);
+  return base.toISOString();
+}
+
 // 참여자가 카풀 운전자로 지원할 때 좌석 수/출발지/출발 시간을 입력하는 다이얼로그
 export function CarpoolVolunteerDialog({
+  eventId,
+  eventDate,
   existingPassengerRecord = null,
 }: {
+  eventId: string;
+  eventDate: string;
   existingPassengerRecord?: ExistingPassengerRecord | null;
 }) {
   const [open, setOpen] = useState(false);
   const [step, setStep] = useState<"warning" | "form">(
     existingPassengerRecord ? "warning" : "form",
   );
+  const [seats, setSeats] = useState("");
+  const [departurePoint, setDeparturePoint] = useState("");
+  const [departureTime, setDepartureTime] = useState("");
+  const [isPending, setIsPending] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [forceOnSubmit, setForceOnSubmit] = useState(false);
+
+  const submit = async (force: boolean) => {
+    setIsPending(true);
+    setErrorMessage(null);
+    const result = await registerCarpool(
+      eventId,
+      {
+        seatsTotal: Number(seats),
+        departurePoint,
+        departureTime: toDepartureTimestamp(eventDate, departureTime),
+      },
+      force,
+    );
+    setIsPending(false);
+    if (result.error) {
+      setErrorMessage(result.error);
+      return;
+    }
+    if (result.conflict) {
+      setStep("warning");
+      return;
+    }
+    setOpen(false);
+  };
 
   const handleOpenChange = (nextOpen: boolean) => {
     setOpen(nextOpen);
@@ -80,7 +124,7 @@ export function CarpoolVolunteerDialog({
               <Button
                 variant="destructive"
                 onClick={() => {
-                  // TODO: 무시하고 지원하기 선택 시 기존 카풀 탑승(초대중/신청/확정) 레코드 제거 로직 구현 필요
+                  setForceOnSubmit(true);
                   setStep("form");
                 }}
               >
@@ -104,6 +148,8 @@ export function CarpoolVolunteerDialog({
                   type="number"
                   min={1}
                   placeholder="예: 3"
+                  value={seats}
+                  onChange={(event) => setSeats(event.target.value)}
                 />
               </div>
               <div className="grid gap-2">
@@ -111,22 +157,30 @@ export function CarpoolVolunteerDialog({
                 <Input
                   id="carpool-departure-point"
                   placeholder="예: 강남역 2번 출구"
+                  value={departurePoint}
+                  onChange={(event) => setDeparturePoint(event.target.value)}
                 />
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="carpool-departure-time">출발 시간</Label>
-                <Input id="carpool-departure-time" type="time" />
+                <Input
+                  id="carpool-departure-time"
+                  type="time"
+                  value={departureTime}
+                  onChange={(event) => setDepartureTime(event.target.value)}
+                />
               </div>
+              {errorMessage && (
+                <p className="text-sm text-destructive">{errorMessage}</p>
+              )}
             </div>
             <DialogFooter>
               <Button variant="outline" onClick={() => setOpen(false)}>
                 취소
               </Button>
               <Button
-                onClick={() => {
-                  // TODO: 카풀 운전자 등록 로직 구현 필요
-                  setOpen(false);
-                }}
+                disabled={isPending || !seats}
+                onClick={() => submit(forceOnSubmit)}
               >
                 지원하기
               </Button>
