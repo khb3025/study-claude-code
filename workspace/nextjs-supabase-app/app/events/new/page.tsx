@@ -9,7 +9,7 @@ export default function NewEventPage() {
         <h1 className="text-2xl font-bold">이벤트 생성</h1>
       </div>
       <div className="max-w-xl">
-        <EventForm />
+        <EventForm mode="create" />
       </div>
     </div>
   );

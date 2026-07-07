@@ -1,13 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState, type ChangeEvent } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CalendarIcon } from "lucide-react";
+import { CalendarIcon, ImageIcon, Loader2 } from "lucide-react";
 import { format } from "date-fns";
 import { ko } from "date-fns/locale";
 
 import { cn } from "@/lib/utils";
+import { createClient } from "@/lib/supabase/client";
+import { createEvent, updateEvent } from "@/app/events/actions";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -26,6 +28,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Calendar } from "@/components/ui/calendar";
 import {
   Popover,
@@ -48,8 +51,27 @@ import {
   type EventFormValues,
 } from "@/types/event";
 
-export function EventForm() {
+// 업로드 가능한 최대 파일 크기(5MB)
+const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
+
+interface EventFormProps {
+  // 수정 모드일 때 폼에 미리 채워 넣을 기존 이벤트 값
+  initialValues?: Partial<EventFormValues>;
+  mode?: "create" | "edit";
+  // 수정 모드일 때 어떤 이벤트를 대상으로 updateEvent를 호출할지 지정
+  eventId?: string;
+}
+
+export function EventForm({
+  initialValues,
+  mode = "create",
+  eventId,
+}: EventFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isUploadingImage, setIsUploadingImage] = useState(false);
+  const [imageError, setImageError] = useState<string | null>(null);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const form = useForm<EventFormValues>({
     resolver: zodResolver(eventFormSchema),
@@ -64,8 +86,56 @@ export function EventForm() {
       items_to_bring: "",
       recurrence_type: RECURRENCE_TYPE.NONE.value,
       settlement_visible: true,
+      image_url: null,
+      participation_fee_enabled: false,
+      participation_fee_amount: null,
+      ...initialValues,
     },
   });
+
+  const imageUrl = form.watch("image_url");
+  const participationFeeEnabled = form.watch("participation_fee_enabled");
+
+  const handleImageChange = async (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+      setImageError("이미지 파일만 업로드할 수 있습니다.");
+      return;
+    }
+    if (file.size > MAX_IMAGE_SIZE) {
+      setImageError("파일 크기는 5MB 이하여야 합니다.");
+      return;
+    }
+
+    setImageError(null);
+    setIsUploadingImage(true);
+    try {
+      const supabase = createClient();
+      // 한글/공백 등 원본 파일명의 특수문자가 Storage 객체 키 규칙과 충돌하지 않도록
+      // 확장자만 추출해 UUID 기반 파일명으로 저장한다
+      const extension = file.name.split(".").pop()?.toLowerCase() || "bin";
+      const path = `${crypto.randomUUID()}.${extension}`;
+      const { error: uploadError } = await supabase.storage
+        .from("event-images")
+        .upload(path, file);
+
+      if (uploadError) {
+        console.error("이벤트 사진 업로드 실패:", uploadError);
+        setImageError(`이미지 업로드에 실패했습니다: ${uploadError.message}`);
+        return;
+      }
+
+      const {
+        data: { publicUrl },
+      } = supabase.storage.from("event-images").getPublicUrl(path);
+
+      form.setValue("image_url", publicUrl, { shouldValidate: true });
+    } finally {
+      setIsUploadingImage(false);
+    }
+  };
 
   // 참가 방식이 "비밀번호"일 때만 비밀번호 입력 필드를 노출한다
   const joinType = form.watch("join_type");
@@ -74,9 +144,16 @@ export function EventForm() {
 
   const onSubmit = async (values: EventFormValues) => {
     setIsSubmitting(true);
+    setSubmitError(null);
     try {
-      // Task 004(서버 액션 연동) 이전까지는 더미 제출 처리
-      console.log("이벤트 생성 폼 제출값:", values);
+      const result =
+        mode === "edit" && eventId
+          ? await updateEvent(eventId, values)
+          : await createEvent(values);
+      // 성공 시 Server Action 내부에서 redirect()가 호출되어 이 지점에 도달하지 않는다
+      if (result?.error) {
+        setSubmitError(result.error);
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -85,8 +162,14 @@ export function EventForm() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-2xl">이벤트 생성</CardTitle>
-        <CardDescription>새 모임 이벤트의 정보를 입력해주세요</CardDescription>
+        <CardTitle className="text-2xl">
+          {mode === "edit" ? "이벤트 수정" : "이벤트 생성"}
+        </CardTitle>
+        <CardDescription>
+          {mode === "edit"
+            ? "이벤트 정보를 수정해주세요"
+            : "새 모임 이벤트의 정보를 입력해주세요"}
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -94,6 +177,50 @@ export function EventForm() {
             onSubmit={form.handleSubmit(onSubmit)}
             className="flex flex-col gap-6"
           >
+            <FormItem>
+              <FormLabel>이벤트 사진 (선택)</FormLabel>
+              <FormControl>
+                <div className="flex flex-col gap-2">
+                  <button
+                    type="button"
+                    onClick={() => fileInputRef.current?.click()}
+                    disabled={isUploadingImage}
+                    className="aspect-square w-full max-w-[240px] cursor-pointer disabled:cursor-not-allowed"
+                  >
+                    {imageUrl ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={imageUrl}
+                        alt="이벤트 사진 미리보기"
+                        className="h-full w-full rounded-lg border object-cover"
+                      />
+                    ) : (
+                      <div className="flex h-full w-full flex-col items-center justify-center gap-2 rounded-lg border bg-muted text-sm text-muted-foreground hover:bg-muted/70">
+                        <ImageIcon className="h-8 w-8" />
+                        이벤트 사진
+                      </div>
+                    )}
+                  </button>
+                  <Input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/*"
+                    disabled={isUploadingImage}
+                    onChange={handleImageChange}
+                  />
+                  {isUploadingImage && (
+                    <p className="flex items-center gap-1 text-sm text-muted-foreground">
+                      <Loader2 className="h-3 w-3 animate-spin" />
+                      업로드 중...
+                    </p>
+                  )}
+                  {imageError && (
+                    <p className="text-sm text-destructive">{imageError}</p>
+                  )}
+                </div>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
             <FormField
               control={form.control}
               name="title"
@@ -430,8 +557,70 @@ export function EventForm() {
                 </FormItem>
               )}
             />
+            <FormField
+              control={form.control}
+              name="participation_fee_enabled"
+              render={({ field }) => (
+                <FormItem className="flex flex-row items-start gap-3 rounded-lg border p-4">
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={(checked) => {
+                        field.onChange(checked === true);
+                        if (checked !== true) {
+                          form.setValue("participation_fee_amount", null, {
+                            shouldValidate: true,
+                          });
+                        }
+                      }}
+                    />
+                  </FormControl>
+                  <div className="flex flex-col gap-1">
+                    <FormLabel>참가비 금액 설정</FormLabel>
+                    <p className="text-sm text-muted-foreground">
+                      체크하면 참여가 확정될 때마다 참가비 정산 항목에 자동으로
+                      분담액이 추가됩니다.
+                    </p>
+                  </div>
+                </FormItem>
+              )}
+            />
+            {participationFeeEnabled && (
+              <FormField
+                control={form.control}
+                name="participation_fee_amount"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>이벤트 참가비 (1인 기준)</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="number"
+                        min={0}
+                        placeholder="예: 10000"
+                        value={field.value ?? ""}
+                        onChange={(e) =>
+                          field.onChange(
+                            e.target.value === ""
+                              ? null
+                              : Number(e.target.value),
+                          )
+                        }
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            )}
+            {submitError && (
+              <p className="text-sm text-destructive">{submitError}</p>
+            )}
             <Button type="submit" className="w-full" disabled={isSubmitting}>
-              {isSubmitting ? "저장 중..." : "저장"}
+              {isSubmitting
+                ? "저장 중..."
+                : mode === "edit"
+                  ? "수정 완료"
+                  : "저장"}
             </Button>
           </form>
         </Form>
