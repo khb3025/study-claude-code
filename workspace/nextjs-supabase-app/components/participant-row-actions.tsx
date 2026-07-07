@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useTransition } from "react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
@@ -16,22 +17,53 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import type { ParticipantStatus } from "@/types/event";
+import {
+  approveParticipant,
+  kickParticipant,
+  rejectParticipant,
+} from "@/app/events/participant-actions";
 
 interface ParticipantRowActionsProps {
+  participantId: string;
+  eventId: string;
   status: ParticipantStatus;
 }
 
-// 참여자 행의 액션 버튼: 승인 대기 상태는 승인/거절, 그 외에는 강퇴 버튼을 노출한다
-export function ParticipantRowActions({ status }: ParticipantRowActionsProps) {
+// 참여자 행의 액션 버튼: 승인 대기 상태는 승인/거절, 그 외에는 강퇴 버튼을 노출한다(주최자 전용, 서버 액션 연동)
+export function ParticipantRowActions({
+  participantId,
+  eventId,
+  status,
+}: ParticipantRowActionsProps) {
+  const [isPending, startTransition] = useTransition();
+  const [reason, setReason] = useState("");
+  const [reasonHidden, setReasonHidden] = useState(false);
+
   if (status === "pending_approval") {
     return (
       <div className="flex justify-end gap-2">
-        <Button size="sm" variant="outline" onClick={() => {}}>
-          {/* TODO: 참여 승인 로직 구현 필요 */}
+        <Button
+          size="sm"
+          variant="outline"
+          disabled={isPending}
+          onClick={() =>
+            startTransition(async () => {
+              await approveParticipant(participantId, eventId);
+            })
+          }
+        >
           승인
         </Button>
-        <Button size="sm" variant="destructive" onClick={() => {}}>
-          {/* TODO: 참여 거절 로직 구현 필요 */}
+        <Button
+          size="sm"
+          variant="destructive"
+          disabled={isPending}
+          onClick={() =>
+            startTransition(async () => {
+              await rejectParticipant(participantId, eventId);
+            })
+          }
+        >
           거절
         </Button>
       </div>
@@ -58,9 +90,17 @@ export function ParticipantRowActions({ status }: ParticipantRowActionsProps) {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <div className="flex flex-col gap-3">
-            <Textarea placeholder="강퇴 사유를 입력하세요" />
+            <Textarea
+              placeholder="강퇴 사유를 입력하세요"
+              value={reason}
+              onChange={(event) => setReason(event.target.value)}
+            />
             <div className="flex items-center gap-2">
-              <Checkbox id="kick-reason-hidden" />
+              <Checkbox
+                id="kick-reason-hidden"
+                checked={reasonHidden}
+                onCheckedChange={(checked) => setReasonHidden(checked === true)}
+              />
               <Label
                 htmlFor="kick-reason-hidden"
                 className="text-sm font-normal"
@@ -71,8 +111,19 @@ export function ParticipantRowActions({ status }: ParticipantRowActionsProps) {
           </div>
           <AlertDialogFooter>
             <AlertDialogCancel>취소</AlertDialogCancel>
-            <AlertDialogAction onClick={() => {}}>
-              {/* TODO: 강퇴 처리 서버 액션 연동 필요 */}
+            <AlertDialogAction
+              disabled={isPending}
+              onClick={() =>
+                startTransition(async () => {
+                  await kickParticipant(
+                    participantId,
+                    eventId,
+                    reason,
+                    !reasonHidden,
+                  );
+                })
+              }
+            >
               강퇴 확정
             </AlertDialogAction>
           </AlertDialogFooter>
