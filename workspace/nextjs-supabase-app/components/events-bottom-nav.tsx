@@ -10,7 +10,7 @@ const NAV_ITEMS = [
   { href: "/protected", label: "홈", icon: Home },
   { href: "/events", label: "이벤트", icon: CalendarDays },
   { href: "/friends", label: "친구", icon: Users },
-  { href: "/protected", label: "프로필", icon: User },
+  { href: "/profile", label: "프로필", icon: User },
 ] as const;
 
 export function EventsBottomNav() {

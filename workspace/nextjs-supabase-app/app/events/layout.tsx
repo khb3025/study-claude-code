@@ -14,23 +14,29 @@ export default function EventsLayout({
   return (
     <main className="flex min-h-screen flex-col items-center">
       <div className="flex w-full flex-1 flex-col items-center gap-8">
-        <EventsTopNav
-          authSlot={
-            !hasEnvVars ? (
-              <EnvVarWarning />
-            ) : (
-              <Suspense>
-                <AuthButton />
-              </Suspense>
-            )
-          }
-        />
+        <Suspense>
+          <EventsTopNav
+            authSlot={
+              !hasEnvVars ? (
+                <EnvVarWarning />
+              ) : (
+                <Suspense>
+                  <AuthButton />
+                </Suspense>
+              )
+            }
+          />
+        </Suspense>
         <div className="flex w-full max-w-5xl flex-1 flex-col gap-8 p-5 pb-24 md:pb-8">
           {children}
         </div>
       </div>
-      <EventsBottomNav />
-      <NewEventFab />
+      <Suspense>
+        <EventsBottomNav />
+      </Suspense>
+      <Suspense>
+        <NewEventFab />
+      </Suspense>
     </main>
   );
 }

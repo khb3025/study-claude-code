@@ -3,7 +3,6 @@ import { CalendarDays, Tent, Users, Waves } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { EventStatusBadge } from "@/components/event-status-badge";
-import { DUMMY_ORGANIZERS, DUMMY_PARTICIPANTS } from "@/app/events/dummy-data";
 import type { Event } from "@/types/event";
 
 // 이벤트 썸네일은 실제 이미지 필드 없이(신규 DB 컬럼 추가 없이) id 기반으로 결정되는 장식용 그라디언트다.
@@ -21,13 +20,20 @@ function getThumbnail(eventId: string) {
   return THUMBNAIL_STYLES[hash % THUMBNAIL_STYLES.length];
 }
 
-export function EventCard({ event }: { event: Event }) {
+interface EventCardProps {
+  event: Event;
+  organizerName?: string;
+  organizerEmail?: string | null;
+  participantCount?: number;
+}
+
+export function EventCard({
+  event,
+  organizerName,
+  organizerEmail,
+  participantCount = 0,
+}: EventCardProps) {
   const startsAt = new Date(event.starts_at);
-  const organizer = DUMMY_ORGANIZERS[event.organizer_id];
-  const participantCount = DUMMY_PARTICIPANTS.filter(
-    (participant) =>
-      participant.event_id === event.id && participant.status === "confirmed",
-  ).length;
   const thumbnail = getThumbnail(event.id);
   const ThumbnailIcon = thumbnail.icon;
 
@@ -43,7 +49,14 @@ export function EventCard({ event }: { event: Event }) {
           <div className="flex min-w-0 flex-1 flex-col gap-1.5">
             <div className="flex items-start justify-between gap-2">
               <h3 className="truncate font-semibold">{event.title}</h3>
-              <EventStatusBadge status={event.status} />
+              <div className="flex shrink-0 items-center gap-1">
+                {event.deleted_at && (
+                  <span className="rounded-full bg-muted px-2 py-0.5 text-xs text-muted-foreground">
+                    삭제됨
+                  </span>
+                )}
+                <EventStatusBadge status={event.status} />
+              </div>
             </div>
             <div className="flex items-center gap-1 text-xs text-muted-foreground">
               <CalendarDays className="h-3.5 w-3.5" />
@@ -54,18 +67,25 @@ export function EventCard({ event }: { event: Event }) {
                 minute: "2-digit",
               })}
             </div>
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-1.5">
-                <Avatar className="h-5 w-5">
+            <div className="flex items-center justify-between gap-2">
+              <div className="flex min-w-0 items-center gap-1.5">
+                <Avatar className="h-5 w-5 shrink-0">
                   <AvatarFallback className="text-[10px]">
-                    {organizer?.initial ?? "?"}
+                    {(organizerName ?? "?").slice(0, 1)}
                   </AvatarFallback>
                 </Avatar>
-                <span className="text-xs text-muted-foreground">
-                  {organizer?.name ?? "알 수 없음"}
-                </span>
+                <div className="flex min-w-0 flex-col">
+                  <span className="truncate text-xs text-muted-foreground">
+                    {organizerName ?? "알 수 없음"}
+                  </span>
+                  {organizerEmail && (
+                    <span className="truncate text-[10px] text-muted-foreground/70">
+                      {organizerEmail}
+                    </span>
+                  )}
+                </div>
               </div>
-              <div className="flex items-center gap-1 text-xs text-muted-foreground">
+              <div className="flex shrink-0 items-center gap-1 text-xs text-muted-foreground">
                 <Users className="h-3.5 w-3.5" />
                 {participantCount}
               </div>

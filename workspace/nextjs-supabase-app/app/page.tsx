@@ -1,10 +1,12 @@
 import { CalendarPlus, Link2, Users } from "lucide-react";
 import { Suspense } from "react";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { AuthButton } from "@/components/auth-button";
 import { EnvVarWarning } from "@/components/env-var-warning";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { createClient } from "@/lib/supabase/server";
 import { hasEnvVars } from "@/lib/utils";
 
 // 서비스 소개용 웰컴 페이지: "Gather" 브랜드, 핵심 기능 3가지, 시작하기 CTA로 구성
@@ -26,9 +28,26 @@ const FEATURES = [
   },
 ] as const;
 
+// 이미 로그인된 사용자는 웰컴 페이지를 볼 필요 없이 이벤트 목록으로 바로 이동한다
+async function RedirectIfAuthenticated() {
+  const supabase = await createClient();
+  const { data } = await supabase.auth.getClaims();
+
+  if (data?.claims) {
+    redirect("/events");
+  }
+
+  return null;
+}
+
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center">
+      {hasEnvVars && (
+        <Suspense>
+          <RedirectIfAuthenticated />
+        </Suspense>
+      )}
       <nav className="flex h-16 w-full justify-center border-b border-b-foreground/10">
         <div className="flex w-full max-w-5xl items-center justify-end p-3 px-5 text-sm">
           {!hasEnvVars ? (
@@ -69,7 +88,7 @@ export default function Home() {
         </div>
 
         <Button asChild size="lg" className="w-full">
-          <Link href="/auth/login">Google로 시작하기</Link>
+          <Link href="/auth/login">로그인하기</Link>
         </Button>
 
         <p className="text-xs text-muted-foreground">
