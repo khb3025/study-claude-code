@@ -4,6 +4,7 @@ import { BackToEventsLink } from "@/components/back-to-events-link";
 import { EventForm } from "@/components/event-form";
 import { createClient } from "@/lib/supabase/server";
 import type { EventFormValues } from "@/types/event";
+import EditEventLoading from "./loading";
 
 async function EditEventForm({ eventId }: { eventId: string }) {
   const supabase = await createClient();
@@ -58,11 +59,7 @@ export default function EditEventPage({
         <h1 className="text-2xl font-bold">이벤트 수정</h1>
       </div>
       <div className="max-w-xl">
-        <Suspense
-          fallback={
-            <p className="text-sm text-muted-foreground">불러오는 중...</p>
-          }
-        >
+        <Suspense fallback={<EditEventLoading />}>
           <EditEventResolved params={params} />
         </Suspense>
       </div>

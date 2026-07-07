@@ -1,6 +1,9 @@
 import { Suspense } from "react";
+import { CalendarX } from "lucide-react";
 import { EventList } from "@/components/event-list";
 import { EventQuickLinks } from "@/components/event-quick-links";
+import { EmptyState } from "@/components/empty-state";
+import { Skeleton } from "@/components/ui/skeleton";
 import { createClient } from "@/lib/supabase/server";
 import { getEventListDisplayData } from "@/app/events/event-list-data";
 import type { Event } from "@/types/event";
@@ -19,9 +22,7 @@ async function EventListSection() {
 
   if (!events || events.length === 0) {
     return (
-      <p className="text-sm text-muted-foreground">
-        아직 등록된 이벤트가 없습니다.
-      </p>
+      <EmptyState icon={<CalendarX />} title="아직 등록된 이벤트가 없습니다." />
     );
   }
 
@@ -44,9 +45,7 @@ async function EventListSection() {
 
   if (visibleEvents.length === 0) {
     return (
-      <p className="text-sm text-muted-foreground">
-        아직 등록된 이벤트가 없습니다.
-      </p>
+      <EmptyState icon={<CalendarX />} title="아직 등록된 이벤트가 없습니다." />
     );
   }
 
@@ -108,7 +107,11 @@ export default function EventsPage() {
       </Suspense>
       <Suspense
         fallback={
-          <p className="text-sm text-muted-foreground">불러오는 중...</p>
+          <div className="flex flex-col gap-3">
+            {Array.from({ length: 3 }).map((_, index) => (
+              <Skeleton key={index} className="h-[104px] w-full rounded-lg" />
+            ))}
+          </div>
         }
       >
         <EventListSection />

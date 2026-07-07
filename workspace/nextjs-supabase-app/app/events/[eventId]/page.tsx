@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
+import EventDetailLoading from "./loading";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -36,6 +37,7 @@ import { CarpoolInvitePassengerDialog } from "@/components/carpool-invite-passen
 import { CarpoolPassengerActions } from "@/components/carpool-passenger-actions";
 import { CarpoolRequestButton } from "@/components/carpool-request-button";
 import { CreateSettlementDialog } from "@/components/create-settlement-dialog";
+import { EmptyState } from "@/components/empty-state";
 import { OrganizerCarpoolVisibleToggle } from "@/components/organizer-carpool-visible-toggle";
 import { SettlementShareToggle } from "@/components/settlement-share-toggle";
 import { InviteByEmailDialog } from "@/components/invite-by-email-dialog";
@@ -283,6 +285,16 @@ async function EventDetail({ eventId }: { eventId: string }) {
             </div>
           )}
           <div className="flex flex-col gap-4 rounded-lg border p-4">
+            {event.admin_notice && (
+              <div className="rounded-md border border-amber-500/50 bg-amber-500/10 p-3 text-sm">
+                <p className="font-medium text-amber-600 dark:text-amber-400">
+                  관리자 공지
+                </p>
+                <p className="whitespace-pre-wrap text-amber-700 dark:text-amber-300">
+                  {event.admin_notice}
+                </p>
+              </div>
+            )}
             <p>{event.description}</p>
             <div className="flex items-start gap-2 text-sm">
               <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" />
@@ -371,68 +383,74 @@ async function EventDetail({ eventId }: { eventId: string }) {
                   <InviteByEmailDialog eventId={event.id} />
                 </div>
               )}
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>참여자</TableHead>
-                    <TableHead>상태</TableHead>
-                    <TableHead>신청 시각</TableHead>
-                    <TableHead className="text-right">액션</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {participants.map((participant) => (
-                    <TableRow key={participant.id}>
-                      <TableCell>
-                        {getUserDisplay(participant.user_id).name}
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex flex-col gap-1">
-                          <ParticipantStatusBadge status={participant.status} />
-                          {participant.status === "kicked" &&
-                            participant.kick_reason_visible &&
-                            participant.kick_reason && (
-                              <span className="text-xs text-muted-foreground">
-                                사유: {participant.kick_reason}
-                              </span>
-                            )}
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        {new Date(participant.joined_at).toLocaleString(
-                          "ko-KR",
-                        )}
-                      </TableCell>
-                      <TableCell className="text-right">
-                        {isOrganizer && !event.deleted_at && (
-                          <ParticipantRowActions
-                            participantId={participant.id}
-                            eventId={event.id}
-                            status={participant.status}
-                          />
-                        )}
-                        {!isOrganizer &&
-                          !event.deleted_at &&
-                          participant.user_id === currentUserId &&
-                          (participant.status === "confirmed" ||
-                            participant.status === "waitlisted" ||
-                            participant.status === "pending_approval") && (
-                            <div className="flex justify-end">
-                              <ParticipantCancelButton
-                                participantId={participant.id}
-                                eventId={event.id}
-                                isCutoff={
-                                  participant.status === "confirmed" &&
-                                  isCancelCutoff
-                                }
-                              />
-                            </div>
-                          )}
-                      </TableCell>
+              {participants.length === 0 ? (
+                <EmptyState icon={<Users />} title="아직 참여자가 없습니다." />
+              ) : (
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>참여자</TableHead>
+                      <TableHead>상태</TableHead>
+                      <TableHead>신청 시각</TableHead>
+                      <TableHead className="text-right">액션</TableHead>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+                  </TableHeader>
+                  <TableBody>
+                    {participants.map((participant) => (
+                      <TableRow key={participant.id}>
+                        <TableCell>
+                          {getUserDisplay(participant.user_id).name}
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex flex-col gap-1">
+                            <ParticipantStatusBadge
+                              status={participant.status}
+                            />
+                            {participant.status === "kicked" &&
+                              participant.kick_reason_visible &&
+                              participant.kick_reason && (
+                                <span className="text-xs text-muted-foreground">
+                                  사유: {participant.kick_reason}
+                                </span>
+                              )}
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          {new Date(participant.joined_at).toLocaleString(
+                            "ko-KR",
+                          )}
+                        </TableCell>
+                        <TableCell className="text-right">
+                          {isOrganizer && !event.deleted_at && (
+                            <ParticipantRowActions
+                              participantId={participant.id}
+                              eventId={event.id}
+                              status={participant.status}
+                            />
+                          )}
+                          {!isOrganizer &&
+                            !event.deleted_at &&
+                            participant.user_id === currentUserId &&
+                            (participant.status === "confirmed" ||
+                              participant.status === "waitlisted" ||
+                              participant.status === "pending_approval") && (
+                              <div className="flex justify-end">
+                                <ParticipantCancelButton
+                                  participantId={participant.id}
+                                  eventId={event.id}
+                                  isCutoff={
+                                    participant.status === "confirmed" &&
+                                    isCancelCutoff
+                                  }
+                                />
+                              </div>
+                            )}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              )}
             </>
           )}
         </TabsContent>
@@ -478,9 +496,7 @@ async function EventDetail({ eventId }: { eventId: string }) {
               )}
 
               {carpools.length === 0 ? (
-                <p className="text-sm text-muted-foreground">
-                  등록된 카풀이 없습니다.
-                </p>
+                <EmptyState title="등록된 카풀이 없습니다." />
               ) : (
                 carpools.map((carpool) => {
                   const driver = getUserDisplay(carpool.driver_id);
@@ -693,9 +709,7 @@ async function EventDetail({ eventId }: { eventId: string }) {
                 </div>
               )}
               {settlements.length === 0 ? (
-                <p className="text-sm text-muted-foreground">
-                  등록된 정산이 없습니다.
-                </p>
+                <EmptyState title="등록된 정산이 없습니다." />
               ) : (
                 settlements.map((settlement) => (
                   <div key={settlement.id} className="flex flex-col gap-2">
@@ -753,9 +767,7 @@ export default function EventDetailPage({
   params: Promise<{ eventId: string }>;
 }) {
   return (
-    <Suspense
-      fallback={<p className="text-sm text-muted-foreground">불러오는 중...</p>}
-    >
+    <Suspense fallback={<EventDetailLoading />}>
       <EventDetailResolved params={params} />
     </Suspense>
   );

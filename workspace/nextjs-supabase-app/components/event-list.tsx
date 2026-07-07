@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { CalendarX } from "lucide-react";
+import { EmptyState } from "@/components/empty-state";
 import { EventCard } from "@/components/event-card";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { EVENT_STATUS, type Event, type EventStatus } from "@/types/event";
@@ -53,17 +55,24 @@ export function EventList({
           ))}
         </TabsList>
       </Tabs>
-      <div className="grid grid-cols-1 gap-3 lg:grid-cols-2">
-        {filteredEvents.map((event) => (
-          <EventCard
-            key={event.id}
-            event={event}
-            organizerName={organizers[event.organizer_id]?.name}
-            organizerEmail={organizers[event.organizer_id]?.email}
-            participantCount={participantCounts[event.id] ?? 0}
-          />
-        ))}
-      </div>
+      {filteredEvents.length === 0 ? (
+        <EmptyState
+          icon={<CalendarX />}
+          title="해당 조건의 이벤트가 없습니다."
+        />
+      ) : (
+        <div className="grid grid-cols-1 gap-3 lg:grid-cols-2">
+          {filteredEvents.map((event) => (
+            <EventCard
+              key={event.id}
+              event={event}
+              organizerName={organizers[event.organizer_id]?.name}
+              organizerEmail={organizers[event.organizer_id]?.email}
+              participantCount={participantCounts[event.id] ?? 0}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

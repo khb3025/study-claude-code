@@ -1,21 +1,12 @@
 import { Suspense } from "react";
 import { CalendarX } from "lucide-react";
 import { BackToEventsLink } from "@/components/back-to-events-link";
+import { EmptyState } from "@/components/empty-state";
 import { EventList } from "@/components/event-list";
+import { Skeleton } from "@/components/ui/skeleton";
 import { createClient } from "@/lib/supabase/server";
 import { getEventListDisplayData } from "@/app/events/event-list-data";
 import type { Event } from "@/types/event";
-
-function EmptyState() {
-  return (
-    <div className="flex flex-col items-center justify-center gap-3 rounded-lg border border-dashed py-16 text-center">
-      <CalendarX className="h-10 w-10 text-muted-foreground" />
-      <p className="text-sm text-muted-foreground">
-        참여 중인 이벤트가 없습니다.
-      </p>
-    </div>
-  );
-}
 
 // 내가 참여자로 등록된 이벤트만 조회해 보여주는 서버 컴포넌트.
 // 취소(cancelled)/강퇴(kicked) 상태인 참여 기록은 더 이상 "참여 중"이 아니므로 제외한다.
@@ -42,7 +33,9 @@ async function JoinedEventsList() {
   );
 
   if (joinedEventIds.length === 0) {
-    return <EmptyState />;
+    return (
+      <EmptyState icon={<CalendarX />} title="참여 중인 이벤트가 없습니다." />
+    );
   }
 
   const { data: events } = await supabase
@@ -52,7 +45,9 @@ async function JoinedEventsList() {
     .order("starts_at");
 
   if (!events || events.length === 0) {
-    return <EmptyState />;
+    return (
+      <EmptyState icon={<CalendarX />} title="참여 중인 이벤트가 없습니다." />
+    );
   }
 
   const { organizers, participantCounts } = await getEventListDisplayData(
@@ -78,7 +73,11 @@ export default function JoinedEventsPage() {
       </div>
       <Suspense
         fallback={
-          <p className="text-sm text-muted-foreground">불러오는 중...</p>
+          <div className="flex flex-col gap-3">
+            {Array.from({ length: 3 }).map((_, index) => (
+              <Skeleton key={index} className="h-[104px] w-full rounded-lg" />
+            ))}
+          </div>
         }
       >
         <JoinedEventsList />
