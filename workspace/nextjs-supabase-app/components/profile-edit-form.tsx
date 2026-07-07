@@ -122,6 +122,7 @@ export function ProfileEditForm({
           type="button"
           onClick={() => fileInputRef.current?.click()}
           disabled={isUploadingImage}
+          aria-label="프로필 사진 변경"
           className="rounded-full disabled:cursor-not-allowed"
         >
           <ProfileAvatar
