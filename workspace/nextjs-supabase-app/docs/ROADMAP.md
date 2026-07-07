@@ -203,33 +203,45 @@
   - 이벤트 상세 공지 탭에 "이벤트 문의" 섹션(주최자 표시 이름 + 가입 이메일) 추가. `profiles.email` 전체를 열람 가능하게 여는 대신, 주최자 본인 또는 확정 참여자만 호출 가능한 `get_event_organizer_contact` RPC(`SECURITY DEFINER`, 내부에서 권한 재검증)를 신설해 이메일 노출 범위를 좁힘
   - **[비고]** 기존 3번 항목(정산 완료/미완료 토글)은 `components/settlement-share-toggle.tsx` + `toggleSettlementPaid`로 이미 구현되어 있어 그대로 재사용, 별도 변경 없음.
 
-### Phase 3: 관리자 기능
+### Phase 3: 관리자 기능 ✅
 
 > 관리자 기능은 권한 모델(`admin_users`)이 일반 사용자 플로우와 분리되어 있고 결합도가 낮아 별도 Phase로 분리한다.
 
-- **Task 010: 관리자 인증 가드 및 레이아웃**
-  - `app/admin/layout.tsx`에서 `admin_users` 조회 기반 서버 컴포넌트 가드 구현, 미등록 사용자는 404 처리
-  - 사이드바 레이아웃(대시보드/이벤트 관리/사용자 관리/통계 분석) 구성
-  - Playwright MCP로 관리자 계정 접근 허용, 일반 계정 접근 차단(404) E2E 테스트
+- **Task 010: 관리자 인증 가드 및 레이아웃** ✅ - 완료
+  - See: `tasks/010-admin-guard.md`
+  - ✅ `app/admin/layout.tsx`를 `Suspense` + 비동기 `AdminGuard`(`app/admin/admin-guard.tsx`) 구조로 전환해 `admin_users` 미등록 사용자는 404 처리(Next.js 16 Cache Components 요구사항에 맞춰 비동기 데이터 접근을 `Suspense` 하위로 분리)
+  - ✅ 사이드바(`components/admin-sidebar.tsx`)를 client 컴포넌트로 분리해 대시보드/이벤트 관리/사용자 관리/통계 분석 메뉴 구성 유지
+  - ✅ `app/admin/page.tsx` 신설로 `/admin` 직접 접근 시 `/admin/dashboard`로 리다이렉트, `app/profile/page.tsx`의 "관리자" 표시를 `/admin/dashboard` 링크로 교체
+  - ✅ 로그인 직후 라우팅 분기 추가: `login-form.tsx`/`app/auth/callback/route.ts`에서 닉네임 미설정→`/profile`, 관리자→`/admin/dashboard`, 일반 사용자→`/events`(초대 링크 등 명시적 `next` 파라미터는 그대로 우선)
+  - **[2026-07-07 Playwright MCP E2E 검증 완료]** 비로그인 상태 `/admin` 접근 시 `/auth/login` 리다이렉트, 일반 계정(`khb1928@naver.com`) 접근 시 404, 관리자 계정(`khb3025@gmail.com`, 검증을 위해 `admin_users`에 수동 등록) 접근 시 `/admin/dashboard` 정상 렌더링을 실제 계정으로 확인. 로그인 폼에서 최초 로그인 시 자동 분기 시나리오는 별도 검증 필요(작업서에 미완료 체크리스트로 기록).
+  - ✅ 추가: `components/admin-sidebar.tsx` 하단에 기존 `LogoutButton`을 재사용해 관리자 페이지 어디서든 로그아웃 가능하도록 보강, Playwright로 로그아웃 후 재접근 시 로그인 요구됨을 확인.
 
-- **Task 011: 관리자 대시보드 구현 (F011-1)**
-  - 총 이벤트/총 사용자/진행 중 이벤트/이번 달 신규(이벤트/사용자) 집계 쿼리 작성
-  - 최근 이벤트 목록, 최근 가입 사용자 목록 표시
-  - Playwright MCP로 대시보드 통계 카드/최근 목록 렌더링 검증 E2E 테스트
+- **Task 011: 관리자 대시보드 구현 (F011-1)** ✅ - 완료
+  - See: `tasks/011-admin-dashboard.md`
+  - ✅ `events`/`profiles` 병렬 count 쿼리(총 이벤트/진행중 이벤트/총 사용자/이번 달 신규 가입)로 더미 통계 카드 교체
+  - ✅ 최근 이벤트 5건/최근 가입자 5건을 최신순 조회로 교체, 주최자 이름은 `app/events/event-list-data.ts`의 `getEventListDisplayData` 재사용
+  - **[2026-07-07 Playwright MCP E2E 검증 완료]** 관리자 계정으로 실제 DB 값(총 이벤트 1, 총 사용자 2 등)과 화면 숫자 일치 확인
 
-- **Task 012: 관리자 이벤트 관리 구현 (F011-2)**
-  - 이벤트 검색 필터, 목록 테이블(제목/이벤트 비밀번호/날짜/상태/호스트/참여자 수) 구현
-  - 강제 삭제(alert-dialog 확인) Server Action, 관리자 공지 등록 모달/Server Action
-  - Playwright MCP로 검색→강제 삭제→공지 등록 E2E 테스트
+- **Task 012: 관리자 이벤트 관리 구현 (F011-2)** ✅ - 완료
+  - See: `tasks/012-admin-events.md`
+  - ✅ `events.admin_notice`(nullable text) 컬럼 마이그레이션 추가 및 타입 재생성
+  - ✅ 이벤트 검색 필터(제목 ILIKE), 목록 테이블(제목/비밀번호 유무/날짜/상태/호스트/참여자 수) 구현
+  - ✅ 강제 삭제는 신규 하드 삭제 로직 없이 기존 `deleteEvent`에 관리자 허용 분기(`admin_users` 확인) + `skipRedirect` 옵션을 추가해 재사용, 관리자 공지 등록은 신규 `setAdminNotice` Server Action으로 구현하고 이벤트 상세 공지 탭에 노출
+  - **[2026-07-07 Playwright MCP E2E 검증 완료]** 제목 검색(일치/불일치), 공지 등록 후 상세 페이지 노출, 관리자의 타 주최자 이벤트 강제 삭제(DB 확인 결과 소프트 삭제 유지) 전 과정을 실제 계정으로 검증. 테스트 후 데이터는 원상 복구.
 
-- **Task 013: 관리자 사용자 관리/통계 구현 (F011-3, 최소범위)**
-  - 사용자 목록/검색 페이지(`app/admin/users`) 구현
-  - 월별 이벤트 생성 수/신규 가입자 수 추이 조회 페이지(`app/admin/analytics`) 구현(조회 전용)
-  - Playwright MCP로 사용자 검색, 통계 조회 E2E 테스트
+- **Task 013: 관리자 사용자 관리/통계 구현 (F011-3, 최소범위)** ✅ - 완료
+  - See: `tasks/013-admin-users-analytics.md`
+  - ✅ 사용자 목록/검색 페이지(`app/admin/users`)를 `profiles` 이메일/닉네임 ILIKE 검색으로 구현
+  - ✅ 월별 이벤트 생성 수/신규 가입자 수 추이는 신규 `get_monthly_stats()` SECURITY DEFINER RPC(내부 `private.is_admin()` 검증)로 집계해 `app/admin/analytics` 조회 전용 페이지에 표시
+  - **[비고]** 최초 구현에서 RPC 반환 컬럼명 `month`가 PL/pgSQL 내부적으로 SQL 별칭과 충돌해 `ambiguous column` 에러가 발생했으나 화면엔 조용히 빈 데이터로만 표시됨 — 서버 로그 확인으로 원인 파악 후 컬럼명을 `stat_month`로 변경해 수정.
+  - **[2026-07-07 Playwright MCP E2E 검증 완료]** 실제 관리자 계정으로 사용자 검색 필터링, 월별 통계(2026년 7월: 이벤트 2 · 신규가입 2) 정상 렌더링 확인. `get_advisors` 경고는 기존 RPC들과 동일한 의도된 설계.
 
-### Phase 4: 마감 및 최적화
+### Phase 4: 마감 및 최적화 ✅
 
-- **Task 014: 사용자 경험 개선 및 품질 보증** (기존 Task 009, 대상 범위를 F001~F011 전체로 확장)
-  - 로딩/에러/빈 상태(Empty State) 처리, 폼 검증 피드백 정교화 (강퇴/초대/블랙리스트/친구/관리자 화면 포함)
-  - 서버 컴포넌트 데이터 페칭 최적화 및 캐시 무효화(revalidatePath) 정리
-  - 접근성 점검, `get_advisors` 재점검, ESLint/타입 체크 및 프로덕션 빌드 검증
+- **Task 014: 사용자 경험 개선 및 품질 보증** ✅ - 완료 (기존 Task 009, 대상 범위를 F001~F011 전체로 확장, Shrimp 서브태스크 014-1~014-5로 분할 실행)
+  - See: `tasks/014-1-common-components.md`, `tasks/014-2-events-participants.md`, `tasks/014-3-carpool-settlement-social.md`, `tasks/014-4-admin-cache-audit.md`, `tasks/014-5-final-verification.md`
+  - ✅ 로딩/에러/빈 상태: `components/ui/skeleton.tsx`(shadcn), `components/empty-state.tsx`(공통 도메인 컴포넌트)를 신설하고 `app/events`, `app/events/mine`, `app/events/joined`, `app/events/[eventId]`, `app/events/[eventId]/edit`, `app/friends`, `app/events/invitations`, `app/admin/dashboard`, `app/admin/events`, `app/admin/users`, `app/admin/analytics` 세그먼트에 `loading.tsx`/`error.tsx`를 적용, 개별 구현되어 있던 plain-text 빈 상태를 공통 컴포넌트로 통합
+  - ✅ 접근성: 카풀/정산 아이콘 전용 체크박스(`settlement-share-toggle.tsx`, `carpool-invite-passenger-dialog.tsx`)와 프로필 사진 변경 버튼(`profile-edit-form.tsx`)에 `aria-label` 추가. 조사 결과 대부분의 버튼은 이미 아이콘+텍스트로 접근 가능한 이름을 갖고 있어 불필요한 변경은 하지 않음
+  - ✅ 폼 검증 피드백: 인증 관련 폼(`login-form`, `sign-up-form`, `forgot-password-form`, `update-password-form`)의 에러 텍스트 색상을 `text-red-500` → `text-destructive`로 통일
+  - ✅ `revalidatePath` 감사: `createEvent`/`updateEvent`/`deleteEvent`에 `/admin/dashboard`를, 참여자 관련 5개 액션(`joinEvent`/`cancelParticipation`/`approveParticipant`/`rejectParticipant`/`kickParticipant`)에 `/admin/events`를 추가해 관리자 화면 캐시 무효화 누락을 해소(카풀/정산 액션은 관리자 화면에 노출되지 않아 범위에서 제외)
+  - **[2026-07-07 Playwright MCP E2E 검증 완료]** 관리자 계정으로 이벤트/참여자/카풀/친구/초대/관리자 화면 전반의 회귀 없음과 다수의 EmptyState 렌더링(빈 검색 결과, 빈 탭 필터 등)을 확인. `get_advisors`(security/performance) 재점검 결과 기존 대비 신규 이슈 없음.
