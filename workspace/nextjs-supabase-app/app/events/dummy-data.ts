@@ -58,6 +58,7 @@ export const DUMMY_EVENTS: Event[] = [
     participation_fee_amount: null,
     organizer_carpool_visible: false,
     deleted_at: null,
+    admin_notice: null,
   },
   {
     id: "2",
@@ -80,6 +81,7 @@ export const DUMMY_EVENTS: Event[] = [
     participation_fee_amount: null,
     organizer_carpool_visible: false,
     deleted_at: null,
+    admin_notice: null,
   },
   {
     id: "3",
@@ -103,6 +105,7 @@ export const DUMMY_EVENTS: Event[] = [
     participation_fee_amount: null,
     organizer_carpool_visible: false,
     deleted_at: null,
+    admin_notice: null,
   },
   {
     id: "4",
@@ -125,6 +128,7 @@ export const DUMMY_EVENTS: Event[] = [
     participation_fee_amount: null,
     organizer_carpool_visible: false,
     deleted_at: null,
+    admin_notice: null,
   },
 ];
 

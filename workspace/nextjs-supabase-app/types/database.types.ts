@@ -119,6 +119,7 @@ export type Database = {
       };
       events: {
         Row: {
+          admin_notice: string | null;
           capacity: number;
           created_at: string;
           deleted_at: string | null;
@@ -145,6 +146,7 @@ export type Database = {
           title: string;
         };
         Insert: {
+          admin_notice?: string | null;
           capacity: number;
           created_at?: string;
           deleted_at?: string | null;
@@ -171,6 +173,7 @@ export type Database = {
           title: string;
         };
         Update: {
+          admin_notice?: string | null;
           capacity?: number;
           created_at?: string;
           deleted_at?: string | null;
@@ -487,6 +490,14 @@ export type Database = {
         Returns: {
           email: string;
           name: string;
+        }[];
+      };
+      get_monthly_stats: {
+        Args: Record<PropertyKey, never>;
+        Returns: {
+          event_count: number;
+          signup_count: number;
+          stat_month: string;
         }[];
       };
       invite_passenger: {

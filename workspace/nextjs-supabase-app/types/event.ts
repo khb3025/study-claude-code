@@ -122,6 +122,8 @@ export interface Event {
   // 주최자가 삭제 처리한 시각(소프트 삭제 — null이면 활성 이벤트).
   // 삭제되어도 참여자/정산 기록은 보존되어 이력 페이지에서 계속 조회 가능하다.
   deleted_at: string | null;
+  // 관리자가 등록한 공지(관리자 페이지 전용, null이면 공지 없음)
+  admin_notice: string | null;
 }
 
 export interface Participant {
