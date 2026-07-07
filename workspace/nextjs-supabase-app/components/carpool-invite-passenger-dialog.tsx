@@ -71,6 +71,7 @@ export function CarpoolInvitePassengerDialog({
                         : prev.filter((id) => id !== user.id),
                     )
                   }
+                  aria-label={`${user.name} 탑승자로 선택`}
                 />
                 <Avatar className="h-6 w-6">
                   <AvatarFallback className="text-[10px]">

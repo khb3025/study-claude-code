@@ -38,7 +38,11 @@ export function SettlementShareToggle({
     <AlertDialog>
       <div className="flex items-center gap-2">
         <AlertDialogTrigger asChild>
-          <Checkbox checked={isPaid} disabled={isPending} />
+          <Checkbox
+            checked={isPaid}
+            disabled={isPending}
+            aria-label="정산 완료 처리"
+          />
         </AlertDialogTrigger>
         <span>미완료</span>
       </div>

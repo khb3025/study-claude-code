@@ -1,10 +1,13 @@
 import { Suspense } from "react";
+import { UserRoundX, Users } from "lucide-react";
 import { BackToEventsLink } from "@/components/back-to-events-link";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { EmptyState } from "@/components/empty-state";
 import { FriendRequestActions } from "@/components/friend-request-actions";
 import { FriendSearch } from "@/components/friend-search";
+import { Skeleton } from "@/components/ui/skeleton";
 import { createClient } from "@/lib/supabase/server";
 
 interface FriendProfile {
@@ -89,9 +92,10 @@ async function FriendsContent() {
         </CardHeader>
         <CardContent className="flex flex-col gap-3">
           {pendingRequests.length === 0 ? (
-            <p className="text-sm text-muted-foreground">
-              대기중인 친구 요청이 없습니다.
-            </p>
+            <EmptyState
+              icon={<UserRoundX />}
+              title="대기중인 친구 요청이 없습니다."
+            />
           ) : (
             pendingRequests.map((request) => {
               const profile = profileMap.get(request.user_id);
@@ -126,9 +130,7 @@ async function FriendsContent() {
         </CardHeader>
         <CardContent className="flex flex-col gap-3">
           {acceptedFriendships.length === 0 ? (
-            <p className="text-sm text-muted-foreground">
-              아직 친구가 없습니다.
-            </p>
+            <EmptyState icon={<Users />} title="아직 친구가 없습니다." />
           ) : (
             acceptedFriendships.map((friendship) => {
               const friendId =
@@ -176,7 +178,10 @@ export default function FriendsPage() {
 
       <Suspense
         fallback={
-          <p className="text-sm text-muted-foreground">불러오는 중...</p>
+          <div className="flex flex-col gap-3">
+            <Skeleton className="h-24 w-full rounded-lg" />
+            <Skeleton className="h-24 w-full rounded-lg" />
+          </div>
         }
       >
         <FriendsContent />

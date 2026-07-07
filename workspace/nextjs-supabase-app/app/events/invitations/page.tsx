@@ -2,8 +2,10 @@ import { Suspense } from "react";
 import { Mail } from "lucide-react";
 import { BackToEventsLink } from "@/components/back-to-events-link";
 import { Card, CardContent } from "@/components/ui/card";
+import { EmptyState } from "@/components/empty-state";
 import { InvitationActions } from "@/components/invitation-actions";
 import { OrganizerBlockSearch } from "@/components/organizer-block-search";
+import { Skeleton } from "@/components/ui/skeleton";
 import { createClient } from "@/lib/supabase/server";
 
 // 받은 이벤트 초대 목록: 아직 응답하지 않은(pending) 초대만 보여주며 수락/거절, 주최자 차단 액션을 제공한다.
@@ -15,12 +17,7 @@ async function InvitationList() {
   } = await supabase.auth.getUser();
 
   if (!user) {
-    return (
-      <div className="flex flex-col items-center justify-center gap-3 rounded-lg border border-dashed py-16 text-center">
-        <Mail className="h-10 w-10 text-muted-foreground" />
-        <p className="text-sm text-muted-foreground">로그인이 필요합니다.</p>
-      </div>
-    );
+    return <EmptyState icon={<Mail />} title="로그인이 필요합니다." />;
   }
 
   const { data: invitationRows } = await supabase
@@ -77,12 +74,7 @@ async function InvitationList() {
   );
 
   if (invitations.length === 0) {
-    return (
-      <div className="flex flex-col items-center justify-center gap-3 rounded-lg border border-dashed py-16 text-center">
-        <Mail className="h-10 w-10 text-muted-foreground" />
-        <p className="text-sm text-muted-foreground">받은 초대가 없습니다.</p>
-      </div>
-    );
+    return <EmptyState icon={<Mail />} title="받은 초대가 없습니다." />;
   }
 
   return (
@@ -128,7 +120,10 @@ export default function InvitationsPage() {
       </div>
       <Suspense
         fallback={
-          <p className="text-sm text-muted-foreground">불러오는 중...</p>
+          <div className="flex flex-col gap-3">
+            <Skeleton className="h-20 w-full rounded-lg" />
+            <Skeleton className="h-20 w-full rounded-lg" />
+          </div>
         }
       >
         <InvitationList />
