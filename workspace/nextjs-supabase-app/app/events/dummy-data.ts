@@ -52,6 +52,12 @@ export const DUMMY_EVENTS: Event[] = [
     items_to_bring: "수모, 수경, 개인 물병",
     recurrence_type: "weekly",
     settlement_visible: true,
+    created_at: "2026-07-01T09:00:00+09:00",
+    image_url: null,
+    participation_fee_enabled: false,
+    participation_fee_amount: null,
+    organizer_carpool_visible: false,
+    deleted_at: null,
   },
   {
     id: "2",
@@ -68,6 +74,12 @@ export const DUMMY_EVENTS: Event[] = [
     items_to_bring: "텐트, 침낭, 랜턴, 개인 세면도구",
     recurrence_type: "none",
     settlement_visible: true,
+    created_at: "2026-07-02T09:00:00+09:00",
+    image_url: null,
+    participation_fee_enabled: false,
+    participation_fee_amount: null,
+    organizer_carpool_visible: false,
+    deleted_at: null,
   },
   {
     id: "3",
@@ -85,6 +97,12 @@ export const DUMMY_EVENTS: Event[] = [
     recurrence_type: "weekly",
     // 특강 성격의 유료 강습 — 주최자가 정산 내역을 비공개로 설정한 데모
     settlement_visible: false,
+    created_at: "2026-07-03T09:00:00+09:00",
+    image_url: null,
+    participation_fee_enabled: false,
+    participation_fee_amount: null,
+    organizer_carpool_visible: false,
+    deleted_at: null,
   },
   {
     id: "4",
@@ -101,6 +119,12 @@ export const DUMMY_EVENTS: Event[] = [
     items_to_bring: "등산화, 스틱, 간식, 물",
     recurrence_type: "none",
     settlement_visible: true,
+    created_at: "2026-06-20T09:00:00+09:00",
+    image_url: null,
+    participation_fee_enabled: false,
+    participation_fee_amount: null,
+    organizer_carpool_visible: false,
+    deleted_at: null,
   },
 ];
 
@@ -423,6 +447,7 @@ export const DUMMY_SETTLEMENT_SHARES: SettlementShare[] = [
     user_id: "user-3",
     amount: 30000,
     is_paid: true,
+    paid_at: null,
   },
   {
     id: "ss2",
@@ -430,6 +455,7 @@ export const DUMMY_SETTLEMENT_SHARES: SettlementShare[] = [
     user_id: "user-4",
     amount: 30000,
     is_paid: false,
+    paid_at: null,
   },
 ];
 

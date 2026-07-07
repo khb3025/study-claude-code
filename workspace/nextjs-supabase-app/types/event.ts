@@ -98,8 +98,8 @@ export interface Event {
   id: string;
   organizer_id: string;
   title: string;
-  description: string;
-  location: string;
+  description: string | null;
+  location: string | null;
   starts_at: string;
   capacity: number;
   status: EventStatus;
@@ -110,6 +110,18 @@ export interface Event {
   recurrence_type: RecurrenceType;
   // 정산 내역을 참여자 전체에게 공개할지 여부(비공개 시 주최자만 열람 가능)
   settlement_visible: boolean;
+  created_at: string;
+  // 이벤트 사진 공개 URL(Supabase Storage event-images 버킷에 업로드된 파일, 선택)
+  image_url: string | null;
+  // 참가비 옵션 활성화 여부(활성화 시 참여 확정될 때 "참가비 정산" 항목에 자동으로 분담액이 추가됨)
+  participation_fee_enabled: boolean;
+  // 1인당 참가비 금액(원 단위, participation_fee_enabled가 true일 때만 사용)
+  participation_fee_amount: number | null;
+  // 주최자를 카풀 탑승자 초대 후보 목록에 노출할지 여부(주최자가 직접 토글)
+  organizer_carpool_visible: boolean;
+  // 주최자가 삭제 처리한 시각(소프트 삭제 — null이면 활성 이벤트).
+  // 삭제되어도 참여자/정산 기록은 보존되어 이력 페이지에서 계속 조회 가능하다.
+  deleted_at: string | null;
 }
 
 export interface Participant {
@@ -153,13 +165,37 @@ export interface AdminUser {
   granted_at: string;
 }
 
+// auth.users는 PostgREST로 직접 조회할 수 없어, 주최자/참여자 등
+// "타인"의 이름·아바타 표시용으로 public 스키마에 복제해두는 프로필 정보.
+export interface Profile {
+  id: string;
+  email: string | null;
+  full_name: string | null;
+  avatar_url: string | null;
+  // 사용자가 직접 설정하는 표시용 이름(가입 직후에는 미설정 상태로 null)
+  nickname: string | null;
+  // true면 닉네임과 함께 실명(full_name)도 공개, false면 닉네임만 공개
+  name_visible: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+// 폼 입력 전용 Zod 스키마: 닉네임 설정/수정, 실명 공개 여부 토글
+export const profileFormSchema = z.object({
+  nickname: z.string().trim().min(1, "닉네임을 입력해주세요").max(30),
+  name_visible: z.boolean(),
+  avatar_url: z.string().url().optional().nullable(),
+});
+
+export type ProfileFormValues = z.infer<typeof profileFormSchema>;
+
 export interface Carpool {
   id: string;
   event_id: string;
   driver_id: string;
   seats_total: number;
-  departure_point: string;
-  departure_time: string;
+  departure_point: string | null;
+  departure_time: string | null;
 }
 
 export interface CarpoolPassenger {
@@ -184,31 +220,55 @@ export interface SettlementShare {
   user_id: string;
   amount: number;
   is_paid: boolean;
+  // 완료 처리된 시각(당사자가 정산 완료 확인증에서 확인할 수 있도록 기록)
+  paid_at: string | null;
 }
 
 // 폼 입력 전용 Zod 스키마(서버 생성 필드 id/organizer_id/status 등은 제외)
-export const eventFormSchema = z.object({
-  title: z.string().min(1, "제목을 입력해주세요"),
-  description: z.string().min(1, "설명(공지사항)을 입력해주세요"),
-  location: z.string().min(1, "장소를 입력해주세요"),
-  starts_at: z.date({ error: "일시를 선택해주세요" }),
-  capacity: z.number().int().min(1, "정원은 1명 이상이어야 합니다"),
-  join_type: z.enum(["first_come", "password", "approval"]),
-  password: z.string().optional(),
-  schedule: z.string().optional(),
-  items_to_bring: z.string().optional(),
-  recurrence_type: z.enum([
-    "none",
-    "daily",
-    "weekly",
-    "monthly_nth_weekday",
-    "monthly_date",
-  ]),
-  recurrence_weekday: z.number().int().min(0).max(6).optional(),
-  recurrence_week_of_month: z.number().int().optional(),
-  recurrence_day_of_month: z.number().int().min(1).max(31).optional(),
-  recurrence_time: z.string().optional(),
-  settlement_visible: z.boolean(),
-});
+export const eventFormSchema = z
+  .object({
+    title: z.string().min(1, "제목을 입력해주세요"),
+    description: z.string().min(1, "설명(공지사항)을 입력해주세요"),
+    location: z.string().min(1, "장소를 입력해주세요"),
+    starts_at: z.date({ error: "일시를 선택해주세요" }),
+    capacity: z.number().int().min(1, "정원은 1명 이상이어야 합니다"),
+    join_type: z.enum(["first_come", "password", "approval"]),
+    password: z.string().optional(),
+    schedule: z.string().optional(),
+    items_to_bring: z.string().optional(),
+    recurrence_type: z.enum([
+      "none",
+      "daily",
+      "weekly",
+      "monthly_nth_weekday",
+      "monthly_date",
+    ]),
+    recurrence_weekday: z.number().int().min(0).max(6).optional(),
+    recurrence_week_of_month: z.number().int().optional(),
+    recurrence_day_of_month: z.number().int().min(1).max(31).optional(),
+    recurrence_time: z.string().optional(),
+    settlement_visible: z.boolean(),
+    image_url: z.string().url().optional().nullable(),
+    participation_fee_enabled: z.boolean(),
+    participation_fee_amount: z
+      .number()
+      .int()
+      .nonnegative()
+      .optional()
+      .nullable(),
+  })
+  .superRefine((values, ctx) => {
+    // 참가비 옵션을 활성화했다면 반드시 1원 이상의 금액을 입력해야 한다
+    if (
+      values.participation_fee_enabled &&
+      (!values.participation_fee_amount || values.participation_fee_amount <= 0)
+    ) {
+      ctx.addIssue({
+        code: "custom",
+        message: "참가비 금액을 1원 이상 입력해주세요",
+        path: ["participation_fee_amount"],
+      });
+    }
+  });
 
 export type EventFormValues = z.infer<typeof eventFormSchema>;
