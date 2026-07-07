@@ -1,37 +1,88 @@
+import { Suspense } from "react";
 import { CalendarX } from "lucide-react";
 import { BackToEventsLink } from "@/components/back-to-events-link";
 import { EventList } from "@/components/event-list";
-import {
-  CURRENT_USER_ID,
-  DUMMY_EVENTS,
-  DUMMY_PARTICIPANTS,
-} from "@/app/events/dummy-data";
+import { createClient } from "@/lib/supabase/server";
+import { getEventListDisplayData } from "@/app/events/event-list-data";
+import type { Event } from "@/types/event";
 
-// 내가 참여자로 등록된 이벤트만 필터링해 보여주는 페이지
-export default function JoinedEventsPage() {
-  const joinedEventIds = DUMMY_PARTICIPANTS.filter(
-    (participant) => participant.user_id === CURRENT_USER_ID,
-  ).map((participant) => participant.event_id);
-  const joinedEvents = DUMMY_EVENTS.filter((event) =>
-    joinedEventIds.includes(event.id),
+function EmptyState() {
+  return (
+    <div className="flex flex-col items-center justify-center gap-3 rounded-lg border border-dashed py-16 text-center">
+      <CalendarX className="h-10 w-10 text-muted-foreground" />
+      <p className="text-sm text-muted-foreground">
+        참여 중인 이벤트가 없습니다.
+      </p>
+    </div>
+  );
+}
+
+// 내가 참여자로 등록된 이벤트만 조회해 보여주는 서버 컴포넌트.
+// 취소(cancelled)/강퇴(kicked) 상태인 참여 기록은 더 이상 "참여 중"이 아니므로 제외한다.
+async function JoinedEventsList() {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    return (
+      <p className="text-sm text-muted-foreground">로그인이 필요합니다.</p>
+    );
+  }
+
+  const { data: participantRows } = await supabase
+    .from("participants")
+    .select("event_id")
+    .eq("user_id", user.id)
+    .not("status", "in", "(cancelled,kicked)");
+
+  const joinedEventIds = Array.from(
+    new Set((participantRows ?? []).map((row) => row.event_id as string)),
   );
 
+  if (joinedEventIds.length === 0) {
+    return <EmptyState />;
+  }
+
+  const { data: events } = await supabase
+    .from("events")
+    .select("*")
+    .in("id", joinedEventIds)
+    .order("starts_at");
+
+  if (!events || events.length === 0) {
+    return <EmptyState />;
+  }
+
+  const { organizers, participantCounts } = await getEventListDisplayData(
+    supabase,
+    events as Event[],
+  );
+
+  return (
+    <EventList
+      events={events as Event[]}
+      organizers={organizers}
+      participantCounts={participantCounts}
+    />
+  );
+}
+
+export default function JoinedEventsPage() {
   return (
     <div className="flex w-full flex-1 flex-col gap-6">
       <div className="flex items-center gap-3">
         <BackToEventsLink />
         <h1 className="text-2xl font-bold">참여 이벤트</h1>
       </div>
-      {joinedEvents.length > 0 ? (
-        <EventList events={joinedEvents} />
-      ) : (
-        <div className="flex flex-col items-center justify-center gap-3 rounded-lg border border-dashed py-16 text-center">
-          <CalendarX className="h-10 w-10 text-muted-foreground" />
-          <p className="text-sm text-muted-foreground">
-            참여 중인 이벤트가 없습니다.
-          </p>
-        </div>
-      )}
+      <Suspense
+        fallback={
+          <p className="text-sm text-muted-foreground">불러오는 중...</p>
+        }
+      >
+        <JoinedEventsList />
+      </Suspense>
     </div>
   );
 }

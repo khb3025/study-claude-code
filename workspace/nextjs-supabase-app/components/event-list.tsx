@@ -4,8 +4,11 @@ import { useState } from "react";
 import { EventCard } from "@/components/event-card";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { EVENT_STATUS, type Event, type EventStatus } from "@/types/event";
+import type { EventOrganizerInfo } from "@/app/events/event-list-data";
 
-const FILTERS: { value: EventStatus | "all"; label: string }[] = [
+type ListFilter = EventStatus | "all" | "deleted";
+
+const FILTERS: { value: ListFilter; label: string }[] = [
   { value: "all", label: "전체" },
   {
     value: EVENT_STATUS.RECRUITING.value,
@@ -13,21 +16,34 @@ const FILTERS: { value: EventStatus | "all"; label: string }[] = [
   },
   { value: EVENT_STATUS.CLOSED.value, label: EVENT_STATUS.CLOSED.label },
   { value: EVENT_STATUS.FINISHED.value, label: EVENT_STATUS.FINISHED.label },
+  { value: "deleted", label: "삭제됨" },
 ];
 
-export function EventList({ events }: { events: Event[] }) {
-  const [filter, setFilter] = useState<EventStatus | "all">("all");
+interface EventListProps {
+  events: Event[];
+  organizers?: Record<string, EventOrganizerInfo>;
+  participantCounts?: Record<string, number>;
+}
+
+export function EventList({
+  events,
+  organizers = {},
+  participantCounts = {},
+}: EventListProps) {
+  const [filter, setFilter] = useState<ListFilter>("all");
 
   const filteredEvents =
     filter === "all"
       ? events
-      : events.filter((event) => event.status === filter);
+      : filter === "deleted"
+        ? events.filter((event) => event.deleted_at !== null)
+        : events.filter((event) => event.status === filter);
 
   return (
     <div className="flex flex-col gap-6">
       <Tabs
         value={filter}
-        onValueChange={(value) => setFilter(value as EventStatus | "all")}
+        onValueChange={(value) => setFilter(value as ListFilter)}
       >
         <TabsList>
           {FILTERS.map((item) => (
@@ -39,7 +55,13 @@ export function EventList({ events }: { events: Event[] }) {
       </Tabs>
       <div className="grid grid-cols-1 gap-3 lg:grid-cols-2">
         {filteredEvents.map((event) => (
-          <EventCard key={event.id} event={event} />
+          <EventCard
+            key={event.id}
+            event={event}
+            organizerName={organizers[event.organizer_id]?.name}
+            organizerEmail={organizers[event.organizer_id]?.email}
+            participantCount={participantCounts[event.id] ?? 0}
+          />
         ))}
       </div>
     </div>
