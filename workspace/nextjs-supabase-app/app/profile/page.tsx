@@ -141,7 +141,13 @@ async function ProfileContent() {
           <h3 className="font-semibold">계정 정보</h3>
           <div className="flex items-center justify-between text-sm">
             <span className="text-muted-foreground">역할</span>
-            <span>{adminRow ? "관리자" : "사용자"}</span>
+            {adminRow ? (
+              <Link href="/admin/dashboard" className="text-primary underline">
+                관리자
+              </Link>
+            ) : (
+              <span>사용자</span>
+            )}
           </div>
           <div className="flex items-center justify-between text-sm">
             <span className="text-muted-foreground">가입일</span>

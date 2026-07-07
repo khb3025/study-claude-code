@@ -40,13 +40,26 @@ export function LoginForm({
       });
       if (error) throw error;
 
-      // 닉네임을 아직 설정하지 않은 사용자는 프로필 설정 화면으로, 그 외에는 이벤트 목록으로 이동
-      const { data: profile } = await supabase
-        .from("profiles")
-        .select("nickname")
-        .eq("id", data.user.id)
-        .maybeSingle();
-      router.push(profile?.nickname ? "/events" : "/profile");
+      // 닉네임을 아직 설정하지 않은 사용자는 프로필 설정 화면으로,
+      // 관리자 계정은 관리자 대시보드로, 그 외에는 이벤트 목록으로 이동
+      const [{ data: profile }, { data: adminRow }] = await Promise.all([
+        supabase
+          .from("profiles")
+          .select("nickname")
+          .eq("id", data.user.id)
+          .maybeSingle(),
+        supabase
+          .from("admin_users")
+          .select("user_id")
+          .eq("user_id", data.user.id)
+          .maybeSingle(),
+      ]);
+
+      if (!profile?.nickname) {
+        router.push("/profile");
+      } else {
+        router.push(adminRow ? "/admin/dashboard" : "/events");
+      }
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : "오류가 발생했습니다");
     } finally {
@@ -93,7 +106,7 @@ export function LoginForm({
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
-              {error && <p className="text-sm text-red-500">{error}</p>}
+              {error && <p className="text-sm text-destructive">{error}</p>}
               <Button type="submit" className="w-full" disabled={isLoading}>
                 {isLoading ? "로그인 중..." : "로그인"}
               </Button>
