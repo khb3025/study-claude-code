@@ -59,6 +59,8 @@ export async function createEvent(values: EventFormValues) {
     return { error: "이벤트 생성에 실패했습니다. 다시 시도해주세요." };
   }
 
+  revalidatePath("/admin/events");
+  revalidatePath("/admin/dashboard");
   redirect(`/events/${data.id}`);
 }
 
@@ -95,10 +97,15 @@ export async function updateEvent(eventId: string, values: EventFormValues) {
   }
 
   revalidatePath(`/events/${eventId}`);
+  revalidatePath("/admin/events");
+  revalidatePath("/admin/dashboard");
   redirect(`/events/${eventId}`);
 }
 
-export async function deleteEvent(eventId: string) {
+export async function deleteEvent(
+  eventId: string,
+  options?: { skipRedirect?: boolean },
+) {
   const supabase = await createClient();
   const {
     data: { user },
@@ -114,8 +121,20 @@ export async function deleteEvent(eventId: string) {
     .eq("id", eventId)
     .single();
 
-  if (!existing || existing.organizer_id !== user.id) {
+  if (!existing) {
     return { error: "이 이벤트를 삭제할 권한이 없습니다." };
+  }
+
+  if (existing.organizer_id !== user.id) {
+    const { data: adminRow } = await supabase
+      .from("admin_users")
+      .select("user_id")
+      .eq("user_id", user.id)
+      .maybeSingle();
+
+    if (!adminRow) {
+      return { error: "이 이벤트를 삭제할 권한이 없습니다." };
+    }
   }
 
   // 하드 삭제 대신 소프트 삭제를 사용한다: 참여자/정산 기록이 함께 사라지면
@@ -131,5 +150,12 @@ export async function deleteEvent(eventId: string) {
   }
 
   revalidatePath("/events");
+  revalidatePath("/admin/events");
+  revalidatePath("/admin/dashboard");
+
+  if (options?.skipRedirect) {
+    return { error: null };
+  }
+
   redirect("/events");
 }

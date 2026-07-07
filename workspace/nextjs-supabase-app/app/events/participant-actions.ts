@@ -37,6 +37,7 @@ export async function joinEvent(eventId: string, password?: string) {
     return { error: error.message };
   }
   revalidatePath(`/events/${eventId}`);
+  revalidatePath("/admin/events");
   return { error: null };
 }
 
@@ -53,6 +54,7 @@ export async function cancelParticipation(
     return { error: error.message };
   }
   revalidatePath(`/events/${eventId}`);
+  revalidatePath("/admin/events");
   return { error: null };
 }
 
@@ -69,6 +71,7 @@ export async function approveParticipant(
     return { error: error.message };
   }
   revalidatePath(`/events/${eventId}`);
+  revalidatePath("/admin/events");
   return { error: null };
 }
 
@@ -86,6 +89,7 @@ export async function rejectParticipant(
     return { error: error.message };
   }
   revalidatePath(`/events/${eventId}`);
+  revalidatePath("/admin/events");
   return { error: null };
 }
 
@@ -110,5 +114,6 @@ export async function kickParticipant(
     return { error: error.message };
   }
   revalidatePath(`/events/${eventId}`);
+  revalidatePath("/admin/events");
   return { error: null };
 }
