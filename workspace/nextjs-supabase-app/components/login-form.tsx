@@ -34,13 +34,19 @@ export function LoginForm({
     setError(null);
 
     try {
-      const { error } = await supabase.auth.signInWithPassword({
+      const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
       if (error) throw error;
-      // 로그인 성공 시 모임 이벤트 목록으로 이동
-      router.push("/events");
+
+      // 닉네임을 아직 설정하지 않은 사용자는 프로필 설정 화면으로, 그 외에는 이벤트 목록으로 이동
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select("nickname")
+        .eq("id", data.user.id)
+        .maybeSingle();
+      router.push(profile?.nickname ? "/events" : "/profile");
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : "오류가 발생했습니다");
     } finally {
