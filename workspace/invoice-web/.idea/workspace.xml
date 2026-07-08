@@ -5,7 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6476f6e2-8222-4fb8-b4c4-a86247f803c4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/claudeCodeEditorTabs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/claudeCodeEditorTabs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/claudeCodeEditorTabs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -13,7 +14,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="604" />
+    <option name="cachedIndexableFilesCount" value="724" />
     <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
   </component>
   <component name="Git.Settings">
@@ -132,6 +133,9 @@
       <workItem from="1783226685893" duration="3000" />
       <workItem from="1783240033663" duration="72000" />
       <workItem from="1783312380599" duration="1000" />
+      <workItem from="1783516576740" duration="877000" />
+      <workItem from="1783521169029" duration="901000" />
+      <workItem from="1783522488101" duration="25000" />
     </task>
     <task id="LOCAL-00001" summary="next.JS 및 shadcnUI 직접 설치">
       <option name="closed" value="true" />
