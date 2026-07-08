@@ -1,0 +1,14 @@
+{
+  "name": "ppt-maker-scripts",
+  "version": "1.0.0",
+  "private": true,
+  "description": "ppt-maker skill의 PDF/PPTX 변환 스크립트 의존성",
+  "scripts": {
+    "export:pdf": "node export-pdf.js",
+    "export:pptx": "node export-pptx.js"
+  },
+  "dependencies": {
+    "playwright": "^1.47.0",
+    "pptxgenjs": "^3.12.0"
+  }
+}

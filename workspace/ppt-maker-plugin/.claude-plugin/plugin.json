@@ -1,0 +1,8 @@
+{
+    "name": "ppt-maker",
+    "description": "PPT작성 SKILL 플러그인.",
+    "version": "1.0.0",
+    "author": {
+        "name":"khb"
+    }
+}

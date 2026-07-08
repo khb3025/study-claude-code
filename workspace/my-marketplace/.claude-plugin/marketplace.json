@@ -1,0 +1,17 @@
+{
+    "name": "my-marketplace",
+    "owner" :{
+        "name": "khb",
+        "email": "khb1928@naver.com"
+    },
+    "plugins": [
+        {
+            "name": "ppt-maker",
+            "source": "./plugins/ppt-maker-plugin",
+            "description": "PPT작성 SKILL 플러그인.",
+            "version": "1.0.0",
+            "author": "khb"
+        }
+    ]
+
+}

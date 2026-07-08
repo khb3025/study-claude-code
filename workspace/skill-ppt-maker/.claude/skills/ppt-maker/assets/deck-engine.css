@@ -1,0 +1,127 @@
+/* ppt-maker deck-engine.css
+   모든 슬라이드 덱이 공통으로 불러오는 기반 스타일.
+   좌표계는 1280x720px(16:9) 고정 — RESEARCH.md의 "레이아웃/그리드 엔진" 결론을 그대로 채택. */
+
+:root {
+  /* primitive 색상 (필요 시 프로젝트에 맞게 교체) */
+  --color-blue-600: #2563eb;
+  --color-blue-100: #dbeafe;
+  --color-gray-900: #111827;
+  --color-gray-600: #4b5563;
+  --color-gray-200: #e5e7eb;
+  --color-gray-50: #f9fafb;
+  --color-white: #ffffff;
+
+  /* semantic 색상 (light) */
+  --color-bg: var(--color-white);
+  --color-surface: var(--color-gray-50);
+  --color-text: var(--color-gray-900);
+  --color-text-muted: var(--color-gray-600);
+  --color-accent: var(--color-blue-600);
+  --color-accent-bg: var(--color-blue-100);
+  --color-border: var(--color-gray-200);
+}
+
+:root[data-theme="dark"] {
+  --color-bg: #0f172a;
+  --color-surface: #1e293b;
+  --color-text: #f1f5f9;
+  --color-text-muted: #94a3b8;
+  --color-accent: #60a5fa;
+  --color-accent-bg: #1e3a5f;
+  --color-border: #334155;
+}
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  height: 100%;
+  background: #333;
+  font-family: 'Pretendard', 'Malgun Gothic', sans-serif;
+}
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* 반응형 프리뷰 wrapper. 실제 export 좌표(1280x720)에는 영향 없음 */
+.viewport {
+  width: 1280px;
+  height: 720px;
+  transform: scale(var(--preview-scale, 0.7));
+  transform-origin: center;
+}
+body:fullscreen .viewport,
+body:-webkit-full-screen .viewport {
+  transform: scale(var(--fullscreen-scale, 1));
+}
+
+.deck { position: relative; width: 1280px; height: 720px; }
+
+.slide {
+  position: absolute; inset: 0;
+  width: 1280px; height: 720px;
+  background: var(--color-bg); color: var(--color-text);
+  padding: 56px 64px;
+  display: none;
+  overflow: hidden;
+}
+.slide.active { display: block; }
+
+/* 타이포그래피 스케일 (제목 36-44pt / 부제 15-16pt / 본문 13-14pt) */
+h1 { font-size: 38pt; margin: 0 0 8px 0; font-weight: 700; line-height: 1.15; }
+h2 { font-size: 22pt; margin: 0 0 12px 0; font-weight: 700; }
+.subtitle { font-size: 15pt; color: var(--color-text-muted); margin: 0 0 24px 0; font-weight: 500; }
+.kicker {
+  font-size: 12pt; color: var(--color-accent); font-weight: 700;
+  letter-spacing: .04em; margin: 0 0 6px 0; text-transform: uppercase;
+}
+p, li { font-size: 13pt; line-height: 1.4; color: var(--color-text); }
+
+/* 슬라이드 번호 매기기 */
+.page-num { position: absolute; bottom: 24px; right: 32px; font-size: 10pt; color: var(--color-text-muted); }
+.footnote { position: absolute; bottom: 24px; left: 64px; font-size: 9pt; color: var(--color-text-muted); max-width: 820px; }
+
+/* 컨트롤 UI (내비게이션 힌트, 테마 토글, 진행바) — PDF/PPTX 출력에는 포함되지 않음 */
+.nav-hint {
+  position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%);
+  color: #cbd5e1; font-size: 12px; background: rgba(0,0,0,.35);
+  padding: 6px 14px; border-radius: 999px; z-index: 20;
+}
+.theme-toggle, .fullscreen-toggle {
+  position: fixed; top: 12px; z-index: 20; padding: 6px 12px; font-size: 12px; cursor: pointer;
+}
+.theme-toggle { left: 12px; }
+.fullscreen-toggle { left: 110px; }
+.progress { position: fixed; top: 0; left: 0; height: 4px; background: var(--color-accent); z-index: 20; transition: width .3s ease; }
+
+/* .fragment 패턴: 클릭 시 순차 등장 애니메이션 (reveal.js 스타일) */
+.fragment {
+  opacity: 0; transform: translateY(12px);
+  transition: opacity .4s ease, transform .4s ease;
+}
+.fragment.visible { opacity: 1; transform: translateY(0); }
+
+/* ============================================================
+   PDF 변환 전용 스타일 (scripts/export-pdf.js가 body에 .print-mode를 부여)
+   모든 슬라이드를 절대배치 대신 순차 배치해 페이지 단위로 인쇄한다.
+   ============================================================ */
+body.print-mode { background: var(--color-bg); }
+body.print-mode .viewport { transform: none; width: 1280px; height: auto; }
+body.print-mode .deck { height: auto; }
+body.print-mode .slide {
+  position: relative; display: block !important;
+  page-break-after: always; break-after: page;
+}
+body.print-mode .slide:last-child { page-break-after: auto; break-after: auto; }
+body.print-mode .nav-hint,
+body.print-mode .theme-toggle,
+body.print-mode .fullscreen-toggle,
+body.print-mode .progress { display: none !important; }
+body.print-mode .fragment { opacity: 1 !important; transform: none !important; }
+
+@media print {
+  @page { size: 1280px 720px; margin: 0; }
+}

@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<title>게임 플랫폼별 유저 통계 (리서치 샘플)</title>
+<link rel="stylesheet" href="../.claude/skills/ppt-maker/assets/deck-engine.css" />
+<style>
+  /* 이 덱 전용 스타일 (공통 규칙은 deck-engine.css가 제공) */
+  .decor-bg { position:absolute; top:-90px; right:-90px; width:280px; height:280px; border-radius:50%; background:var(--color-accent-bg); z-index:0; }
+
+  .title-slide { display:flex; flex-direction:column; justify-content:center; height:100%; position:relative; z-index:1; }
+  .title-slide .badge { display:inline-block; background:var(--color-accent-bg); color:var(--color-accent); font-size:11pt; font-weight:700; padding:6px 14px; border-radius:999px; margin-bottom:20px; width:fit-content; }
+  .title-slide h1 { font-size:46pt; }
+  .platform-chip-row { display:flex; gap:12px; margin-top:32px; }
+  .platform-chip { background:var(--color-surface); border:1px solid var(--color-border); border-radius:10px; padding:10px 16px; font-size:12pt; font-weight:600; }
+
+  .card-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:16px; position:relative; z-index:1; }
+  .platform-card { background:var(--color-surface); border:1px solid var(--color-border); border-radius:14px; padding:18px 16px; min-height:340px; display:flex; flex-direction:column; }
+  .platform-card .dot { width:14px; height:14px; border-radius:50%; margin-bottom:10px; }
+  .platform-card h3 { font-size:14pt; margin:0 0 6px 0; }
+  .platform-card .stat { font-size:20pt; font-weight:700; margin:10px 0 2px 0; }
+  .platform-card .stat-label { font-size:9.5pt; color:var(--color-text-muted); margin-bottom:12px; }
+  .platform-card ul { margin:0; padding-left:16px; font-size:9.5pt; color:var(--color-text-muted); flex:1; }
+  .platform-card li { margin-bottom:5px; }
+
+  .chart-wrap { position:relative; z-index:1; background:var(--color-surface); border:1px solid var(--color-border); border-radius:16px; padding:24px 28px; }
+  .legend { display:flex; gap:18px; margin-top:14px; flex-wrap:wrap; }
+  .legend-item { display:flex; align-items:center; gap:6px; font-size:10.5pt; color:var(--color-text-muted); }
+  .legend-swatch { width:12px; height:12px; border-radius:3px; }
+  .axis-label { font-size:9pt; fill: var(--color-text-muted); }
+
+  .bars-wrap { display:flex; align-items:flex-end; gap:36px; height:340px; padding:20px 20px 0; }
+  .bar-col { flex:1; display:flex; flex-direction:column; align-items:center; height:100%; justify-content:flex-end; }
+  .bar-value { font-size:13pt; font-weight:700; margin-bottom:6px; }
+  .bar-fill { width:60%; border-radius:8px 8px 0 0; }
+  .bar-name { margin-top:10px; font-size:11pt; font-weight:600; text-align:center; }
+  .bar-sub { font-size:9pt; color:var(--color-text-muted); }
+
+  .insight-grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; position:relative; z-index:1; }
+  .insight-card { background:var(--color-surface); border-left:5px solid var(--color-accent); border-radius:10px; padding:18px 20px; }
+  .insight-card h3 { font-size:13.5pt; margin:0 0 6px 0; }
+  .insight-card p { font-size:11.5pt; margin:0; color:var(--color-text-muted); }
+</style>
+</head>
+<body>
+
+<button class="theme-toggle" onclick="togglePptTheme()">테마 전환</button>
+<button class="fullscreen-toggle" onclick="toggleFullscreen()">전체화면 (F5)</button>
+<div class="progress" id="progress"></div>
+<div class="nav-hint">← → 방향키로 이동 · F5 전체화면 (<span id="pageIndicator">1 / 6</span>)</div>
+
+<div class="viewport">
+<div class="deck" id="deck">
+
+  <!-- 1. 타이틀 -->
+  <section class="slide active">
+    <div class="decor-bg"></div>
+    <div class="title-slide">
+      <div class="badge">RESEARCH SAMPLE · 2026</div>
+      <h1>게임 플랫폼별 유저 통계</h1>
+      <p class="subtitle">PC 온라인 · 모바일 · Steam · PlayStation · Nintendo — 인구 규모와 접속 패턴 비교 (2020–2026)</p>
+      <div class="platform-chip-row">
+        <div class="platform-chip">🖥️ PC 온라인</div>
+        <div class="platform-chip">📱 모바일</div>
+        <div class="platform-chip">🟦 Steam</div>
+        <div class="platform-chip">🎮 PlayStation</div>
+        <div class="platform-chip">🕹️ Nintendo</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. 플랫폼 개요 -->
+  <section class="slide">
+    <div class="decor-bg"></div>
+    <p class="kicker">Overview</p>
+    <h1 style="font-size:30pt;">플랫폼 개요 및 2026년 스냅샷</h1>
+    <p class="subtitle" style="margin-bottom:20px;">각 플랫폼의 대표 지표 (2025–2026년 공개 자료 기준 추정)</p>
+    <div class="card-grid">
+      <div class="platform-card">
+        <div class="dot" style="background:#2563eb;"></div>
+        <h3>PC 온라인 게임</h3>
+        <div class="stat">9.4억</div>
+        <div class="stat-label">전세계 활성 이용자 (명)</div>
+        <ul>
+          <li>매출 규모 약 $399억</li>
+          <li>세션당 평균 2~3시간</li>
+          <li>e스포츠·MMO 중심 성장</li>
+        </ul>
+      </div>
+      <div class="platform-card">
+        <div class="dot" style="background:#10b981;"></div>
+        <h3>모바일 게임</h3>
+        <div class="stat">32억+</div>
+        <div class="stat-label">전세계 활성 이용자 (명)</div>
+        <ul>
+          <li>매출 비중 시장 55% (최대)</li>
+          <li>일 4~6세션, 세션당 5~6분</li>
+          <li>캐주얼·하이퍼캐주얼 강세</li>
+        </ul>
+      </div>
+      <div class="platform-card">
+        <div class="dot" style="background:#f59e0b;"></div>
+        <h3>Steam</h3>
+        <div class="stat">1.32억</div>
+        <div class="stat-label">월간 활성 이용자 (명)</div>
+        <ul>
+          <li>동시접속 최고 4,204만 (2026.1)</li>
+          <li>PC 디지털 유통 점유율 74~75%</li>
+          <li>일간 활성 이용자 6,900만</li>
+        </ul>
+      </div>
+      <div class="platform-card">
+        <div class="dot" style="background:#8b5cf6;"></div>
+        <h3>PlayStation</h3>
+        <div class="stat">1.23억</div>
+        <div class="stat-label">월간 활성 이용자 (명)</div>
+        <ul>
+          <li>콘솔 시장 매출 $459억(전체)</li>
+          <li>세션당 평균 2~4시간</li>
+          <li>구독 서비스(PS+) 성장세</li>
+        </ul>
+      </div>
+      <div class="platform-card">
+        <div class="dot" style="background:#f43f5e;"></div>
+        <h3>Nintendo</h3>
+        <div class="stat">1.43억</div>
+        <div class="stat-label">Switch 누적 판매 대수</div>
+        <ul>
+          <li>현세대 콘솔 점유율 46.1%</li>
+          <li>가족·캐주얼 유저 비중 高</li>
+          <li>Switch 2 출시로 신규 유입 확대</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. 인구 규모 추이 (인덱스, 2020=100) -->
+  <section class="slide">
+    <div class="decor-bg"></div>
+    <p class="kicker">User Base Growth</p>
+    <h1 style="font-size:30pt;">플랫폼별 이용자 규모 성장 추이 (2020–2026)</h1>
+    <p class="subtitle" style="margin-bottom:16px;">2020년 이용자 규모를 100으로 환산한 성장 지수 — 플랫폼 간 규모 차이가 커서 지수로 정규화</p>
+    <div class="chart-wrap">
+      <svg id="growthChart" width="1152" height="330" viewBox="0 0 1152 330"></svg>
+      <div class="legend" id="growthLegend"></div>
+    </div>
+    <div class="footnote">※ 2026년 값은 Newzoo·Steam·SQ Magazine 등 공개 통계를 앵커로 하되, 2020~2025 구간은 설계 샘플용 추정 보간값입니다.</div>
+  </section>
+
+  <!-- 4. 평균 접속 시간 추이 -->
+  <section class="slide">
+    <div class="decor-bg"></div>
+    <p class="kicker">Session Duration Trend</p>
+    <h1 style="font-size:30pt;">플랫폼별 평균 접속 시간 추이 (2020–2026)</h1>
+    <p class="subtitle" style="margin-bottom:16px;">1회 세션 기준 평균 접속 시간(시간 단위 환산)</p>
+    <div class="chart-wrap">
+      <svg id="sessionChart" width="1152" height="330" viewBox="0 0 1152 330"></svg>
+      <div class="legend" id="sessionLegend"></div>
+    </div>
+    <div class="footnote">※ 모바일은 세션이 짧고 매우 빈번(일 4~6회)한 특성을 반영해 시간 단위로 환산한 추정치입니다.</div>
+  </section>
+
+  <!-- 5. 주간 평균 접속 시간 -->
+  <section class="slide">
+    <div class="decor-bg"></div>
+    <p class="kicker">Weekly Engagement</p>
+    <h1 style="font-size:30pt;">주간 평균 접속 시간 비교 (2026)</h1>
+    <p class="subtitle" style="margin-bottom:8px;">전체 게이머 주간 평균 8.45시간 — 플랫폼별 편차 존재</p>
+    <div class="chart-wrap" style="padding-top:8px;">
+      <div class="bars-wrap" id="weeklyBars"></div>
+    </div>
+    <div class="footnote">※ 콘솔·PC 30~49세 이용자는 주 9.7~10시간, 18~29세는 주 10.8시간까지 상승하는 경향이 관측됩니다.</div>
+  </section>
+
+  <!-- 6. 인사이트 요약 -->
+  <section class="slide">
+    <div class="decor-bg"></div>
+    <p class="kicker">Key Insights</p>
+    <h1 style="font-size:30pt;">종합 인사이트</h1>
+    <p class="subtitle" style="margin-bottom:20px;">플랫폼별 통계 리서치를 바탕으로 한 4가지 시사점</p>
+    <div class="insight-grid">
+      <div class="insight-card">
+        <h3>📱 모바일, 규모의 절대 강자</h3>
+        <p>32억 명 이상의 이용자로 압도적 규모를 유지하지만, 세션당 5~6분의 짧은 접속이 특징 — "자주, 짧게" 패턴.</p>
+      </div>
+      <div class="insight-card">
+        <h3>🖥️ PC·콘솔, 몰입형 장시간 세션</h3>
+        <p>PC·PlayStation은 세션당 2~4시간으로 몰입도가 높으며, 30대 이상에서 주간 접속시간이 오히려 증가하는 경향.</p>
+      </div>
+      <div class="insight-card">
+        <h3>🟦 Steam, 꾸준한 동시접속 최고 기록 경신</h3>
+        <p>2026년 1월 동시접속 4,204만 명으로 역대 최고치 — PC 디지털 유통의 압도적 허브 지위 유지.</p>
+      </div>
+      <div class="insight-card">
+        <h3>🕹️ Nintendo, 신규 하드웨어로 반등</h3>
+        <p>Switch 2 출시가 신규 유저 유입을 견인하며, 가족·캐주얼 유저층의 접속 빈도 상승에 기여.</p>
+      </div>
+    </div>
+  </section>
+
+</div>
+</div>
+
+<script src="../.claude/skills/ppt-maker/assets/deck-engine.js"></script>
+<script>
+  /* ---------------- 데이터 (설계 샘플용 추정치) ---------------- */
+  var years = [2020, 2021, 2022, 2023, 2024, 2025, 2026];
+  var platforms = [
+    { key:'pc',     name:'PC 온라인', color:'#2563eb' },
+    { key:'mobile', name:'모바일',    color:'#10b981' },
+    { key:'steam',  name:'Steam',     color:'#f59e0b' },
+    { key:'ps',     name:'PlayStation', color:'#8b5cf6' },
+    { key:'switch', name:'Nintendo',  color:'#f43f5e' }
+  ];
+
+  var growthIndex = {
+    pc:     [100, 108, 116, 122, 128, 133, 134],
+    mobile: [100, 109, 114, 118, 122, 126, 128],
+    steam:  [100, 108, 118, 128, 138, 146, 147],
+    ps:     [100, 104, 108, 113, 117, 121, 123],
+    switch: [100, 103, 105, 106, 108, 128, 239]
+  };
+
+  var sessionHours = {
+    pc:     [2.1, 2.2, 2.3, 2.4, 2.4, 2.5, 2.5],
+    mobile: [0.35, 0.33, 0.32, 0.30, 0.29, 0.28, 0.27],
+    steam:  [2.4, 2.5, 2.6, 2.7, 2.7, 2.8, 2.8],
+    ps:     [2.6, 2.7, 2.8, 2.9, 3.0, 3.1, 3.1],
+    switch: [1.4, 1.5, 1.5, 1.5, 1.6, 1.7, 1.8]
+  };
+
+  var weekly = { pc:9.8, mobile:8.5, steam:10.2, ps:9.7, switch:7.6 };
+
+  function renderLineChart(svgId, legendId, data, yMax, yStep) {
+    var svg = document.getElementById(svgId);
+    var W = 1152, H = 330, padL = 60, padR = 20, padT = 20, padB = 40;
+    var plotW = W - padL - padR, plotH = H - padT - padB;
+    var n = years.length;
+
+    var html = '';
+    for (var v = 0; v <= yMax; v += yStep) {
+      var y = padT + plotH - (v / yMax) * plotH;
+      html += '<line x1="' + padL + '" y1="' + y + '" x2="' + (W - padR) + '" y2="' + y + '" stroke="var(--color-border)" stroke-width="1"/>';
+      html += '<text x="' + (padL - 10) + '" y="' + (y + 4) + '" text-anchor="end" class="axis-label">' + v + '</text>';
+    }
+    for (var i = 0; i < n; i++) {
+      var x = padL + (i / (n - 1)) * plotW;
+      html += '<text x="' + x + '" y="' + (H - 12) + '" text-anchor="middle" class="axis-label">' + years[i] + '</text>';
+    }
+
+    platforms.forEach(function (p) {
+      var series = data[p.key];
+      var points = series.map(function (val, i) {
+        var x = padL + (i / (n - 1)) * plotW;
+        var y = padT + plotH - (Math.min(val, yMax) / yMax) * plotH;
+        return x + ',' + y;
+      }).join(' ');
+      html += '<polyline points="' + points + '" fill="none" stroke="' + p.color + '" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>';
+      series.forEach(function (val, i) {
+        var x = padL + (i / (n - 1)) * plotW;
+        var y = padT + plotH - (Math.min(val, yMax) / yMax) * plotH;
+        html += '<circle cx="' + x + '" cy="' + y + '" r="3.5" fill="' + p.color + '"/>';
+      });
+    });
+
+    svg.innerHTML = html;
+
+    var legend = document.getElementById(legendId);
+    legend.innerHTML = platforms.map(function (p) {
+      return '<div class="legend-item"><span class="legend-swatch" style="background:' + p.color + ';"></span>' + p.name + '</div>';
+    }).join('');
+  }
+
+  renderLineChart('growthChart', 'growthLegend', growthIndex, 250, 50);
+  renderLineChart('sessionChart', 'sessionLegend', sessionHours, 3.5, 0.5);
+
+  var weeklyWrap = document.getElementById('weeklyBars');
+  var maxWeekly = Math.max.apply(null, Object.values(weekly));
+  weeklyWrap.innerHTML = platforms.map(function (p) {
+    var h = Math.round((weekly[p.key] / maxWeekly) * 260);
+    return '<div class="bar-col">' +
+      '<div class="bar-value">' + weekly[p.key].toFixed(1) + 'h</div>' +
+      '<div class="bar-fill" style="height:' + h + 'px; background:' + p.color + ';"></div>' +
+      '<div class="bar-name">' + p.name + '</div>' +
+      '<div class="bar-sub">주간 평균</div>' +
+    '</div>';
+  }).join('');
+</script>
+
+</body>
+</html>

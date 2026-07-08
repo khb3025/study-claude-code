@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<title>PPT 샘플 슬라이드</title>
+<style>
+  /* ============================================================
+     폰트 임베딩 예시 (실제 skill에서는 로컬 .woff2를 base64로 인라인)
+     @font-face {
+       font-family: 'Pretendard';
+       src: url(data:font/woff2;base64,AAEAAAAS...) format('woff2');
+       font-weight: 400 700;
+       font-display: swap;
+     }
+     ============================================================ */
+
+  /* 2계층 색상 테마: primitive -> semantic */
+  :root {
+    /* primitive */
+    --color-blue-600: #2563eb;
+    --color-blue-100: #dbeafe;
+    --color-gray-900: #111827;
+    --color-gray-600: #4b5563;
+    --color-gray-200: #e5e7eb;
+    --color-gray-50: #f9fafb;
+    --color-white: #ffffff;
+    --color-amber-500: #f59e0b;
+
+    /* semantic (light) */
+    --color-bg: var(--color-white);
+    --color-surface: var(--color-gray-50);
+    --color-text: var(--color-gray-900);
+    --color-text-muted: var(--color-gray-600);
+    --color-accent: var(--color-blue-600);
+    --color-accent-bg: var(--color-blue-100);
+    --color-border: var(--color-gray-200);
+  }
+
+  :root[data-theme="dark"] {
+    --color-bg: #0f172a;
+    --color-surface: #1e293b;
+    --color-text: #f1f5f9;
+    --color-text-muted: #94a3b8;
+    --color-accent: #60a5fa;
+    --color-accent-bg: #1e3a5f;
+    --color-border: #334155;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    display: flex; /* margin collapse로 인한 오버플로우 오탐 방지 */
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #333;
+    font-family: 'Pretendard', 'Malgun Gothic', sans-serif;
+  }
+
+  /* ============================================================
+     반응형 프리뷰 wrapper: 실제 export 좌표(1280x720)에는 영향 없음
+     ============================================================ */
+  .viewport {
+    width: 1280px;
+    height: 720px;
+    transform: scale(var(--preview-scale, 0.7));
+    transform-origin: top left;
+  }
+
+  /* ============================================================
+     슬라이드 = 1280x720 고정 좌표계 컨테이너
+     규칙: 배경/테두리/그림자는 div에만, 텍스트는 p/h1-h6/ul/ol에만
+     ============================================================ */
+  .slide {
+    width: 1280px;
+    height: 720px;
+    background: var(--color-bg);
+    color: var(--color-text);
+    position: relative;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto 1fr;
+    grid-template-areas:
+      "title   title"
+      "body    chart"
+      "table   chart";
+    gap: 24px;
+    padding: 56px 64px;
+  }
+
+  /* 장식용 배경 도형 (div) */
+  .decor-bg {
+    position: absolute;
+    top: -80px;
+    right: -80px;
+    width: 260px;
+    height: 260px;
+    border-radius: 50%;
+    background: var(--color-accent-bg);
+    z-index: 0;
+  }
+
+  .area-title { grid-area: title; position: relative; z-index: 1; }
+  .area-body  { grid-area: body; position: relative; z-index: 1; }
+  .area-chart { grid-area: chart; position: relative; z-index: 1; }
+  .area-table { grid-area: table; position: relative; z-index: 1; }
+
+  h1 {
+    margin: 0 0 6px 0;
+    font-size: 40pt;   /* 제목 36-44pt */
+    line-height: 1.1;
+    font-weight: 700;
+  }
+  .subtitle {
+    margin: 0;
+    font-size: 16pt;
+    color: var(--color-text-muted);
+    font-weight: 500;
+  }
+  h2 {
+    margin: 0 0 12px 0;
+    font-size: 20pt;
+    font-weight: 600;
+  }
+  p, li {
+    font-size: 14pt;  /* 본문 18-24pt 권장이나 슬라이드 밀도상 축소 */
+    line-height: 1.3;
+    color: var(--color-text);
+  }
+  ul { margin: 0; padding-left: 20px; }
+  li { margin-bottom: 8px; }
+
+  /* 아이콘 예시 (인라인 SVG, Lucide 스타일) */
+  .icon-row { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+  .icon-row svg { flex-shrink: 0; }
+  .icon-row span { font-size: 13pt; color: var(--color-text); }
+
+  /* 표(table) 스타일: 헤더 강조 + 저채도 zebra striping */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11pt;
+  }
+  thead th {
+    background: var(--color-accent);
+    color: var(--color-white);
+    text-align: left;
+    padding: 8px 10px;
+    font-weight: 600;
+  }
+  tbody td {
+    padding: 7px 10px;
+    color: var(--color-text);
+  }
+  tbody td.num { text-align: right; }
+  tbody tr:nth-child(even) { background: var(--color-surface); }
+
+  /* 순수 CSS 막대 차트 예시 (커스텀 인포그래픽 -> 실제 skill에선 캡처하여 이미지 삽입) */
+  .bar-chart {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: 20px;
+    height: 100%;
+  }
+  .bars { display: flex; align-items: flex-end; gap: 16px; height: 160px; margin-top: 12px; }
+  .bar { flex: 1; display: flex; flex-direction: column; align-items: center; }
+  .bar-fill {
+    width: 100%;
+    border-radius: 4px 4px 0 0;
+    background: var(--color-accent);
+  }
+  .bar-label { margin-top: 6px; font-size: 10pt; color: var(--color-text-muted); }
+
+  /* ============================================================
+     .fragment 패턴: 클릭 시 등장 애니메이션 (reveal.js 스타일)
+     ============================================================ */
+  .fragment {
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  .fragment.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .theme-toggle {
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    z-index: 10;
+    padding: 6px 12px;
+    font-size: 12px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<button class="theme-toggle" onclick="toggleTheme()">테마 전환</button>
+
+<div class="viewport">
+  <div class="slide">
+    <div class="decor-bg"></div>
+
+    <div class="area-title">
+      <h1>2026년 3분기 프로젝트 현황</h1>
+      <p class="subtitle">HTML/CSS 기반 슬라이드 → PPTX 변환 설계 샘플</p>
+    </div>
+
+    <div class="area-body fragment" data-fragment-index="1">
+      <h2>주요 지표</h2>
+      <div class="icon-row">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><path d="M12 2v20M2 12h20"/></svg>
+        <span>신규 사용자 12,400명 (전분기 대비 +18%)</span>
+      </div>
+      <div class="icon-row">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg>
+        <span>평균 세션 시간 4분 32초</span>
+      </div>
+      <ul>
+        <li>온보딩 완료율 78% → 개선 필요</li>
+        <li>모바일 트래픽 비중 61%</li>
+      </ul>
+    </div>
+
+    <div class="area-chart fragment" data-fragment-index="2">
+      <div class="bar-chart">
+        <h2>분기별 매출 추이</h2>
+        <div class="bars">
+          <div class="bar"><div class="bar-fill" style="height:60px;"></div><div class="bar-label">1분기</div></div>
+          <div class="bar"><div class="bar-fill" style="height:90px;"></div><div class="bar-label">2분기</div></div>
+          <div class="bar"><div class="bar-fill" style="height:140px; background: var(--color-amber-500);"></div><div class="bar-label">3분기</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="area-table fragment" data-fragment-index="3">
+      <table>
+        <thead>
+          <tr><th>항목</th><th>목표</th><th>실적</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>가입자 수</td><td class="num">10,000</td><td class="num">12,400</td></tr>
+          <tr><td>전환율</td><td class="num">5.0%</td><td class="num">6.2%</td></tr>
+          <tr><td>이탈률</td><td class="num">15.0%</td><td class="num">11.8%</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  // 반응형 스케일: 뷰포트 크기에 맞춰 1280x720 좌표계를 축소/확대 (export 좌표엔 무관)
+  function updateScale() {
+    var ratio = Math.min(window.innerWidth / 1280, window.innerHeight / 720, 1);
+    document.documentElement.style.setProperty('--preview-scale', ratio * 0.9);
+  }
+  window.addEventListener('resize', updateScale);
+  updateScale();
+
+  function toggleTheme() {
+    var root = document.documentElement;
+    root.setAttribute('data-theme', root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+  }
+
+  // .fragment 클릭 등장 애니메이션: 클릭할 때마다 다음 순번 요소를 visible 처리
+  var fragments = Array.from(document.querySelectorAll('.fragment')).sort(function (a, b) {
+    return Number(a.dataset.fragmentIndex) - Number(b.dataset.fragmentIndex);
+  });
+  var revealed = 0;
+  document.body.addEventListener('click', function (e) {
+    if (e.target.closest('.theme-toggle')) return;
+    if (revealed < fragments.length) {
+      fragments[revealed].classList.add('visible');
+      revealed++;
+    }
+  });
+</script>
+
+</body>
+</html>
